@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
-import { getRandomTagline } from "@/lib/utils";
+import { Tagline } from "@/components/landing/Tagline";
+import { taglines } from "@/lib/utils";
 
 const playerFeatures = [
   "Join F1 Fantasy Leagues",
@@ -71,9 +72,7 @@ function Ticker() {
   );
 }
 
-export default async function Home() {
-    const tagline = await getRandomTagline();
-
+export default function Home() {
   return (
       <div className="relative isolate flex flex-1 flex-col bg-background font-sans">
         <AnimatedBackground />
@@ -102,9 +101,7 @@ export default async function Home() {
 
         {/* Hero */}
         <section className="relative z-10 flex flex-col items-center gap-6 px-6 pt-16 pb-20 text-center sm:px-10">
-        <span className="rounded-full bg-brand/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-brand">
-            {tagline}
-        </span>
+          <Tagline taglines={taglines}/>
           <h1 className="max-w-3xl text-4xl font-black leading-tight text-foreground sm:text-6xl">
             Run your own{" "}
             <span className="text-brand">Formula 1 Fantasy</span> league with
