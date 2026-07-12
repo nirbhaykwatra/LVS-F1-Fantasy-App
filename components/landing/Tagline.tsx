@@ -17,7 +17,7 @@ function pickRandomTagline(taglines: string[], exclude?: string) {
 export function Tagline({ taglines }: { taglines: string[] }) {
     const [tagline, setTagline] = useState<string | null>(null);
     const [visible, setVisible] = useState(false);
-    const fadeTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+    const fadeTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
     useEffect(() => {
         setTagline(pickRandomTagline(taglines));
