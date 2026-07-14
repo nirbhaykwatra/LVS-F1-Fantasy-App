@@ -1,8 +1,6 @@
 import { pgTable, integer, text, smallint, bigint, char, boolean, varchar, jsonb, timestamp, date, index, uniqueIndex, foreignKey, primaryKey, unique, check, pgView, numeric } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 
-
-
 export const constructorExhaustion = pgTable("constructor_exhaustion", {
 	id: integer().primaryKey().generatedAlwaysAsIdentity(),
 	playerId: integer("player_id").notNull().references(() => players.id, { onDelete: "cascade" } ),
@@ -134,10 +132,17 @@ export const leagues = pgTable("leagues", {
 	embedColor: integer("embed_color").default(15135274).notNull(),
 	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`).notNull(),
 	counterpickLimit: integer("counterpick_limit").default(3).notNull(),
+	createdByPlayerId: integer("created_by_player_id").references(() => players.id, { onDelete: "set null" } ),  // ADD
+	inviteCode: text("invite_code"),  // ADD
 }, (table) => [
 	index("idx_leagues_discord_guild").using("btree", table.discordGuildId.asc().nullsLast()),
 	index("idx_leagues_season").using("btree", table.seasonId.asc().nullsLast()),
-	unique("leagues_discord_guild_id_name_key").on(table.discordGuildId, table.name),	unique("leagues_season_id_name_key").on(table.seasonId, table.name),]);
+	index("idx_leagues_created_by").using("btree", table.createdByPlayerId.asc().nullsLast()),  // ADD
+	index("idx_leagues_invite_code").using("btree", table.inviteCode.asc().nullsLast()),  // ADD
+	unique("leagues_discord_guild_id_name_key").on(table.discordGuildId, table.name),
+	unique("leagues_season_id_name_key").on(table.seasonId, table.name),
+	unique("leagues_invite_code_key").on(table.inviteCode),  // ADD
+]);
 
 export const playerLeagues = pgTable("player_leagues", {
 	playerId: integer("player_id").notNull().references(() => players.id, { onDelete: "cascade" } ),
@@ -145,10 +150,12 @@ export const playerLeagues = pgTable("player_leagues", {
 	teamName: text("team_name"),
 	teamMotto: text("team_motto"),
 	joinedAt: timestamp("joined_at", { withTimezone: true }).default(sql`now()`).notNull(),
+	role: text("role").default("member").notNull(),  // ADD: appended last — safe for existing bot repositories
 }, (table) => [
 	primaryKey({ columns: [table.playerId, table.leagueId], name: "player_leagues_pkey"}),
 	index("idx_player_leagues_league").using("btree", table.leagueId.asc().nullsLast()),
 	index("idx_player_leagues_player").using("btree", table.playerId.asc().nullsLast()),
+	check("player_leagues_role_check", sql`(role = ANY (ARRAY['owner'::text, 'member'::text]))`),  // ADD
 ]);
 
 export const playerRoundScores = pgTable("player_round_scores", {
@@ -171,10 +178,15 @@ export const players = pgTable("players", {
 	password: varchar({ length: 255 }),
 	timezone: text().default("UTC").notNull(),
 	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`).notNull(),
+	email: text(),  // ADD: appended last — safe for existing bot repositories
 }, (table) => [
 	index("idx_players_discord_user").using("btree", table.discordUserId.asc().nullsLast()),
 	index("idx_players_username").using("btree", table.username.asc().nullsLast()),
-	unique("players_discord_user_id_key").on(table.discordUserId),	unique("players_username_key").on(table.username),]);
+	index("idx_players_email").using("btree", table.email.asc().nullsLast()),  // ADD
+	unique("players_discord_user_id_key").on(table.discordUserId),
+	unique("players_username_key").on(table.username),
+	unique("players_email_key").on(table.email),  // ADD
+]);
 
 export const raceResults = pgTable("race_results", {
 	id: integer().primaryKey().generatedAlwaysAsIdentity(),

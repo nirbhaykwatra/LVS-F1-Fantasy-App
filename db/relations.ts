@@ -56,6 +56,10 @@ export const relations = defineRelations(schema, (r) => ({
 			from: r.leagues.seasonId,
 			to: r.seasons.id
 		}),
+		createdByPlayer: r.one.players({  // ADD
+			from: r.leagues.createdByPlayerId,
+			to: r.players.id
+		}),
 		players: r.many.players({
 			from: r.leagues.id.through(r.playerLeagues.leagueId),
 			to: r.players.id.through(r.playerLeagues.playerId)
