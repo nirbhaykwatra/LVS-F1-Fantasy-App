@@ -1,6 +1,13 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Rammetto_One } from "next/font/google";
 import "./globals.css";
+import { SerwistProvider } from "@serwist/turbopack/react";
+import type { Metadata, Viewport } from "next";
+import type { ReactNode } from "react";
+
+const APP_NAME = "LVS F1 Fantasy";
+const APP_DEFAULT_TITLE = "LVS F1 Fantasy";
+const APP_TITLE_TEMPLATE = "%s - PWA App";
+const APP_DESCRIPTION = "Run an LVS F1 Fantasy league with your friends!";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,22 +19,60 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const rammetto = Rammetto_One({
+  variable: "--font-rammetto",
+  subsets: ["latin"],
+  weight: "400",
+});
+
 export const metadata: Metadata = {
-  title: "LVS Formula 1 Fantasy",
-  description: "",
+  applicationName: APP_NAME,
+  title: {
+    default: APP_DEFAULT_TITLE,
+    template: APP_TITLE_TEMPLATE,
+  },
+  description: APP_DESCRIPTION,
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: APP_DEFAULT_TITLE,
+    // startUpImage: [],
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    siteName: APP_NAME,
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary",
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = {
+  themeColor: "#e10600",
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
-    </html>
+      <html
+          lang="en"
+          className={`${geistSans.variable} ${geistMono.variable} ${rammetto.variable} h-full antialiased`}
+      >
+      <body className="min-h-full flex flex-col">
+      <SerwistProvider swUrl="/serwist/sw.js">{children}</SerwistProvider>
+      </body>
+      </html>
   );
 }

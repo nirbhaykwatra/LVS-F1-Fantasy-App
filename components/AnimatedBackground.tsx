@@ -52,11 +52,11 @@ export function AnimatedBackground() {
         />
       </div>
 
-      <div className="absolute inset-0 animate-[pulse-glow_6s_ease-in-out_infinite] bg-stripes opacity-[0.08] text-brand" />
+      {/*<div className="absolute inset-0 animate-[pulse-glow_6s_ease-in-out_infinite] bg-stripes opacity-[0.08] text-brand" />*/}
 
       <div
         ref={gridRef}
-        className="absolute inset-0 animate-[drift_9s_linear_infinite] bg-grid text-foreground/[0.05] will-change-transform"
+        className="absolute inset-0 animate-[drift_9s_linear_infinite] bg-grid opacity-[0.05] will-change-transform"
       />
     </div>
   );

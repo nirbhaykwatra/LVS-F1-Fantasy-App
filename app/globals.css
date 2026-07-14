@@ -14,6 +14,7 @@
   --color-brand-foreground: var(--brand-foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-rammetto: var(--font-rammetto);
 }
 
 @media (prefers-color-scheme: dark) {

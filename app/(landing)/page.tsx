@@ -102,11 +102,12 @@ export default function Home() {
         {/* Hero */}
         <section className="relative z-10 flex flex-col items-center gap-6 px-6 pt-16 pb-20 text-center sm:px-10">
           <Tagline taglines={taglines}/>
-          <h1 className="max-w-3xl text-4xl font-black leading-tight text-foreground sm:text-6xl">
-            Run your own{" "}
-            <span className="text-brand">Formula 1 Fantasy</span> league with
-            friends
+          <h1 className="max-w-3xl text-5xl font-black leading-tight text-foreground sm:text-6xl">
+              <span className="text-brand font-rammetto">LVS Formula 1 Fantasy</span>
           </h1>
+          <h3 className="max-w-3xl text-2xl font-black leading-tight text-foreground sm:text-6xl">
+            Run your own F1 Fantasy league with friends
+          </h3>
           <p className="max-w-xl text-base text-foreground/70 sm:text-lg">
             Draft your team, track live standings, and outsmart your friends
             with power ups and counterpicks — race after race, season after
