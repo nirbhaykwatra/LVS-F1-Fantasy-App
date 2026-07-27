@@ -1,99 +1,37 @@
-import { pgTable, integer, text, smallint, bigint, char, boolean, varchar, jsonb, timestamp, date, index, uniqueIndex, foreignKey, primaryKey, unique, check, pgView, numeric } from "drizzle-orm/pg-core"
+import { pgTable, integer, smallint, bigint, text, boolean, char, timestamp, varchar, jsonb, date, index, uniqueIndex, foreignKey, primaryKey, unique, check, pgView, numeric } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 
-export const constructorExhaustion = pgTable("constructor_exhaustion", {
+export const seasons = pgTable("seasons", {
 	id: integer().primaryKey().generatedAlwaysAsIdentity(),
-	playerId: integer("player_id").notNull().references(() => players.id, { onDelete: "cascade" } ),
-	leagueId: integer("league_id").notNull().references(() => leagues.id, { onDelete: "cascade" } ),
-	constructorId: integer("constructor_id").notNull().references(() => constructors.id, { onDelete: "cascade" } ),
-	lastGrandPrixId: integer("last_grand_prix_id").notNull().references(() => grandsPrix.id, { onDelete: "cascade" } ),
-	consecutiveUses: integer("consecutive_uses").default(1).notNull(),
-	isExhausted: boolean("is_exhausted").default(false).notNull(),
+	year: smallint().notNull(),
+	isActive: boolean("is_active").default(false).notNull(),
 	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`).notNull(),
-	updatedAt: timestamp("updated_at", { withTimezone: true }).default(sql`now()`).notNull(),
 }, (table) => [
-	index("idx_constructor_exhaustion_constructor").using("btree", table.constructorId.asc().nullsLast()),
-	index("idx_constructor_exhaustion_exhausted").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()).where(sql`(is_exhausted = true)`),
-	index("idx_constructor_exhaustion_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
-	unique("constructor_exhaustion_player_id_league_id_constructor_id_key").on(table.playerId, table.leagueId, table.constructorId),check("constructor_exhaustion_consecutive_uses_check", sql`(consecutive_uses >= 0)`),]);
+	uniqueIndex("idx_seasons_active").using("btree", table.isActive.asc().nullsLast()).where(sql`(is_active = true)`),
+	unique("seasons_year_key").on(table.year),
+]);
 
 export const constructors = pgTable("constructors", {
 	id: integer().primaryKey().generatedAlwaysAsIdentity(),
-	seasonId: integer("season_id").notNull().references(() => seasons.id, { onDelete: "cascade" } ),
+	seasonId: integer("season_id").notNull(),
 	shortName: text("short_name").notNull(),
 	fullName: text("full_name").notNull(),
 	colorHex: char("color_hex", { length: 7 }).default("#FFFFFF").notNull(),
 	ergastId: text("ergast_id"),
 }, (table) => [
 	index("idx_constructors_season").using("btree", table.seasonId.asc().nullsLast()),
-	unique("constructors_season_id_short_name_key").on(table.seasonId, table.shortName),]);
-
-export const counterpickUsage = pgTable("counterpick_usage", {
-	playerId: integer("player_id").notNull().references(() => players.id, { onDelete: "cascade" } ),
-	leagueId: integer("league_id").notNull().references(() => leagues.id, { onDelete: "cascade" } ),
-	seasonId: integer("season_id").notNull().references(() => seasons.id, { onDelete: "cascade" } ),
-	usedCount: integer("used_count").default(0).notNull(),
-}, (table) => [
-	primaryKey({ columns: [table.playerId, table.leagueId, table.seasonId], name: "counterpick_usage_pkey"}),
-	index("idx_counterpick_usage_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
-	index("idx_counterpick_usage_season").using("btree", table.seasonId.asc().nullsLast()),
-check("counterpick_usage_used_count_check", sql`(used_count >= 0)`),]);
-
-export const counterpicks = pgTable("counterpicks", {
-	id: integer().primaryKey().generatedAlwaysAsIdentity(),
-	grandPrixId: integer("grand_prix_id").notNull().references(() => grandsPrix.id, { onDelete: "cascade" } ),
-	leagueId: integer("league_id").notNull().references(() => leagues.id, { onDelete: "cascade" } ),
-	pickingPlayerId: integer("picking_player_id").notNull().references(() => players.id, { onDelete: "cascade" } ),
-	targetPlayerId: integer("target_player_id").notNull().references(() => players.id, { onDelete: "cascade" } ),
-	targetDriverId: integer("target_driver_id").notNull().references(() => drivers.id, { onDelete: "cascade" } ),
-	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`).notNull(),
-}, (table) => [
-	index("idx_counterpicks_grand_prix_league").using("btree", table.grandPrixId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
-	index("idx_counterpicks_target").using("btree", table.grandPrixId.asc().nullsLast(), table.leagueId.asc().nullsLast(), table.targetPlayerId.asc().nullsLast()),
-	unique("counterpicks_grand_prix_id_league_id_picking_player_id_key").on(table.grandPrixId, table.leagueId, table.pickingPlayerId),check("counterpicks_check", sql`(picking_player_id <> target_player_id)`),]);
-
-export const drafts = pgTable("drafts", {
-	id: integer().primaryKey().generatedAlwaysAsIdentity(),
-	playerId: integer("player_id").notNull().references(() => players.id, { onDelete: "cascade" } ),
-	leagueId: integer("league_id").notNull().references(() => leagues.id, { onDelete: "cascade" } ),
-	grandPrixId: integer("grand_prix_id").notNull().references(() => grandsPrix.id, { onDelete: "cascade" } ),
-	driver1Id: integer("driver1_id").notNull().references(() => drivers.id),
-	driver2Id: integer("driver2_id").notNull().references(() => drivers.id),
-	driver3Id: integer("driver3_id").notNull().references(() => drivers.id),
-	wildcardId: integer("wildcard_id").notNull().references(() => drivers.id),
-	constructorId: integer("constructor_id").notNull().references(() => constructors.id),
-	isAutoAssigned: boolean("is_auto_assigned").default(false).notNull(),
-	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`).notNull(),
-	updatedAt: timestamp("updated_at", { withTimezone: true }).default(sql`now()`).notNull(),
-}, (table) => [
-	index("idx_drafts_grand_prix_league").using("btree", table.grandPrixId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
-	index("idx_drafts_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
-	unique("drafts_player_id_league_id_grand_prix_id_key").on(table.playerId, table.leagueId, table.grandPrixId),check("drafts_check", sql`((driver1_id <> driver2_id) AND (driver1_id <> driver3_id) AND (driver1_id <> wildcard_id) AND (driver2_id <> driver3_id) AND (driver2_id <> wildcard_id) AND (driver3_id <> wildcard_id))`),]);
-
-export const driverExhaustion = pgTable("driver_exhaustion", {
-	id: integer().primaryKey().generatedAlwaysAsIdentity(),
-	playerId: integer("player_id").notNull().references(() => players.id, { onDelete: "cascade" } ),
-	leagueId: integer("league_id").notNull().references(() => leagues.id, { onDelete: "cascade" } ),
-	driverId: integer("driver_id").notNull().references(() => drivers.id, { onDelete: "cascade" } ),
-	lastGrandPrixId: integer("last_grand_prix_id").notNull().references(() => grandsPrix.id, { onDelete: "cascade" } ),
-	consecutiveUses: integer("consecutive_uses").default(1).notNull(),
-	isExhausted: boolean("is_exhausted").default(false).notNull(),
-	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`).notNull(),
-	updatedAt: timestamp("updated_at", { withTimezone: true }).default(sql`now()`).notNull(),
-}, (table) => [
-	index("idx_driver_exhaustion_driver").using("btree", table.driverId.asc().nullsLast()),
-	index("idx_driver_exhaustion_exhausted").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()).where(sql`(is_exhausted = true)`),
-	index("idx_driver_exhaustion_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
-	unique("driver_exhaustion_player_id_league_id_driver_id_key").on(table.playerId, table.leagueId, table.driverId),check("driver_exhaustion_consecutive_uses_check", sql`(consecutive_uses >= 0)`),]);
+	unique("constructors_season_id_short_name_key").on(table.seasonId, table.shortName),
+	foreignKey({ name: "constructors_season_id_fkey", columns: [table.seasonId], foreignColumns: [seasons.id] }).onDelete("cascade"),
+]);
 
 export const drivers = pgTable("drivers", {
 	id: integer().primaryKey().generatedAlwaysAsIdentity(),
-	seasonId: integer("season_id").notNull().references(() => seasons.id, { onDelete: "cascade" } ),
+	seasonId: integer("season_id").notNull(),
 	code: char({ length: 3 }).notNull(),
 	number: smallint().notNull(),
 	firstName: text("first_name").notNull(),
 	lastName: text("last_name").notNull(),
-	constructorId: integer("constructor_id").notNull().references(() => constructors.id, { onDelete: "cascade" } ),
+	constructorId: integer("constructor_id").notNull(),
 	ergastId: text("ergast_id"),
 	isActive: boolean("is_active").default(true).notNull(),
 	dateOfBirth: date("date_of_birth"),
@@ -102,11 +40,14 @@ export const drivers = pgTable("drivers", {
 }, (table) => [
 	index("idx_drivers_constructor").using("btree", table.constructorId.asc().nullsLast()),
 	index("idx_drivers_season").using("btree", table.seasonId.asc().nullsLast()),
-	unique("drivers_season_id_code_number_key").on(table.seasonId, table.code, table.number),]);
+	unique("drivers_season_id_code_number_key").on(table.seasonId, table.code, table.number),
+	foreignKey({ name: "drivers_season_id_fkey", columns: [table.seasonId], foreignColumns: [seasons.id] }).onDelete("cascade"),
+	foreignKey({ name: "drivers_constructor_id_fkey", columns: [table.constructorId], foreignColumns: [constructors.id] }).onDelete("cascade"),
+]);
 
 export const grandsPrix = pgTable("grands_prix", {
 	id: integer().primaryKey().generatedAlwaysAsIdentity(),
-	seasonId: integer("season_id").notNull().references(() => seasons.id, { onDelete: "cascade" } ),
+	seasonId: integer("season_id").notNull(),
 	roundNumber: smallint("round_number").notNull(),
 	eventName: text("event_name").notNull(),
 	circuitKey: text("circuit_key"),
@@ -122,54 +63,9 @@ export const grandsPrix = pgTable("grands_prix", {
 }, (table) => [
 	index("idx_grands_prix_completed").using("btree", table.seasonId.asc().nullsLast(), table.isCompleted.asc().nullsLast()),
 	index("idx_grands_prix_season").using("btree", table.seasonId.asc().nullsLast()),
-	unique("grands_prix_season_id_round_number_key").on(table.seasonId, table.roundNumber),]);
-
-export const leagues = pgTable("leagues", {
-	id: integer().primaryKey().generatedAlwaysAsIdentity(),
-	name: text().notNull(),
-	discordGuildId: bigint("discord_guild_id", { mode: 'number' }),
-	seasonId: integer("season_id").notNull().references(() => seasons.id, { onDelete: "cascade" } ),
-	embedColor: integer("embed_color").default(15135274).notNull(),
-	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`).notNull(),
-	counterpickLimit: integer("counterpick_limit").default(3).notNull(),
-	createdByPlayerId: integer("created_by_player_id").references(() => players.id, { onDelete: "set null" } ),  // ADD
-	inviteCode: text("invite_code"),  // ADD
-}, (table) => [
-	index("idx_leagues_discord_guild").using("btree", table.discordGuildId.asc().nullsLast()),
-	index("idx_leagues_season").using("btree", table.seasonId.asc().nullsLast()),
-	index("idx_leagues_created_by").using("btree", table.createdByPlayerId.asc().nullsLast()),  // ADD
-	index("idx_leagues_invite_code").using("btree", table.inviteCode.asc().nullsLast()),  // ADD
-	unique("leagues_discord_guild_id_name_key").on(table.discordGuildId, table.name),
-	unique("leagues_season_id_name_key").on(table.seasonId, table.name),
-	unique("leagues_invite_code_key").on(table.inviteCode),  // ADD
+	unique("grands_prix_season_id_round_number_key").on(table.seasonId, table.roundNumber),
+	foreignKey({ name: "grands_prix_season_id_fkey", columns: [table.seasonId], foreignColumns: [seasons.id] }).onDelete("cascade"),
 ]);
-
-export const playerLeagues = pgTable("player_leagues", {
-	playerId: integer("player_id").notNull().references(() => players.id, { onDelete: "cascade" } ),
-	leagueId: integer("league_id").notNull().references(() => leagues.id, { onDelete: "cascade" } ),
-	teamName: text("team_name"),
-	teamMotto: text("team_motto"),
-	joinedAt: timestamp("joined_at", { withTimezone: true }).default(sql`now()`).notNull(),
-	role: text("role").default("member").notNull(),  // ADD: appended last — safe for existing bot repositories
-}, (table) => [
-	primaryKey({ columns: [table.playerId, table.leagueId], name: "player_leagues_pkey"}),
-	index("idx_player_leagues_league").using("btree", table.leagueId.asc().nullsLast()),
-	index("idx_player_leagues_player").using("btree", table.playerId.asc().nullsLast()),
-	check("player_leagues_role_check", sql`(role = ANY (ARRAY['owner'::text, 'member'::text]))`),  // ADD
-]);
-
-export const playerRoundScores = pgTable("player_round_scores", {
-	id: integer().primaryKey().generatedAlwaysAsIdentity(),
-	playerId: integer("player_id").notNull().references(() => players.id, { onDelete: "cascade" } ),
-	leagueId: integer("league_id").notNull().references(() => leagues.id, { onDelete: "cascade" } ),
-	grandPrixId: integer("grand_prix_id").notNull().references(() => grandsPrix.id, { onDelete: "cascade" } ),
-	totalPoints: integer("total_points").default(0).notNull(),
-	breakdownJson: jsonb("breakdown_json").default({}).notNull(),
-	calculatedAt: timestamp("calculated_at", { withTimezone: true }).default(sql`now()`).notNull(),
-}, (table) => [
-	index("idx_player_scores_gp_league").using("btree", table.grandPrixId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
-	index("idx_player_scores_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
-	unique("player_round_scores_player_id_league_id_grand_prix_id_key").on(table.playerId, table.leagueId, table.grandPrixId),]);
 
 export const players = pgTable("players", {
 	id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -178,43 +74,203 @@ export const players = pgTable("players", {
 	password: varchar({ length: 255 }),
 	timezone: text().default("UTC").notNull(),
 	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`).notNull(),
-	email: text(),  // ADD: appended last — safe for existing bot repositories
+	email: text(),
 }, (table) => [
 	index("idx_players_discord_user").using("btree", table.discordUserId.asc().nullsLast()),
 	index("idx_players_username").using("btree", table.username.asc().nullsLast()),
-	index("idx_players_email").using("btree", table.email.asc().nullsLast()),  // ADD
+	index("idx_players_email").using("btree", table.email.asc().nullsLast()),
 	unique("players_discord_user_id_key").on(table.discordUserId),
 	unique("players_username_key").on(table.username),
-	unique("players_email_key").on(table.email),  // ADD
+	unique("players_email_key").on(table.email),
+]);
+
+export const leagues = pgTable("leagues", {
+	id: integer().primaryKey().generatedAlwaysAsIdentity(),
+	name: text().notNull(),
+	discordGuildId: bigint("discord_guild_id", { mode: 'number' }),
+	seasonId: integer("season_id").notNull(),
+	embedColor: integer("embed_color").default(15135274).notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`).notNull(),
+	counterpickLimit: integer("counterpick_limit").default(3).notNull(),
+	createdByPlayerId: integer("created_by_player_id"),
+	inviteCode: text("invite_code"),
+}, (table) => [
+	index("idx_leagues_discord_guild").using("btree", table.discordGuildId.asc().nullsLast()),
+	index("idx_leagues_season").using("btree", table.seasonId.asc().nullsLast()),
+	index("idx_leagues_created_by").using("btree", table.createdByPlayerId.asc().nullsLast()),
+	index("idx_leagues_invite_code").using("btree", table.inviteCode.asc().nullsLast()),
+	unique("leagues_discord_guild_id_name_key").on(table.discordGuildId, table.name),
+	unique("leagues_season_id_name_key").on(table.seasonId, table.name),
+	unique("leagues_invite_code_key").on(table.inviteCode),
+	foreignKey({ name: "leagues_season_id_fkey", columns: [table.seasonId], foreignColumns: [seasons.id] }).onDelete("cascade"),
+	foreignKey({ name: "leagues_created_by_player_id_fkey", columns: [table.createdByPlayerId], foreignColumns: [players.id] }).onDelete("set null"),
+]);
+
+export const playerLeagues = pgTable("player_leagues", {
+	playerId: integer("player_id").notNull(),
+	leagueId: integer("league_id").notNull(),
+	teamName: text("team_name"),
+	teamMotto: text("team_motto"),
+	joinedAt: timestamp("joined_at", { withTimezone: true }).default(sql`now()`).notNull(),
+	role: text("role").default("member").notNull(),
+}, (table) => [
+	primaryKey({ columns: [table.playerId, table.leagueId], name: "player_leagues_pkey" }),
+	index("idx_player_leagues_league").using("btree", table.leagueId.asc().nullsLast()),
+	index("idx_player_leagues_player").using("btree", table.playerId.asc().nullsLast()),
+	check("player_leagues_role_check", sql`(role = ANY (ARRAY['owner'::text, 'member'::text]))`),
+	foreignKey({ name: "player_leagues_player_id_fkey", columns: [table.playerId], foreignColumns: [players.id] }).onDelete("cascade"),
+	foreignKey({ name: "player_leagues_league_id_fkey", columns: [table.leagueId], foreignColumns: [leagues.id] }).onDelete("cascade"),
+]);
+
+export const drafts = pgTable("drafts", {
+	id: integer().primaryKey().generatedAlwaysAsIdentity(),
+	playerId: integer("player_id").notNull(),
+	leagueId: integer("league_id").notNull(),
+	grandPrixId: integer("grand_prix_id").notNull(),
+	driver1Id: integer("driver1_id").notNull(),
+	driver2Id: integer("driver2_id").notNull(),
+	driver3Id: integer("driver3_id").notNull(),
+	wildcardId: integer("wildcard_id").notNull(),
+	constructorId: integer("constructor_id").notNull(),
+	isAutoAssigned: boolean("is_auto_assigned").default(false).notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`).notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true }).default(sql`now()`).notNull(),
+}, (table) => [
+	index("idx_drafts_grand_prix_league").using("btree", table.grandPrixId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
+	index("idx_drafts_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
+	unique("drafts_player_id_league_id_grand_prix_id_key").on(table.playerId, table.leagueId, table.grandPrixId),
+	check("drafts_check", sql`((driver1_id <> driver2_id) AND (driver1_id <> driver3_id) AND (driver1_id <> wildcard_id) AND (driver2_id <> driver3_id) AND (driver2_id <> wildcard_id) AND (driver3_id <> wildcard_id))`),
+	foreignKey({ name: "drafts_player_id_fkey", columns: [table.playerId], foreignColumns: [players.id] }).onDelete("cascade"),
+	foreignKey({ name: "drafts_league_id_fkey", columns: [table.leagueId], foreignColumns: [leagues.id] }).onDelete("cascade"),
+	foreignKey({ name: "drafts_grand_prix_id_fkey", columns: [table.grandPrixId], foreignColumns: [grandsPrix.id] }).onDelete("cascade"),
+	foreignKey({ name: "drafts_driver1_id_fkey", columns: [table.driver1Id], foreignColumns: [drivers.id] }),
+	foreignKey({ name: "drafts_driver2_id_fkey", columns: [table.driver2Id], foreignColumns: [drivers.id] }),
+	foreignKey({ name: "drafts_driver3_id_fkey", columns: [table.driver3Id], foreignColumns: [drivers.id] }),
+	foreignKey({ name: "drafts_wildcard_id_fkey", columns: [table.wildcardId], foreignColumns: [drivers.id] }),
+	foreignKey({ name: "drafts_constructor_id_fkey", columns: [table.constructorId], foreignColumns: [constructors.id] }),
+]);
+
+export const driverExhaustion = pgTable("driver_exhaustion", {
+	id: integer().primaryKey().generatedAlwaysAsIdentity(),
+	playerId: integer("player_id").notNull(),
+	leagueId: integer("league_id").notNull(),
+	driverId: integer("driver_id").notNull(),
+	lastGrandPrixId: integer("last_grand_prix_id").notNull(),
+	consecutiveUses: integer("consecutive_uses").default(1).notNull(),
+	isExhausted: boolean("is_exhausted").default(false).notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`).notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true }).default(sql`now()`).notNull(),
+}, (table) => [
+	index("idx_driver_exhaustion_driver").using("btree", table.driverId.asc().nullsLast()),
+	index("idx_driver_exhaustion_exhausted").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()).where(sql`(is_exhausted = true)`),
+	index("idx_driver_exhaustion_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
+	unique("driver_exhaustion_player_id_league_id_driver_id_key").on(table.playerId, table.leagueId, table.driverId),
+	check("driver_exhaustion_consecutive_uses_check", sql`(consecutive_uses >= 0)`),
+	foreignKey({ name: "driver_exhaustion_player_id_fkey", columns: [table.playerId], foreignColumns: [players.id] }).onDelete("cascade"),
+	foreignKey({ name: "driver_exhaustion_league_id_fkey", columns: [table.leagueId], foreignColumns: [leagues.id] }).onDelete("cascade"),
+	foreignKey({ name: "driver_exhaustion_driver_id_fkey", columns: [table.driverId], foreignColumns: [drivers.id] }).onDelete("cascade"),
+	foreignKey({ name: "driver_exhaustion_last_grand_prix_id_fkey", columns: [table.lastGrandPrixId], foreignColumns: [grandsPrix.id] }).onDelete("cascade"),
+]);
+
+export const constructorExhaustion = pgTable("constructor_exhaustion", {
+	id: integer().primaryKey().generatedAlwaysAsIdentity(),
+	playerId: integer("player_id").notNull(),
+	leagueId: integer("league_id").notNull(),
+	constructorId: integer("constructor_id").notNull(),
+	lastGrandPrixId: integer("last_grand_prix_id").notNull(),
+	consecutiveUses: integer("consecutive_uses").default(1).notNull(),
+	isExhausted: boolean("is_exhausted").default(false).notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`).notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true }).default(sql`now()`).notNull(),
+}, (table) => [
+	index("idx_constructor_exhaustion_constructor").using("btree", table.constructorId.asc().nullsLast()),
+	index("idx_constructor_exhaustion_exhausted").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()).where(sql`(is_exhausted = true)`),
+	index("idx_constructor_exhaustion_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
+	unique("constructor_exhaustion_player_id_league_id_constructor_id_key").on(table.playerId, table.leagueId, table.constructorId),
+	check("constructor_exhaustion_consecutive_uses_check", sql`(consecutive_uses >= 0)`),
+	foreignKey({ name: "constructor_exhaustion_player_id_fkey", columns: [table.playerId], foreignColumns: [players.id] }).onDelete("cascade"),
+	foreignKey({ name: "constructor_exhaustion_league_id_fkey", columns: [table.leagueId], foreignColumns: [leagues.id] }).onDelete("cascade"),
+	foreignKey({ name: "constructor_exhaustion_constructor_id_fkey", columns: [table.constructorId], foreignColumns: [constructors.id] }).onDelete("cascade"),
+	foreignKey({ name: "constructor_exhaustion_last_grand_prix_id_fkey", columns: [table.lastGrandPrixId], foreignColumns: [grandsPrix.id] }).onDelete("cascade"),
+]);
+
+export const counterpicks = pgTable("counterpicks", {
+	id: integer().primaryKey().generatedAlwaysAsIdentity(),
+	grandPrixId: integer("grand_prix_id").notNull(),
+	leagueId: integer("league_id").notNull(),
+	pickingPlayerId: integer("picking_player_id").notNull(),
+	targetPlayerId: integer("target_player_id").notNull(),
+	targetDriverId: integer("target_driver_id").notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`).notNull(),
+}, (table) => [
+	index("idx_counterpicks_grand_prix_league").using("btree", table.grandPrixId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
+	index("idx_counterpicks_target").using("btree", table.grandPrixId.asc().nullsLast(), table.leagueId.asc().nullsLast(), table.targetPlayerId.asc().nullsLast()),
+	unique("counterpicks_grand_prix_id_league_id_picking_player_id_key").on(table.grandPrixId, table.leagueId, table.pickingPlayerId),
+	check("counterpicks_check", sql`(picking_player_id <> target_player_id)`),
+	foreignKey({ name: "counterpicks_grand_prix_id_fkey", columns: [table.grandPrixId], foreignColumns: [grandsPrix.id] }).onDelete("cascade"),
+	foreignKey({ name: "counterpicks_league_id_fkey", columns: [table.leagueId], foreignColumns: [leagues.id] }).onDelete("cascade"),
+	foreignKey({ name: "counterpicks_picking_player_id_fkey", columns: [table.pickingPlayerId], foreignColumns: [players.id] }).onDelete("cascade"),
+	foreignKey({ name: "counterpicks_target_player_id_fkey", columns: [table.targetPlayerId], foreignColumns: [players.id] }).onDelete("cascade"),
+	foreignKey({ name: "counterpicks_target_driver_id_fkey", columns: [table.targetDriverId], foreignColumns: [drivers.id] }).onDelete("cascade"),
+]);
+
+export const counterpickUsage = pgTable("counterpick_usage", {
+	playerId: integer("player_id").notNull(),
+	leagueId: integer("league_id").notNull(),
+	seasonId: integer("season_id").notNull(),
+	usedCount: integer("used_count").default(0).notNull(),
+}, (table) => [
+	primaryKey({ columns: [table.playerId, table.leagueId, table.seasonId], name: "counterpick_usage_pkey" }),
+	index("idx_counterpick_usage_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
+	index("idx_counterpick_usage_season").using("btree", table.seasonId.asc().nullsLast()),
+	check("counterpick_usage_used_count_check", sql`(used_count >= 0)`),
+	foreignKey({ name: "counterpick_usage_player_id_fkey", columns: [table.playerId], foreignColumns: [players.id] }).onDelete("cascade"),
+	foreignKey({ name: "counterpick_usage_league_id_fkey", columns: [table.leagueId], foreignColumns: [leagues.id] }).onDelete("cascade"),
+	foreignKey({ name: "counterpick_usage_season_id_fkey", columns: [table.seasonId], foreignColumns: [seasons.id] }).onDelete("cascade"),
 ]);
 
 export const raceResults = pgTable("race_results", {
 	id: integer().primaryKey().generatedAlwaysAsIdentity(),
-	grandPrixId: integer("grand_prix_id").notNull().references(() => grandsPrix.id, { onDelete: "cascade" } ),
+	grandPrixId: integer("grand_prix_id").notNull(),
 	sessionType: text("session_type").notNull(),
-	driverId: integer("driver_id").notNull().references(() => drivers.id),
+	driverId: integer("driver_id").notNull(),
 	position: smallint().notNull(),
 }, (table) => [
 	index("idx_race_results_gp_session").using("btree", table.grandPrixId.asc().nullsLast(), table.sessionType.asc().nullsLast()),
-	unique("race_results_grand_prix_id_session_type_driver_id_key").on(table.grandPrixId, table.sessionType, table.driverId),check("race_results_session_type_check", sql`(session_type = ANY (ARRAY['qualifying'::text, 'race'::text, 'sprint'::text, 'sprint_qualifying'::text]))`),]);
+	unique("race_results_grand_prix_id_session_type_driver_id_key").on(table.grandPrixId, table.sessionType, table.driverId),
+	check("race_results_session_type_check", sql`(session_type = ANY (ARRAY['qualifying'::text, 'race'::text, 'sprint'::text, 'sprint_qualifying'::text]))`),
+	foreignKey({ name: "race_results_grand_prix_id_fkey", columns: [table.grandPrixId], foreignColumns: [grandsPrix.id] }).onDelete("cascade"),
+	foreignKey({ name: "race_results_driver_id_fkey", columns: [table.driverId], foreignColumns: [drivers.id] }),
+]);
+
+export const playerRoundScores = pgTable("player_round_scores", {
+	id: integer().primaryKey().generatedAlwaysAsIdentity(),
+	playerId: integer("player_id").notNull(),
+	leagueId: integer("league_id").notNull(),
+	grandPrixId: integer("grand_prix_id").notNull(),
+	totalPoints: integer("total_points").default(0).notNull(),
+	breakdownJson: jsonb("breakdown_json").default({}).notNull(),
+	calculatedAt: timestamp("calculated_at", { withTimezone: true }).default(sql`now()`).notNull(),
+}, (table) => [
+	index("idx_player_scores_gp_league").using("btree", table.grandPrixId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
+	index("idx_player_scores_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
+	unique("player_round_scores_player_id_league_id_grand_prix_id_key").on(table.playerId, table.leagueId, table.grandPrixId),
+	foreignKey({ name: "player_round_scores_player_id_fkey", columns: [table.playerId], foreignColumns: [players.id] }).onDelete("cascade"),
+	foreignKey({ name: "player_round_scores_league_id_fkey", columns: [table.leagueId], foreignColumns: [leagues.id] }).onDelete("cascade"),
+	foreignKey({ name: "player_round_scores_grand_prix_id_fkey", columns: [table.grandPrixId], foreignColumns: [grandsPrix.id] }).onDelete("cascade"),
+]);
 
 export const scoringRules = pgTable("scoring_rules", {
 	id: integer().primaryKey().generatedAlwaysAsIdentity(),
-	seasonId: integer("season_id").notNull().references(() => seasons.id, { onDelete: "cascade" } ),
+	seasonId: integer("season_id").notNull(),
 	ruleKey: text("rule_key").notNull(),
 	ruleValue: jsonb("rule_value").notNull(),
 }, (table) => [
 	index("idx_scoring_rules_season").using("btree", table.seasonId.asc().nullsLast()),
-	unique("scoring_rules_season_id_rule_key_key").on(table.seasonId, table.ruleKey),]);
+	unique("scoring_rules_season_id_rule_key_key").on(table.seasonId, table.ruleKey),
+	foreignKey({ name: "scoring_rules_season_id_fkey", columns: [table.seasonId], foreignColumns: [seasons.id] }).onDelete("cascade"),
+]);
 
-export const seasons = pgTable("seasons", {
-	id: integer().primaryKey().generatedAlwaysAsIdentity(),
-	year: smallint().notNull(),
-	isActive: boolean("is_active").default(false).notNull(),
-	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`now()`).notNull(),
-}, (table) => [
-	uniqueIndex("idx_seasons_active").using("btree", table.isActive.asc().nullsLast()).where(sql`(is_active = true)`),
-	unique("seasons_year_key").on(table.year),]);
 export const vDriverDraftStats = pgView("v_driver_draft_stats", {	driverId: integer("driver_id"),
 	code: char({ length: 3 }),
 	firstName: text("first_name"),

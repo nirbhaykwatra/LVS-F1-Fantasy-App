@@ -1,10 +1,10 @@
 {
-  "dialect": "postgres",
-  "id": "3fa650c3-07d0-45ac-b1d9-0e808d36c0b4",
-  "prevIds": [
-    "00000000-0000-0000-0000-000000000000"
-  ],
   "version": "8",
+  "dialect": "postgres",
+  "id": "4efc765e-193c-4b1c-8c1a-0c042f61349d",
+  "prevIds": [
+    "fa199999-356d-4412-94b9-2c1787389a4c"
+  ],
   "ddl": [
     {
       "isRlsEnabled": false,
@@ -103,283 +103,15 @@
       "dimensions": 0,
       "default": null,
       "generated": null,
-      "identity": null,
-      "name": "player_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "player_leagues"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": {
-        "type": "always",
-        "name": "drafts_id_seq",
-        "increment": "1",
-        "minValue": "1",
-        "maxValue": "2147483647",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
-      },
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drafts"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": {
-        "type": "always",
-        "name": "constructors_id_seq",
-        "increment": "1",
-        "minValue": "1",
-        "maxValue": "2147483647",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
-      },
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "constructors"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": {
-        "type": "always",
-        "name": "leagues_id_seq",
-        "increment": "1",
-        "minValue": "1",
-        "maxValue": "2147483647",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
-      },
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "leagues"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": {
-        "type": "always",
-        "name": "grands_prix_id_seq",
-        "increment": "1",
-        "minValue": "1",
-        "maxValue": "2147483647",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
-      },
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "grands_prix"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": {
-        "type": "always",
-        "name": "driver_exhaustion_id_seq",
-        "increment": "1",
-        "minValue": "1",
-        "maxValue": "2147483647",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
-      },
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "driver_exhaustion"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": {
-        "type": "always",
-        "name": "scoring_rules_id_seq",
-        "increment": "1",
-        "minValue": "1",
-        "maxValue": "2147483647",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
-      },
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "scoring_rules"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": {
-        "type": "always",
-        "name": "seasons_id_seq",
-        "increment": "1",
-        "minValue": "1",
-        "maxValue": "2147483647",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
-      },
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "seasons"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "player_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "counterpick_usage"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": {
-        "type": "always",
-        "name": "players_id_seq",
-        "increment": "1",
-        "minValue": "1",
-        "maxValue": "2147483647",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
-      },
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "players"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": {
-        "type": "always",
-        "name": "race_results_id_seq",
-        "increment": "1",
-        "minValue": "1",
-        "maxValue": "2147483647",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
-      },
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "race_results"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": {
-        "type": "always",
-        "name": "counterpicks_id_seq",
-        "increment": "1",
-        "minValue": "1",
-        "maxValue": "2147483647",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
-      },
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "counterpicks"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": {
-        "type": "always",
-        "name": "player_round_scores_id_seq",
-        "increment": "1",
-        "minValue": "1",
-        "maxValue": "2147483647",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
-      },
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "player_round_scores"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
       "identity": {
         "type": "always",
         "name": "constructor_exhaustion_id_seq",
         "increment": "1",
+        "startWith": "1",
         "minValue": "1",
         "maxValue": "2147483647",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
+        "cache": 1,
+        "cycle": false
       },
       "name": "id",
       "entityType": "columns",
@@ -393,93 +125,6 @@
       "dimensions": 0,
       "default": null,
       "generated": null,
-      "identity": {
-        "type": "always",
-        "name": "drivers_id_seq",
-        "increment": "1",
-        "minValue": "1",
-        "maxValue": "2147483647",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
-      },
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drivers"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "league_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "counterpick_usage"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "league_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "player_leagues"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "name",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "leagues"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "season_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "constructors"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "player_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "player_round_scores"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
       "identity": null,
       "name": "player_id",
       "entityType": "columns",
@@ -494,322 +139,10 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "grand_prix_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "counterpicks"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "player_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drafts"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "player_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "driver_exhaustion"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "season_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drivers"
-    },
-    {
-      "type": "smallint",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "year",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "seasons"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "season_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "scoring_rules"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "season_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "grands_prix"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "grand_prix_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "race_results"
-    },
-    {
-      "type": "bigint",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "discord_user_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "players"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "team_name",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "player_leagues"
-    },
-    {
-      "type": "char(3)",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "code",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drivers"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "league_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "counterpicks"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "season_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "counterpick_usage"
-    },
-    {
-      "type": "boolean",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "false",
-      "generated": null,
-      "identity": null,
-      "name": "is_active",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "seasons"
-    },
-    {
-      "type": "bigint",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "discord_guild_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "leagues"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "rule_key",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "scoring_rules"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "username",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "players"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
       "name": "league_id",
       "entityType": "columns",
       "schema": "public",
       "table": "constructor_exhaustion"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "session_type",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "race_results"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "short_name",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "constructors"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "league_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "player_round_scores"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "league_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "driver_exhaustion"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "league_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drafts"
-    },
-    {
-      "type": "smallint",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "round_number",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "grands_prix"
-    },
-    {
-      "type": "smallint",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "number",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drivers"
     },
     {
       "type": "integer",
@@ -825,6 +158,119 @@
       "table": "constructor_exhaustion"
     },
     {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "last_grand_prix_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "constructor_exhaustion"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "1",
+      "generated": null,
+      "identity": null,
+      "name": "consecutive_uses",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "constructor_exhaustion"
+    },
+    {
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "false",
+      "generated": null,
+      "identity": null,
+      "name": "is_exhausted",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "constructor_exhaustion"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "constructor_exhaustion"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "updated_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "constructor_exhaustion"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "constructors_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "constructors"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "season_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "constructors"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "short_name",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "constructors"
+    },
+    {
       "type": "text",
       "typeSchema": null,
       "notNull": true,
@@ -838,6 +284,71 @@
       "table": "constructors"
     },
     {
+      "type": "char(7)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'#FFFFFF'",
+      "generated": null,
+      "identity": null,
+      "name": "color_hex",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "constructors"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "ergast_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "constructors"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "player_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "counterpick_usage"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "league_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "counterpick_usage"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "season_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "counterpick_usage"
+    },
+    {
       "type": "integer",
       "typeSchema": null,
       "notNull": true,
@@ -849,6 +360,54 @@
       "entityType": "columns",
       "schema": "public",
       "table": "counterpick_usage"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "counterpicks_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "counterpicks"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "grand_prix_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "counterpicks"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "league_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "counterpicks"
     },
     {
       "type": "integer",
@@ -871,10 +430,10 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "grand_prix_id",
+      "name": "target_player_id",
       "entityType": "columns",
       "schema": "public",
-      "table": "drafts"
+      "table": "counterpicks"
     },
     {
       "type": "integer",
@@ -884,101 +443,10 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "driver_id",
+      "name": "target_driver_id",
       "entityType": "columns",
       "schema": "public",
-      "table": "driver_exhaustion"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "event_name",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "grands_prix"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "season_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "leagues"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "team_motto",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "player_leagues"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "grand_prix_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "player_round_scores"
-    },
-    {
-      "type": "varchar(255)",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "password",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "players"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "driver_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "race_results"
-    },
-    {
-      "type": "jsonb",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "rule_value",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "scoring_rules"
+      "table": "counterpicks"
     },
     {
       "type": "timestamp with time zone",
@@ -991,59 +459,68 @@
       "name": "created_at",
       "entityType": "columns",
       "schema": "public",
-      "table": "seasons"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "circuit_key",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "grands_prix"
-    },
-    {
-      "type": "smallint",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "position",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "race_results"
+      "table": "counterpicks"
     },
     {
       "type": "integer",
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
-      "default": "0",
+      "default": null,
       "generated": null,
-      "identity": null,
-      "name": "total_points",
+      "identity": {
+        "type": "always",
+        "name": "drafts_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "name": "id",
       "entityType": "columns",
       "schema": "public",
-      "table": "player_round_scores"
+      "table": "drafts"
     },
     {
-      "type": "char(7)",
+      "type": "integer",
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
-      "default": "'#FFFFFF'",
+      "default": null,
       "generated": null,
       "identity": null,
-      "name": "color_hex",
+      "name": "player_id",
       "entityType": "columns",
       "schema": "public",
-      "table": "constructors"
+      "table": "drafts"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "league_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drafts"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "grand_prix_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drafts"
     },
     {
       "type": "integer",
@@ -1057,175 +534,6 @@
       "entityType": "columns",
       "schema": "public",
       "table": "drafts"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "first_name",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drivers"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "target_player_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "counterpicks"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "'UTC'",
-      "generated": null,
-      "identity": null,
-      "name": "timezone",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "players"
-    },
-    {
-      "type": "timestamp with time zone",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "now()",
-      "generated": null,
-      "identity": null,
-      "name": "joined_at",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "player_leagues"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "15135274",
-      "generated": null,
-      "identity": null,
-      "name": "embed_color",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "leagues"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "last_grand_prix_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "driver_exhaustion"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "last_grand_prix_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "constructor_exhaustion"
-    },
-    {
-      "type": "timestamp with time zone",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "now()",
-      "generated": null,
-      "identity": null,
-      "name": "created_at",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "leagues"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "1",
-      "generated": null,
-      "identity": null,
-      "name": "consecutive_uses",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "constructor_exhaustion"
-    },
-    {
-      "type": "jsonb",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "'{}'",
-      "generated": null,
-      "identity": null,
-      "name": "breakdown_json",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "player_round_scores"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "'conventional'",
-      "generated": null,
-      "identity": null,
-      "name": "event_format",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "grands_prix"
-    },
-    {
-      "type": "timestamp with time zone",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "now()",
-      "generated": null,
-      "identity": null,
-      "name": "created_at",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "players"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "ergast_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "constructors"
     },
     {
       "type": "integer",
@@ -1245,6 +553,158 @@
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "driver3_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drafts"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "wildcard_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drafts"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "constructor_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drafts"
+    },
+    {
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "false",
+      "generated": null,
+      "identity": null,
+      "name": "is_auto_assigned",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drafts"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drafts"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "updated_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drafts"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "driver_exhaustion_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "driver_exhaustion"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "player_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "driver_exhaustion"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "league_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "driver_exhaustion"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "driver_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "driver_exhaustion"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "last_grand_prix_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "driver_exhaustion"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
       "default": "1",
       "generated": null,
       "identity": null,
@@ -1252,6 +712,119 @@
       "entityType": "columns",
       "schema": "public",
       "table": "driver_exhaustion"
+    },
+    {
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "false",
+      "generated": null,
+      "identity": null,
+      "name": "is_exhausted",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "driver_exhaustion"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "driver_exhaustion"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "updated_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "driver_exhaustion"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "drivers_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drivers"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "season_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drivers"
+    },
+    {
+      "type": "char(3)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "code",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drivers"
+    },
+    {
+      "type": "smallint",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "number",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drivers"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "first_name",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drivers"
     },
     {
       "type": "text",
@@ -1274,153 +847,10 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "target_driver_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "counterpicks"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "3",
-      "generated": null,
-      "identity": null,
-      "name": "counterpick_limit",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "leagues"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
       "name": "constructor_id",
       "entityType": "columns",
       "schema": "public",
       "table": "drivers"
-    },
-    {
-      "type": "timestamp with time zone",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "quali_date_utc",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "grands_prix"
-    },
-    {
-      "type": "boolean",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "false",
-      "generated": null,
-      "identity": null,
-      "name": "is_exhausted",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "driver_exhaustion"
-    },
-    {
-      "type": "boolean",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "false",
-      "generated": null,
-      "identity": null,
-      "name": "is_exhausted",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "constructor_exhaustion"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "driver3_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drafts"
-    },
-    {
-      "type": "timestamp with time zone",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "now()",
-      "generated": null,
-      "identity": null,
-      "name": "calculated_at",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "player_round_scores"
-    },
-    {
-      "type": "timestamp with time zone",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "now()",
-      "generated": null,
-      "identity": null,
-      "name": "created_at",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "counterpicks"
-    },
-    {
-      "type": "timestamp with time zone",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "now()",
-      "generated": null,
-      "identity": null,
-      "name": "created_at",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "constructor_exhaustion"
-    },
-    {
-      "type": "timestamp with time zone",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "now()",
-      "generated": null,
-      "identity": null,
-      "name": "created_at",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "driver_exhaustion"
-    },
-    {
-      "type": "timestamp with time zone",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "sprint_quali_date_utc",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "grands_prix"
     },
     {
       "type": "text",
@@ -1436,19 +866,6 @@
       "table": "drivers"
     },
     {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "wildcard_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drafts"
-    },
-    {
       "type": "boolean",
       "typeSchema": null,
       "notNull": true,
@@ -1460,6 +877,158 @@
       "entityType": "columns",
       "schema": "public",
       "table": "drivers"
+    },
+    {
+      "type": "date",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "date_of_birth",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drivers"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "nationality",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drivers"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "driver_image_url",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "drivers"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "grands_prix_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "grands_prix"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "season_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "grands_prix"
+    },
+    {
+      "type": "smallint",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "round_number",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "grands_prix"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "event_name",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "grands_prix"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "circuit_key",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "grands_prix"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'conventional'",
+      "generated": null,
+      "identity": null,
+      "name": "event_format",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "grands_prix"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "quali_date_utc",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "grands_prix"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "sprint_quali_date_utc",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "grands_prix"
     },
     {
       "type": "timestamp with time zone",
@@ -1477,58 +1046,6 @@
     {
       "type": "timestamp with time zone",
       "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "now()",
-      "generated": null,
-      "identity": null,
-      "name": "updated_at",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "driver_exhaustion"
-    },
-    {
-      "type": "integer",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "constructor_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drafts"
-    },
-    {
-      "type": "timestamp with time zone",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "now()",
-      "generated": null,
-      "identity": null,
-      "name": "updated_at",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "constructor_exhaustion"
-    },
-    {
-      "type": "boolean",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "false",
-      "generated": null,
-      "identity": null,
-      "name": "is_auto_assigned",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drafts"
-    },
-    {
-      "type": "timestamp with time zone",
-      "typeSchema": null,
       "notNull": false,
       "dimensions": 0,
       "default": null,
@@ -1538,32 +1055,6 @@
       "entityType": "columns",
       "schema": "public",
       "table": "grands_prix"
-    },
-    {
-      "type": "date",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "date_of_birth",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drivers"
-    },
-    {
-      "type": "timestamp with time zone",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "now()",
-      "generated": null,
-      "identity": null,
-      "name": "created_at",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drafts"
     },
     {
       "type": "timestamp with time zone",
@@ -1577,45 +1068,6 @@
       "entityType": "columns",
       "schema": "public",
       "table": "grands_prix"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "nationality",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drivers"
-    },
-    {
-      "type": "timestamp with time zone",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "now()",
-      "generated": null,
-      "identity": null,
-      "name": "updated_at",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drafts"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "driver_image_url",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "drivers"
     },
     {
       "type": "timestamp with time zone",
@@ -1657,14 +1109,614 @@
       "table": "grands_prix"
     },
     {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "leagues_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "leagues"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "name",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "leagues"
+    },
+    {
+      "type": "bigint",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "discord_guild_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "leagues"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "season_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "leagues"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "15135274",
+      "generated": null,
+      "identity": null,
+      "name": "embed_color",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "leagues"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "leagues"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "3",
+      "generated": null,
+      "identity": null,
+      "name": "counterpick_limit",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "leagues"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "created_by_player_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "leagues"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "invite_code",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "leagues"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "player_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "player_leagues"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "league_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "player_leagues"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "team_name",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "player_leagues"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "team_motto",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "player_leagues"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "joined_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "player_leagues"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'member'",
+      "generated": null,
+      "identity": null,
+      "name": "role",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "player_leagues"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "player_round_scores_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "player_round_scores"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "player_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "player_round_scores"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "league_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "player_round_scores"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "grand_prix_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "player_round_scores"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "0",
+      "generated": null,
+      "identity": null,
+      "name": "total_points",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "player_round_scores"
+    },
+    {
+      "type": "jsonb",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'{}'",
+      "generated": null,
+      "identity": null,
+      "name": "breakdown_json",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "player_round_scores"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "calculated_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "player_round_scores"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "players_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "players"
+    },
+    {
+      "type": "bigint",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "discord_user_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "players"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "username",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "players"
+    },
+    {
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "password",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "players"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'UTC'",
+      "generated": null,
+      "identity": null,
+      "name": "timezone",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "players"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "players"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "email",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "players"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "race_results_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "race_results"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "grand_prix_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "race_results"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "session_type",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "race_results"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "driver_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "race_results"
+    },
+    {
+      "type": "smallint",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "position",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "race_results"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "scoring_rules_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "scoring_rules"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "season_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "scoring_rules"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "rule_key",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "scoring_rules"
+    },
+    {
+      "type": "jsonb",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "rule_value",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "scoring_rules"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "seasons_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "seasons"
+    },
+    {
+      "type": "smallint",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "year",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "seasons"
+    },
+    {
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "false",
+      "generated": null,
+      "identity": null,
+      "name": "is_active",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "seasons"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "seasons"
+    },
+    {
       "nameExplicit": true,
       "columns": [
         {
+          "value": "constructor_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "constructor_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -1681,18 +1733,18 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "player_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "player_id"
+          "opclass": null
         },
         {
+          "value": "league_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "league_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -1709,18 +1761,18 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "player_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "player_id"
+          "opclass": null
         },
         {
+          "value": "league_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "league_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -1737,11 +1789,11 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "season_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "season_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -1758,18 +1810,18 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "player_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "player_id"
+          "opclass": null
         },
         {
+          "value": "league_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "league_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -1786,11 +1838,11 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "season_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "season_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -1807,18 +1859,18 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "grand_prix_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "grand_prix_id"
+          "opclass": null
         },
         {
+          "value": "league_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "league_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -1835,25 +1887,25 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "grand_prix_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "grand_prix_id"
+          "opclass": null
         },
         {
+          "value": "league_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "league_id"
+          "opclass": null
         },
         {
+          "value": "target_player_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "target_player_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -1870,18 +1922,18 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "grand_prix_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "grand_prix_id"
+          "opclass": null
         },
         {
+          "value": "league_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "league_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -1898,18 +1950,18 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "player_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "player_id"
+          "opclass": null
         },
         {
+          "value": "league_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "league_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -1926,11 +1978,11 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "driver_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "driver_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -1947,18 +1999,18 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "player_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "player_id"
+          "opclass": null
         },
         {
+          "value": "league_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "league_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -1975,18 +2027,18 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "player_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "player_id"
+          "opclass": null
         },
         {
+          "value": "league_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "league_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2003,11 +2055,11 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "constructor_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "constructor_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2024,11 +2076,11 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "season_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "season_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2045,18 +2097,18 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "season_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "season_id"
+          "opclass": null
         },
         {
+          "value": "is_completed",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "is_completed"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2073,11 +2125,11 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "season_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "season_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2094,11 +2146,11 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "discord_guild_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "discord_guild_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2115,11 +2167,11 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "season_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "season_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2136,11 +2188,53 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "created_by_player_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "idx_leagues_created_by",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "leagues"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "invite_code",
           "isExpression": false,
-          "value": "league_id"
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "idx_leagues_invite_code",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "leagues"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "league_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2157,11 +2251,11 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "player_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "player_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2178,18 +2272,18 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "grand_prix_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "grand_prix_id"
+          "opclass": null
         },
         {
+          "value": "league_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "league_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2206,18 +2300,18 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "player_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "player_id"
+          "opclass": null
         },
         {
+          "value": "league_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "league_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2234,11 +2328,11 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "discord_user_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "discord_user_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2255,11 +2349,11 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "username",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "username"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2276,18 +2370,39 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "email",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "idx_players_email",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "players"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "grand_prix_id",
           "isExpression": false,
-          "value": "grand_prix_id"
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
         },
         {
+          "value": "session_type",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "session_type"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2304,11 +2419,11 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "season_id",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "season_id"
+          "opclass": null
         }
       ],
       "isUnique": false,
@@ -2325,11 +2440,11 @@
       "nameExplicit": true,
       "columns": [
         {
+          "value": "is_active",
+          "isExpression": false,
           "asc": true,
           "nullsFirst": false,
-          "opclass": null,
-          "isExpression": false,
-          "value": "is_active"
+          "opclass": null
         }
       ],
       "isUnique": true,
@@ -2341,6 +2456,40 @@
       "entityType": "indexes",
       "schema": "public",
       "table": "seasons"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        "player_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "players",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "name": "constructor_exhaustion_player_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "constructor_exhaustion"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        "league_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "leagues",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "name": "constructor_exhaustion_league_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "constructor_exhaustion"
     },
     {
       "nameExplicit": true,
@@ -2379,40 +2528,6 @@
     {
       "nameExplicit": true,
       "columns": [
-        "league_id"
-      ],
-      "schemaTo": "public",
-      "tableTo": "leagues",
-      "columnsTo": [
-        "id"
-      ],
-      "onUpdate": "NO ACTION",
-      "onDelete": "CASCADE",
-      "name": "constructor_exhaustion_league_id_fkey",
-      "entityType": "fks",
-      "schema": "public",
-      "table": "constructor_exhaustion"
-    },
-    {
-      "nameExplicit": true,
-      "columns": [
-        "player_id"
-      ],
-      "schemaTo": "public",
-      "tableTo": "players",
-      "columnsTo": [
-        "id"
-      ],
-      "onUpdate": "NO ACTION",
-      "onDelete": "CASCADE",
-      "name": "constructor_exhaustion_player_id_fkey",
-      "entityType": "fks",
-      "schema": "public",
-      "table": "constructor_exhaustion"
-    },
-    {
-      "nameExplicit": true,
-      "columns": [
         "season_id"
       ],
       "schemaTo": "public",
@@ -2430,23 +2545,6 @@
     {
       "nameExplicit": true,
       "columns": [
-        "league_id"
-      ],
-      "schemaTo": "public",
-      "tableTo": "leagues",
-      "columnsTo": [
-        "id"
-      ],
-      "onUpdate": "NO ACTION",
-      "onDelete": "CASCADE",
-      "name": "counterpick_usage_league_id_fkey",
-      "entityType": "fks",
-      "schema": "public",
-      "table": "counterpick_usage"
-    },
-    {
-      "nameExplicit": true,
-      "columns": [
         "player_id"
       ],
       "schemaTo": "public",
@@ -2457,6 +2555,23 @@
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "counterpick_usage_player_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "counterpick_usage"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        "league_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "leagues",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "name": "counterpick_usage_league_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "counterpick_usage"
@@ -2532,23 +2647,6 @@
     {
       "nameExplicit": true,
       "columns": [
-        "target_driver_id"
-      ],
-      "schemaTo": "public",
-      "tableTo": "drivers",
-      "columnsTo": [
-        "id"
-      ],
-      "onUpdate": "NO ACTION",
-      "onDelete": "CASCADE",
-      "name": "counterpicks_target_driver_id_fkey",
-      "entityType": "fks",
-      "schema": "public",
-      "table": "counterpicks"
-    },
-    {
-      "nameExplicit": true,
-      "columns": [
         "target_player_id"
       ],
       "schemaTo": "public",
@@ -2566,16 +2664,67 @@
     {
       "nameExplicit": true,
       "columns": [
-        "constructor_id"
+        "target_driver_id"
       ],
       "schemaTo": "public",
-      "tableTo": "constructors",
+      "tableTo": "drivers",
       "columnsTo": [
         "id"
       ],
       "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
-      "name": "drafts_constructor_id_fkey",
+      "onDelete": "CASCADE",
+      "name": "counterpicks_target_driver_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "counterpicks"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        "player_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "players",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "name": "drafts_player_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "drafts"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        "league_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "leagues",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "name": "drafts_league_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "drafts"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        "grand_prix_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "grands_prix",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "name": "drafts_grand_prix_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "drafts"
@@ -2634,16 +2783,16 @@
     {
       "nameExplicit": true,
       "columns": [
-        "grand_prix_id"
+        "wildcard_id"
       ],
       "schemaTo": "public",
-      "tableTo": "grands_prix",
+      "tableTo": "drivers",
       "columnsTo": [
         "id"
       ],
       "onUpdate": "NO ACTION",
-      "onDelete": "CASCADE",
-      "name": "drafts_grand_prix_id_fkey",
+      "onDelete": "NO ACTION",
+      "name": "drafts_wildcard_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "drafts"
@@ -2651,16 +2800,16 @@
     {
       "nameExplicit": true,
       "columns": [
-        "league_id"
+        "constructor_id"
       ],
       "schemaTo": "public",
-      "tableTo": "leagues",
+      "tableTo": "constructors",
       "columnsTo": [
         "id"
       ],
       "onUpdate": "NO ACTION",
-      "onDelete": "CASCADE",
-      "name": "drafts_league_id_fkey",
+      "onDelete": "NO ACTION",
+      "name": "drafts_constructor_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "drafts"
@@ -2677,27 +2826,27 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
-      "name": "drafts_player_id_fkey",
+      "name": "driver_exhaustion_player_id_fkey",
       "entityType": "fks",
       "schema": "public",
-      "table": "drafts"
+      "table": "driver_exhaustion"
     },
     {
       "nameExplicit": true,
       "columns": [
-        "wildcard_id"
+        "league_id"
       ],
       "schemaTo": "public",
-      "tableTo": "drivers",
+      "tableTo": "leagues",
       "columnsTo": [
         "id"
       ],
       "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
-      "name": "drafts_wildcard_id_fkey",
+      "onDelete": "CASCADE",
+      "name": "driver_exhaustion_league_id_fkey",
       "entityType": "fks",
       "schema": "public",
-      "table": "drafts"
+      "table": "driver_exhaustion"
     },
     {
       "nameExplicit": true,
@@ -2736,36 +2885,19 @@
     {
       "nameExplicit": true,
       "columns": [
-        "league_id"
+        "season_id"
       ],
       "schemaTo": "public",
-      "tableTo": "leagues",
+      "tableTo": "seasons",
       "columnsTo": [
         "id"
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
-      "name": "driver_exhaustion_league_id_fkey",
+      "name": "drivers_season_id_fkey",
       "entityType": "fks",
       "schema": "public",
-      "table": "driver_exhaustion"
-    },
-    {
-      "nameExplicit": true,
-      "columns": [
-        "player_id"
-      ],
-      "schemaTo": "public",
-      "tableTo": "players",
-      "columnsTo": [
-        "id"
-      ],
-      "onUpdate": "NO ACTION",
-      "onDelete": "CASCADE",
-      "name": "driver_exhaustion_player_id_fkey",
-      "entityType": "fks",
-      "schema": "public",
-      "table": "driver_exhaustion"
+      "table": "drivers"
     },
     {
       "nameExplicit": true,
@@ -2780,23 +2912,6 @@
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "drivers_constructor_id_fkey",
-      "entityType": "fks",
-      "schema": "public",
-      "table": "drivers"
-    },
-    {
-      "nameExplicit": true,
-      "columns": [
-        "season_id"
-      ],
-      "schemaTo": "public",
-      "tableTo": "seasons",
-      "columnsTo": [
-        "id"
-      ],
-      "onUpdate": "NO ACTION",
-      "onDelete": "CASCADE",
-      "name": "drivers_season_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "drivers"
@@ -2838,6 +2953,40 @@
     {
       "nameExplicit": true,
       "columns": [
+        "created_by_player_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "players",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "SET NULL",
+      "name": "leagues_created_by_player_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "leagues"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        "player_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "players",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "name": "player_leagues_player_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "player_leagues"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
         "league_id"
       ],
       "schemaTo": "public",
@@ -2864,24 +3013,7 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
-      "name": "player_leagues_player_id_fkey",
-      "entityType": "fks",
-      "schema": "public",
-      "table": "player_leagues"
-    },
-    {
-      "nameExplicit": true,
-      "columns": [
-        "grand_prix_id"
-      ],
-      "schemaTo": "public",
-      "tableTo": "grands_prix",
-      "columnsTo": [
-        "id"
-      ],
-      "onUpdate": "NO ACTION",
-      "onDelete": "CASCADE",
-      "name": "player_round_scores_grand_prix_id_fkey",
+      "name": "player_round_scores_player_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "player_round_scores"
@@ -2906,36 +3038,19 @@
     {
       "nameExplicit": true,
       "columns": [
-        "player_id"
+        "grand_prix_id"
       ],
       "schemaTo": "public",
-      "tableTo": "players",
+      "tableTo": "grands_prix",
       "columnsTo": [
         "id"
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
-      "name": "player_round_scores_player_id_fkey",
+      "name": "player_round_scores_grand_prix_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "player_round_scores"
-    },
-    {
-      "nameExplicit": true,
-      "columns": [
-        "driver_id"
-      ],
-      "schemaTo": "public",
-      "tableTo": "drivers",
-      "columnsTo": [
-        "id"
-      ],
-      "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
-      "name": "race_results_driver_id_fkey",
-      "entityType": "fks",
-      "schema": "public",
-      "table": "race_results"
     },
     {
       "nameExplicit": true,
@@ -2950,6 +3065,23 @@
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "name": "race_results_grand_prix_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "race_results"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        "driver_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "drivers",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "name": "race_results_driver_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "race_results"
@@ -2973,26 +3105,6 @@
     },
     {
       "columns": [
-        "id"
-      ],
-      "nameExplicit": true,
-      "name": "constructor_exhaustion_pkey",
-      "entityType": "pks",
-      "schema": "public",
-      "table": "constructor_exhaustion"
-    },
-    {
-      "columns": [
-        "id"
-      ],
-      "nameExplicit": true,
-      "name": "constructors_pkey",
-      "entityType": "pks",
-      "schema": "public",
-      "table": "constructors"
-    },
-    {
-      "columns": [
         "player_id",
         "league_id",
         "season_id"
@@ -3002,66 +3114,6 @@
       "entityType": "pks",
       "schema": "public",
       "table": "counterpick_usage"
-    },
-    {
-      "columns": [
-        "id"
-      ],
-      "nameExplicit": true,
-      "name": "counterpicks_pkey",
-      "entityType": "pks",
-      "schema": "public",
-      "table": "counterpicks"
-    },
-    {
-      "columns": [
-        "id"
-      ],
-      "nameExplicit": true,
-      "name": "drafts_pkey",
-      "entityType": "pks",
-      "schema": "public",
-      "table": "drafts"
-    },
-    {
-      "columns": [
-        "id"
-      ],
-      "nameExplicit": true,
-      "name": "driver_exhaustion_pkey",
-      "entityType": "pks",
-      "schema": "public",
-      "table": "driver_exhaustion"
-    },
-    {
-      "columns": [
-        "id"
-      ],
-      "nameExplicit": true,
-      "name": "drivers_pkey",
-      "entityType": "pks",
-      "schema": "public",
-      "table": "drivers"
-    },
-    {
-      "columns": [
-        "id"
-      ],
-      "nameExplicit": true,
-      "name": "grands_prix_pkey",
-      "entityType": "pks",
-      "schema": "public",
-      "table": "grands_prix"
-    },
-    {
-      "columns": [
-        "id"
-      ],
-      "nameExplicit": true,
-      "name": "leagues_pkey",
-      "entityType": "pks",
-      "schema": "public",
-      "table": "leagues"
     },
     {
       "columns": [
@@ -3078,51 +3130,131 @@
       "columns": [
         "id"
       ],
-      "nameExplicit": true,
+      "nameExplicit": false,
+      "name": "constructor_exhaustion_pkey",
+      "schema": "public",
+      "table": "constructor_exhaustion",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "constructors_pkey",
+      "schema": "public",
+      "table": "constructors",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "counterpicks_pkey",
+      "schema": "public",
+      "table": "counterpicks",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "drafts_pkey",
+      "schema": "public",
+      "table": "drafts",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "driver_exhaustion_pkey",
+      "schema": "public",
+      "table": "driver_exhaustion",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "drivers_pkey",
+      "schema": "public",
+      "table": "drivers",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "grands_prix_pkey",
+      "schema": "public",
+      "table": "grands_prix",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "leagues_pkey",
+      "schema": "public",
+      "table": "leagues",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
       "name": "player_round_scores_pkey",
-      "entityType": "pks",
       "schema": "public",
-      "table": "player_round_scores"
+      "table": "player_round_scores",
+      "entityType": "pks"
     },
     {
       "columns": [
         "id"
       ],
-      "nameExplicit": true,
+      "nameExplicit": false,
       "name": "players_pkey",
-      "entityType": "pks",
       "schema": "public",
-      "table": "players"
+      "table": "players",
+      "entityType": "pks"
     },
     {
       "columns": [
         "id"
       ],
-      "nameExplicit": true,
+      "nameExplicit": false,
       "name": "race_results_pkey",
-      "entityType": "pks",
       "schema": "public",
-      "table": "race_results"
+      "table": "race_results",
+      "entityType": "pks"
     },
     {
       "columns": [
         "id"
       ],
-      "nameExplicit": true,
+      "nameExplicit": false,
       "name": "scoring_rules_pkey",
-      "entityType": "pks",
       "schema": "public",
-      "table": "scoring_rules"
+      "table": "scoring_rules",
+      "entityType": "pks"
     },
     {
       "columns": [
         "id"
       ],
-      "nameExplicit": true,
+      "nameExplicit": false,
       "name": "seasons_pkey",
-      "entityType": "pks",
       "schema": "public",
-      "table": "seasons"
+      "table": "seasons",
+      "entityType": "pks"
     },
     {
       "nameExplicit": true,
@@ -3240,6 +3372,17 @@
     {
       "nameExplicit": true,
       "columns": [
+        "invite_code"
+      ],
+      "nullsNotDistinct": false,
+      "name": "leagues_invite_code_key",
+      "entityType": "uniques",
+      "schema": "public",
+      "table": "leagues"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
         "player_id",
         "league_id",
         "grand_prix_id"
@@ -3268,6 +3411,17 @@
       ],
       "nullsNotDistinct": false,
       "name": "players_username_key",
+      "entityType": "uniques",
+      "schema": "public",
+      "table": "players"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        "email"
+      ],
+      "nullsNotDistinct": false,
+      "name": "players_email_key",
       "entityType": "uniques",
       "schema": "public",
       "table": "players"
@@ -3342,6 +3496,13 @@
       "entityType": "checks",
       "schema": "public",
       "table": "driver_exhaustion"
+    },
+    {
+      "value": "(role = ANY (ARRAY['owner'::text, 'member'::text]))",
+      "name": "player_leagues_role_check",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "player_leagues"
     },
     {
       "value": "(session_type = ANY (ARRAY['qualifying'::text, 'race'::text, 'sprint'::text, 'sprint_qualifying'::text]))",
