@@ -1,0 +1,3064 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.grands_prix": {
+      "name": "grands_prix",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "grands_prix_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "season_id": {
+          "name": "season_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "round_number": {
+          "name": "round_number",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "event_name": {
+          "name": "event_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "circuit_key": {
+          "name": "circuit_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "event_format": {
+          "name": "event_format",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'conventional'"
+        },
+        "quali_date_utc": {
+          "name": "quali_date_utc",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sprint_quali_date_utc": {
+          "name": "sprint_quali_date_utc",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sprint_date_utc": {
+          "name": "sprint_date_utc",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "race_date_utc": {
+          "name": "race_date_utc",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "draft_deadline_utc": {
+          "name": "draft_deadline_utc",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "draft_reset_utc": {
+          "name": "draft_reset_utc",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "counterpick_deadline_utc": {
+          "name": "counterpick_deadline_utc",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_completed": {
+          "name": "is_completed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        }
+      },
+      "indexes": {
+        "idx_grands_prix_completed": {
+          "name": "idx_grands_prix_completed",
+          "columns": [
+            {
+              "expression": "season_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "is_completed",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_grands_prix_season": {
+          "name": "idx_grands_prix_season",
+          "columns": [
+            {
+              "expression": "season_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "grands_prix_season_id_fkey": {
+          "name": "grands_prix_season_id_fkey",
+          "tableFrom": "grands_prix",
+          "tableTo": "seasons",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "season_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "grands_prix_season_id_round_number_key": {
+          "columns": [
+            "round_number",
+            "season_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "grands_prix_season_id_round_number_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.drivers": {
+      "name": "drivers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "drivers_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "season_id": {
+          "name": "season_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "name": "code",
+          "type": "char(3)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "number": {
+          "name": "number",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "constructor_id": {
+          "name": "constructor_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ergast_id": {
+          "name": "ergast_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "date_of_birth": {
+          "name": "date_of_birth",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nationality": {
+          "name": "nationality",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "driver_image_url": {
+          "name": "driver_image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "idx_drivers_constructor": {
+          "name": "idx_drivers_constructor",
+          "columns": [
+            {
+              "expression": "constructor_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_drivers_season": {
+          "name": "idx_drivers_season",
+          "columns": [
+            {
+              "expression": "season_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "drivers_constructor_id_fkey": {
+          "name": "drivers_constructor_id_fkey",
+          "tableFrom": "drivers",
+          "tableTo": "constructors",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "constructor_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "drivers_season_id_fkey": {
+          "name": "drivers_season_id_fkey",
+          "tableFrom": "drivers",
+          "tableTo": "seasons",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "season_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "drivers_season_id_code_number_key": {
+          "columns": [
+            "code",
+            "number",
+            "season_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "drivers_season_id_code_number_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.drafts": {
+      "name": "drafts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "drafts_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "league_id": {
+          "name": "league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "grand_prix_id": {
+          "name": "grand_prix_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "driver1_id": {
+          "name": "driver1_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "driver2_id": {
+          "name": "driver2_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "driver3_id": {
+          "name": "driver3_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "wildcard_id": {
+          "name": "wildcard_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "constructor_id": {
+          "name": "constructor_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_auto_assigned": {
+          "name": "is_auto_assigned",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_drafts_grand_prix_league": {
+          "name": "idx_drafts_grand_prix_league",
+          "columns": [
+            {
+              "expression": "grand_prix_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "league_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_drafts_player_league": {
+          "name": "idx_drafts_player_league",
+          "columns": [
+            {
+              "expression": "player_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "league_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "drafts_constructor_id_fkey": {
+          "name": "drafts_constructor_id_fkey",
+          "tableFrom": "drafts",
+          "tableTo": "constructors",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "constructor_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "drafts_driver1_id_fkey": {
+          "name": "drafts_driver1_id_fkey",
+          "tableFrom": "drafts",
+          "tableTo": "drivers",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "driver1_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "drafts_driver2_id_fkey": {
+          "name": "drafts_driver2_id_fkey",
+          "tableFrom": "drafts",
+          "tableTo": "drivers",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "driver2_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "drafts_driver3_id_fkey": {
+          "name": "drafts_driver3_id_fkey",
+          "tableFrom": "drafts",
+          "tableTo": "drivers",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "driver3_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "drafts_grand_prix_id_fkey": {
+          "name": "drafts_grand_prix_id_fkey",
+          "tableFrom": "drafts",
+          "tableTo": "grands_prix",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "grand_prix_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "drafts_league_id_fkey": {
+          "name": "drafts_league_id_fkey",
+          "tableFrom": "drafts",
+          "tableTo": "leagues",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "league_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "drafts_player_id_fkey": {
+          "name": "drafts_player_id_fkey",
+          "tableFrom": "drafts",
+          "tableTo": "players",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "drafts_wildcard_id_fkey": {
+          "name": "drafts_wildcard_id_fkey",
+          "tableFrom": "drafts",
+          "tableTo": "drivers",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "wildcard_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "drafts_player_id_league_id_grand_prix_id_key": {
+          "columns": [
+            "grand_prix_id",
+            "league_id",
+            "player_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "drafts_player_id_league_id_grand_prix_id_key"
+        }
+      },
+      "checkConstraints": {
+        "drafts_check": {
+          "name": "drafts_check",
+          "value": "(driver1_id <> driver2_id) AND (driver1_id <> driver3_id) AND (driver1_id <> wildcard_id) AND (driver2_id <> driver3_id) AND (driver2_id <> wildcard_id) AND (driver3_id <> wildcard_id)"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.constructors": {
+      "name": "constructors",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "constructors_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "season_id": {
+          "name": "season_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "short_name": {
+          "name": "short_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "full_name": {
+          "name": "full_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "color_hex": {
+          "name": "color_hex",
+          "type": "char(7)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'#FFFFFF'"
+        },
+        "ergast_id": {
+          "name": "ergast_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "idx_constructors_season": {
+          "name": "idx_constructors_season",
+          "columns": [
+            {
+              "expression": "season_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "constructors_season_id_fkey": {
+          "name": "constructors_season_id_fkey",
+          "tableFrom": "constructors",
+          "tableTo": "seasons",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "season_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "constructors_season_id_short_name_key": {
+          "columns": [
+            "season_id",
+            "short_name"
+          ],
+          "nullsNotDistinct": false,
+          "name": "constructors_season_id_short_name_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.driver_exhaustion": {
+      "name": "driver_exhaustion",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "driver_exhaustion_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "league_id": {
+          "name": "league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "driver_id": {
+          "name": "driver_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_grand_prix_id": {
+          "name": "last_grand_prix_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "consecutive_uses": {
+          "name": "consecutive_uses",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "is_exhausted": {
+          "name": "is_exhausted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_driver_exhaustion_driver": {
+          "name": "idx_driver_exhaustion_driver",
+          "columns": [
+            {
+              "expression": "driver_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_driver_exhaustion_exhausted": {
+          "name": "idx_driver_exhaustion_exhausted",
+          "columns": [
+            {
+              "expression": "player_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "league_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "where": "(is_exhausted = true)",
+          "with": {}
+        },
+        "idx_driver_exhaustion_player_league": {
+          "name": "idx_driver_exhaustion_player_league",
+          "columns": [
+            {
+              "expression": "player_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "league_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "driver_exhaustion_driver_id_fkey": {
+          "name": "driver_exhaustion_driver_id_fkey",
+          "tableFrom": "driver_exhaustion",
+          "tableTo": "drivers",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "driver_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "driver_exhaustion_last_grand_prix_id_fkey": {
+          "name": "driver_exhaustion_last_grand_prix_id_fkey",
+          "tableFrom": "driver_exhaustion",
+          "tableTo": "grands_prix",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "last_grand_prix_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "driver_exhaustion_league_id_fkey": {
+          "name": "driver_exhaustion_league_id_fkey",
+          "tableFrom": "driver_exhaustion",
+          "tableTo": "leagues",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "league_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "driver_exhaustion_player_id_fkey": {
+          "name": "driver_exhaustion_player_id_fkey",
+          "tableFrom": "driver_exhaustion",
+          "tableTo": "players",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "driver_exhaustion_player_id_league_id_driver_id_key": {
+          "columns": [
+            "driver_id",
+            "league_id",
+            "player_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "driver_exhaustion_player_id_league_id_driver_id_key"
+        }
+      },
+      "checkConstraints": {
+        "driver_exhaustion_consecutive_uses_check": {
+          "name": "driver_exhaustion_consecutive_uses_check",
+          "value": "consecutive_uses >= 0"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.player_round_scores": {
+      "name": "player_round_scores",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "player_round_scores_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "league_id": {
+          "name": "league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "grand_prix_id": {
+          "name": "grand_prix_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_points": {
+          "name": "total_points",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "breakdown_json": {
+          "name": "breakdown_json",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::jsonb"
+        },
+        "calculated_at": {
+          "name": "calculated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_player_scores_gp_league": {
+          "name": "idx_player_scores_gp_league",
+          "columns": [
+            {
+              "expression": "grand_prix_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "league_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_player_scores_player_league": {
+          "name": "idx_player_scores_player_league",
+          "columns": [
+            {
+              "expression": "player_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "league_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "player_round_scores_grand_prix_id_fkey": {
+          "name": "player_round_scores_grand_prix_id_fkey",
+          "tableFrom": "player_round_scores",
+          "tableTo": "grands_prix",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "grand_prix_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "player_round_scores_league_id_fkey": {
+          "name": "player_round_scores_league_id_fkey",
+          "tableFrom": "player_round_scores",
+          "tableTo": "leagues",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "league_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "player_round_scores_player_id_fkey": {
+          "name": "player_round_scores_player_id_fkey",
+          "tableFrom": "player_round_scores",
+          "tableTo": "players",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "player_round_scores_player_id_league_id_grand_prix_id_key": {
+          "columns": [
+            "grand_prix_id",
+            "league_id",
+            "player_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "player_round_scores_player_id_league_id_grand_prix_id_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.race_results": {
+      "name": "race_results",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "race_results_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "grand_prix_id": {
+          "name": "grand_prix_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "session_type": {
+          "name": "session_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "driver_id": {
+          "name": "driver_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "idx_race_results_gp_session": {
+          "name": "idx_race_results_gp_session",
+          "columns": [
+            {
+              "expression": "grand_prix_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "session_type",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "race_results_driver_id_fkey": {
+          "name": "race_results_driver_id_fkey",
+          "tableFrom": "race_results",
+          "tableTo": "drivers",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "driver_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "race_results_grand_prix_id_fkey": {
+          "name": "race_results_grand_prix_id_fkey",
+          "tableFrom": "race_results",
+          "tableTo": "grands_prix",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "grand_prix_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "race_results_grand_prix_id_session_type_driver_id_key": {
+          "columns": [
+            "driver_id",
+            "grand_prix_id",
+            "session_type"
+          ],
+          "nullsNotDistinct": false,
+          "name": "race_results_grand_prix_id_session_type_driver_id_key"
+        }
+      },
+      "checkConstraints": {
+        "race_results_session_type_check": {
+          "name": "race_results_session_type_check",
+          "value": "session_type = ANY (ARRAY['qualifying'::text, 'race'::text, 'sprint'::text, 'sprint_qualifying'::text])"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.leagues": {
+      "name": "leagues",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "leagues_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "discord_guild_id": {
+          "name": "discord_guild_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "season_id": {
+          "name": "season_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "embed_color": {
+          "name": "embed_color",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 15135274
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "counterpick_limit": {
+          "name": "counterpick_limit",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 3
+        },
+        "created_by_player_id": {
+          "name": "created_by_player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "invite_code": {
+          "name": "invite_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "idx_leagues_created_by": {
+          "name": "idx_leagues_created_by",
+          "columns": [
+            {
+              "expression": "created_by_player_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_leagues_discord_guild": {
+          "name": "idx_leagues_discord_guild",
+          "columns": [
+            {
+              "expression": "discord_guild_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int8_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_leagues_invite_code": {
+          "name": "idx_leagues_invite_code",
+          "columns": [
+            {
+              "expression": "invite_code",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_leagues_season": {
+          "name": "idx_leagues_season",
+          "columns": [
+            {
+              "expression": "season_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "leagues_season_id_fkey": {
+          "name": "leagues_season_id_fkey",
+          "tableFrom": "leagues",
+          "tableTo": "seasons",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "season_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "leagues_created_by_player_id_fkey": {
+          "name": "leagues_created_by_player_id_fkey",
+          "tableFrom": "leagues",
+          "tableTo": "players",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "created_by_player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "leagues_discord_guild_id_name_key": {
+          "columns": [
+            "discord_guild_id",
+            "name"
+          ],
+          "nullsNotDistinct": false,
+          "name": "leagues_discord_guild_id_name_key"
+        },
+        "leagues_season_id_name_key": {
+          "columns": [
+            "name",
+            "season_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "leagues_season_id_name_key"
+        },
+        "leagues_invite_code_key": {
+          "columns": [
+            "invite_code"
+          ],
+          "nullsNotDistinct": false,
+          "name": "leagues_invite_code_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.counterpicks": {
+      "name": "counterpicks",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "counterpicks_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "grand_prix_id": {
+          "name": "grand_prix_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "league_id": {
+          "name": "league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "picking_player_id": {
+          "name": "picking_player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "target_player_id": {
+          "name": "target_player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "target_driver_id": {
+          "name": "target_driver_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_counterpicks_grand_prix_league": {
+          "name": "idx_counterpicks_grand_prix_league",
+          "columns": [
+            {
+              "expression": "grand_prix_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "league_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_counterpicks_target": {
+          "name": "idx_counterpicks_target",
+          "columns": [
+            {
+              "expression": "grand_prix_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "league_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "target_player_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "counterpicks_grand_prix_id_fkey": {
+          "name": "counterpicks_grand_prix_id_fkey",
+          "tableFrom": "counterpicks",
+          "tableTo": "grands_prix",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "grand_prix_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "counterpicks_league_id_fkey": {
+          "name": "counterpicks_league_id_fkey",
+          "tableFrom": "counterpicks",
+          "tableTo": "leagues",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "league_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "counterpicks_picking_player_id_fkey": {
+          "name": "counterpicks_picking_player_id_fkey",
+          "tableFrom": "counterpicks",
+          "tableTo": "players",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "picking_player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "counterpicks_target_driver_id_fkey": {
+          "name": "counterpicks_target_driver_id_fkey",
+          "tableFrom": "counterpicks",
+          "tableTo": "drivers",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "target_driver_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "counterpicks_target_player_id_fkey": {
+          "name": "counterpicks_target_player_id_fkey",
+          "tableFrom": "counterpicks",
+          "tableTo": "players",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "target_player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "counterpicks_grand_prix_id_league_id_picking_player_id_key": {
+          "columns": [
+            "grand_prix_id",
+            "league_id",
+            "picking_player_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "counterpicks_grand_prix_id_league_id_picking_player_id_key"
+        }
+      },
+      "checkConstraints": {
+        "counterpicks_check": {
+          "name": "counterpicks_check",
+          "value": "picking_player_id <> target_player_id"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.scoring_rules": {
+      "name": "scoring_rules",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "scoring_rules_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "season_id": {
+          "name": "season_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rule_key": {
+          "name": "rule_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rule_value": {
+          "name": "rule_value",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "idx_scoring_rules_season": {
+          "name": "idx_scoring_rules_season",
+          "columns": [
+            {
+              "expression": "season_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "scoring_rules_season_id_fkey": {
+          "name": "scoring_rules_season_id_fkey",
+          "tableFrom": "scoring_rules",
+          "tableTo": "seasons",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "season_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "scoring_rules_season_id_rule_key_key": {
+          "columns": [
+            "rule_key",
+            "season_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "scoring_rules_season_id_rule_key_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.constructor_exhaustion": {
+      "name": "constructor_exhaustion",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "constructor_exhaustion_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "league_id": {
+          "name": "league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "constructor_id": {
+          "name": "constructor_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_grand_prix_id": {
+          "name": "last_grand_prix_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "consecutive_uses": {
+          "name": "consecutive_uses",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "is_exhausted": {
+          "name": "is_exhausted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_constructor_exhaustion_constructor": {
+          "name": "idx_constructor_exhaustion_constructor",
+          "columns": [
+            {
+              "expression": "constructor_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_constructor_exhaustion_exhausted": {
+          "name": "idx_constructor_exhaustion_exhausted",
+          "columns": [
+            {
+              "expression": "player_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "league_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "where": "(is_exhausted = true)",
+          "with": {}
+        },
+        "idx_constructor_exhaustion_player_league": {
+          "name": "idx_constructor_exhaustion_player_league",
+          "columns": [
+            {
+              "expression": "player_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "league_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "constructor_exhaustion_constructor_id_fkey": {
+          "name": "constructor_exhaustion_constructor_id_fkey",
+          "tableFrom": "constructor_exhaustion",
+          "tableTo": "constructors",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "constructor_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "constructor_exhaustion_last_grand_prix_id_fkey": {
+          "name": "constructor_exhaustion_last_grand_prix_id_fkey",
+          "tableFrom": "constructor_exhaustion",
+          "tableTo": "grands_prix",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "last_grand_prix_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "constructor_exhaustion_league_id_fkey": {
+          "name": "constructor_exhaustion_league_id_fkey",
+          "tableFrom": "constructor_exhaustion",
+          "tableTo": "leagues",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "league_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "constructor_exhaustion_player_id_fkey": {
+          "name": "constructor_exhaustion_player_id_fkey",
+          "tableFrom": "constructor_exhaustion",
+          "tableTo": "players",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "constructor_exhaustion_player_id_league_id_constructor_id_key": {
+          "columns": [
+            "constructor_id",
+            "league_id",
+            "player_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "constructor_exhaustion_player_id_league_id_constructor_id_key"
+        }
+      },
+      "checkConstraints": {
+        "constructor_exhaustion_consecutive_uses_check": {
+          "name": "constructor_exhaustion_consecutive_uses_check",
+          "value": "consecutive_uses >= 0"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.seasons": {
+      "name": "seasons",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "seasons_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "year": {
+          "name": "year",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_seasons_active": {
+          "name": "idx_seasons_active",
+          "columns": [
+            {
+              "expression": "is_active",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "bool_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "where": "(is_active = true)",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "seasons_year_key": {
+          "columns": [
+            "year"
+          ],
+          "nullsNotDistinct": false,
+          "name": "seasons_year_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.players": {
+      "name": "players",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "players_id_seq",
+            "increment": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "startWith": "1",
+            "cache": "1",
+            "cycle": false,
+            "schema": "public"
+          }
+        },
+        "discord_user_id": {
+          "name": "discord_user_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "timezone": {
+          "name": "timezone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'UTC'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "idx_players_discord_user": {
+          "name": "idx_players_discord_user",
+          "columns": [
+            {
+              "expression": "discord_user_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int8_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_players_email": {
+          "name": "idx_players_email",
+          "columns": [
+            {
+              "expression": "email",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_players_username": {
+          "name": "idx_players_username",
+          "columns": [
+            {
+              "expression": "username",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "players_discord_user_id_key": {
+          "columns": [
+            "discord_user_id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "players_discord_user_id_key"
+        },
+        "players_username_key": {
+          "columns": [
+            "username"
+          ],
+          "nullsNotDistinct": false,
+          "name": "players_username_key"
+        },
+        "players_email_key": {
+          "columns": [
+            "email"
+          ],
+          "nullsNotDistinct": false,
+          "name": "players_email_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.counterpick_usage": {
+      "name": "counterpick_usage",
+      "schema": "",
+      "columns": {
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "league_id": {
+          "name": "league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "season_id": {
+          "name": "season_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "used_count": {
+          "name": "used_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {
+        "idx_counterpick_usage_player_league": {
+          "name": "idx_counterpick_usage_player_league",
+          "columns": [
+            {
+              "expression": "player_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "league_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_counterpick_usage_season": {
+          "name": "idx_counterpick_usage_season",
+          "columns": [
+            {
+              "expression": "season_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "counterpick_usage_league_id_fkey": {
+          "name": "counterpick_usage_league_id_fkey",
+          "tableFrom": "counterpick_usage",
+          "tableTo": "leagues",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "league_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "counterpick_usage_player_id_fkey": {
+          "name": "counterpick_usage_player_id_fkey",
+          "tableFrom": "counterpick_usage",
+          "tableTo": "players",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "counterpick_usage_season_id_fkey": {
+          "name": "counterpick_usage_season_id_fkey",
+          "tableFrom": "counterpick_usage",
+          "tableTo": "seasons",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "season_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "counterpick_usage_pkey": {
+          "name": "counterpick_usage_pkey",
+          "columns": [
+            "league_id",
+            "player_id",
+            "season_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "counterpick_usage_used_count_check": {
+          "name": "counterpick_usage_used_count_check",
+          "value": "used_count >= 0"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.player_leagues": {
+      "name": "player_leagues",
+      "schema": "",
+      "columns": {
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "league_id": {
+          "name": "league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "team_name": {
+          "name": "team_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "team_motto": {
+          "name": "team_motto",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "joined_at": {
+          "name": "joined_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'member'"
+        }
+      },
+      "indexes": {
+        "idx_player_leagues_league": {
+          "name": "idx_player_leagues_league",
+          "columns": [
+            {
+              "expression": "league_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_player_leagues_player": {
+          "name": "idx_player_leagues_player",
+          "columns": [
+            {
+              "expression": "player_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "player_leagues_league_id_fkey": {
+          "name": "player_leagues_league_id_fkey",
+          "tableFrom": "player_leagues",
+          "tableTo": "leagues",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "league_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "player_leagues_player_id_fkey": {
+          "name": "player_leagues_player_id_fkey",
+          "tableFrom": "player_leagues",
+          "tableTo": "players",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "player_leagues_pkey": {
+          "name": "player_leagues_pkey",
+          "columns": [
+            "league_id",
+            "player_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "player_leagues_role_check": {
+          "name": "player_leagues_role_check",
+          "value": "role = ANY (ARRAY['owner'::text, 'member'::text])"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {
+    "public.v_driver_draft_stats": {
+      "name": "v_driver_draft_stats",
+      "schema": "public",
+      "columns": {
+        "driver_id": {
+          "name": "driver_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "code": {
+          "name": "code",
+          "type": "char(3)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "season_id": {
+          "name": "season_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "league_id": {
+          "name": "league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "league_name": {
+          "name": "league_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "times_drafted_as_main": {
+          "name": "times_drafted_as_main",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "times_drafted_as_bogey": {
+          "name": "times_drafted_as_bogey",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_times_drafted": {
+          "name": "total_times_drafted",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "unique_players_drafted_by": {
+          "name": "unique_players_drafted_by",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "isExisting": false,
+      "definition": "SELECT d.id AS driver_id, d.code, d.first_name, d.last_name, d.season_id, dr.league_id, l.name AS league_name, count(DISTINCT CASE WHEN dr.driver1_id = d.id OR dr.driver2_id = d.id OR dr.driver3_id = d.id THEN dr.id ELSE NULL::integer END) AS times_drafted_as_main, count(DISTINCT CASE WHEN dr.wildcard_id = d.id THEN dr.id ELSE NULL::integer END) AS times_drafted_as_bogey, count(DISTINCT CASE WHEN dr.driver1_id = d.id OR dr.driver2_id = d.id OR dr.driver3_id = d.id OR dr.wildcard_id = d.id THEN dr.id ELSE NULL::integer END) AS total_times_drafted, count(DISTINCT dr.player_id) AS unique_players_drafted_by FROM drivers d LEFT JOIN drafts dr ON dr.driver1_id = d.id OR dr.driver2_id = d.id OR dr.driver3_id = d.id OR dr.wildcard_id = d.id LEFT JOIN leagues l ON l.id = dr.league_id GROUP BY d.id, d.code, d.first_name, d.last_name, d.season_id, dr.league_id, l.name ORDER BY (count(DISTINCT CASE WHEN dr.driver1_id = d.id OR dr.driver2_id = d.id OR dr.driver3_id = d.id OR dr.wildcard_id = d.id THEN dr.id ELSE NULL::integer END)) DESC",
+      "materialized": false
+    },
+    "public.v_driver_draft_stats_season": {
+      "name": "v_driver_draft_stats_season",
+      "schema": "public",
+      "columns": {
+        "driver_id": {
+          "name": "driver_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "code": {
+          "name": "code",
+          "type": "char(3)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "season_id": {
+          "name": "season_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "season_year": {
+          "name": "season_year",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "times_drafted_as_main": {
+          "name": "times_drafted_as_main",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "times_drafted_as_bogey": {
+          "name": "times_drafted_as_bogey",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_times_drafted": {
+          "name": "total_times_drafted",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "unique_players_drafted_by": {
+          "name": "unique_players_drafted_by",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "leagues_drafted_in": {
+          "name": "leagues_drafted_in",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "isExisting": false,
+      "definition": "SELECT d.id AS driver_id, d.code, d.first_name, d.last_name, d.season_id, s.year AS season_year, count(DISTINCT CASE WHEN dr.driver1_id = d.id OR dr.driver2_id = d.id OR dr.driver3_id = d.id THEN dr.id ELSE NULL::integer END) AS times_drafted_as_main, count(DISTINCT CASE WHEN dr.wildcard_id = d.id THEN dr.id ELSE NULL::integer END) AS times_drafted_as_bogey, count(DISTINCT CASE WHEN dr.driver1_id = d.id OR dr.driver2_id = d.id OR dr.driver3_id = d.id OR dr.wildcard_id = d.id THEN dr.id ELSE NULL::integer END) AS total_times_drafted, count(DISTINCT dr.player_id) AS unique_players_drafted_by, count(DISTINCT dr.league_id) AS leagues_drafted_in FROM drivers d JOIN seasons s ON s.id = d.season_id LEFT JOIN drafts dr ON dr.driver1_id = d.id OR dr.driver2_id = d.id OR dr.driver3_id = d.id OR dr.wildcard_id = d.id GROUP BY d.id, d.code, d.first_name, d.last_name, d.season_id, s.year ORDER BY (count(DISTINCT CASE WHEN dr.driver1_id = d.id OR dr.driver2_id = d.id OR dr.driver3_id = d.id OR dr.wildcard_id = d.id THEN dr.id ELSE NULL::integer END)) DESC",
+      "materialized": false
+    },
+    "public.v_grand_prix_leaderboard": {
+      "name": "v_grand_prix_leaderboard",
+      "schema": "public",
+      "columns": {
+        "league_id": {
+          "name": "league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "league_name": {
+          "name": "league_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "grand_prix_id": {
+          "name": "grand_prix_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "event_name": {
+          "name": "event_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "round_number": {
+          "name": "round_number",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "team_name": {
+          "name": "team_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_points": {
+          "name": "total_points",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "breakdown_json": {
+          "name": "breakdown_json",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rank": {
+          "name": "rank",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "isExisting": false,
+      "definition": "SELECT prs.league_id, l.name AS league_name, gp.id AS grand_prix_id, gp.event_name, gp.round_number, p.id AS player_id, p.username, pl.team_name, prs.total_points, prs.breakdown_json, rank() OVER (PARTITION BY prs.league_id, gp.id ORDER BY prs.total_points DESC) AS rank FROM player_round_scores prs JOIN players p ON p.id = prs.player_id JOIN player_leagues pl ON pl.player_id = p.id AND pl.league_id = prs.league_id JOIN leagues l ON l.id = prs.league_id JOIN grands_prix gp ON gp.id = prs.grand_prix_id ORDER BY prs.league_id, gp.round_number, prs.total_points DESC",
+      "materialized": false
+    },
+    "public.v_player_league_stats": {
+      "name": "v_player_league_stats",
+      "schema": "public",
+      "columns": {
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "team_name": {
+          "name": "team_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "league_id": {
+          "name": "league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "league_name": {
+          "name": "league_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "season_id": {
+          "name": "season_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rounds_participated": {
+          "name": "rounds_participated",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_completed_rounds": {
+          "name": "total_completed_rounds",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_points": {
+          "name": "total_points",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "avg_points_per_round": {
+          "name": "avg_points_per_round",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "best_round_score": {
+          "name": "best_round_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "worst_round_score": {
+          "name": "worst_round_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "current_rank": {
+          "name": "current_rank",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "isExisting": false,
+      "definition": "SELECT p.id AS player_id, p.username, pl.team_name, pl.league_id, l.name AS league_name, l.season_id, count(DISTINCT prs.grand_prix_id) AS rounds_participated, count(DISTINCT gp.id) FILTER (WHERE gp.is_completed) AS total_completed_rounds, COALESCE(sum(prs.total_points), 0::bigint) AS total_points, COALESCE(avg(prs.total_points), 0::numeric) AS avg_points_per_round, COALESCE(max(prs.total_points), 0) AS best_round_score, COALESCE(min(prs.total_points), 0) AS worst_round_score, rank() OVER (PARTITION BY pl.league_id ORDER BY (COALESCE(sum(prs.total_points), 0::bigint)) DESC) AS current_rank FROM players p JOIN player_leagues pl ON pl.player_id = p.id JOIN leagues l ON l.id = pl.league_id LEFT JOIN grands_prix gp ON gp.season_id = l.season_id LEFT JOIN player_round_scores prs ON prs.player_id = p.id AND prs.league_id = pl.league_id AND prs.grand_prix_id = gp.id GROUP BY p.id, p.username, pl.team_name, pl.league_id, l.name, l.season_id",
+      "materialized": false
+    },
+    "public.v_league_leaderboard": {
+      "name": "v_league_leaderboard",
+      "schema": "public",
+      "columns": {
+        "league_id": {
+          "name": "league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "league_name": {
+          "name": "league_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "season_id": {
+          "name": "season_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "team_name": {
+          "name": "team_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_points": {
+          "name": "total_points",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rounds_played": {
+          "name": "rounds_played",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rank": {
+          "name": "rank",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "isExisting": false,
+      "definition": "SELECT pl.league_id, l.name AS league_name, l.season_id, p.id AS player_id, p.username, pl.team_name, COALESCE(sum(prs.total_points), 0::bigint) AS total_points, count(DISTINCT prs.grand_prix_id) AS rounds_played, rank() OVER (PARTITION BY pl.league_id ORDER BY (COALESCE(sum(prs.total_points), 0::bigint)) DESC) AS rank FROM player_leagues pl JOIN players p ON p.id = pl.player_id JOIN leagues l ON l.id = pl.league_id LEFT JOIN player_round_scores prs ON prs.player_id = p.id AND prs.league_id = pl.league_id LEFT JOIN grands_prix gp ON gp.id = prs.grand_prix_id AND gp.season_id = l.season_id GROUP BY pl.league_id, l.name, l.season_id, p.id, p.username, pl.team_name ORDER BY pl.league_id, (COALESCE(sum(prs.total_points), 0::bigint)) DESC",
+      "materialized": false
+    },
+    "public.v_league_summary": {
+      "name": "v_league_summary",
+      "schema": "public",
+      "columns": {
+        "league_id": {
+          "name": "league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "league_name": {
+          "name": "league_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "discord_guild_id": {
+          "name": "discord_guild_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "season_id": {
+          "name": "season_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "season_year": {
+          "name": "season_year",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "player_count": {
+          "name": "player_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_scores_submitted": {
+          "name": "total_scores_submitted",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "completed_rounds": {
+          "name": "completed_rounds",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_rounds": {
+          "name": "total_rounds",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "isExisting": false,
+      "definition": "SELECT l.id AS league_id, l.name AS league_name, l.discord_guild_id, l.season_id, s.year AS season_year, count(DISTINCT pl.player_id) AS player_count, count(DISTINCT prs.id) AS total_scores_submitted, count(DISTINCT gp.id) FILTER (WHERE gp.is_completed) AS completed_rounds, count(DISTINCT gp.id) AS total_rounds, l.created_at FROM leagues l JOIN seasons s ON s.id = l.season_id LEFT JOIN player_leagues pl ON pl.league_id = l.id LEFT JOIN grands_prix gp ON gp.season_id = l.season_id LEFT JOIN player_round_scores prs ON prs.league_id = l.id AND prs.grand_prix_id = gp.id GROUP BY l.id, l.name, l.discord_guild_id, l.season_id, s.year, l.created_at ORDER BY l.created_at DESC",
+      "materialized": false
+    },
+    "public.v_player_leagues": {
+      "name": "v_player_leagues",
+      "schema": "public",
+      "columns": {
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "discord_user_id": {
+          "name": "discord_user_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "league_id": {
+          "name": "league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "league_name": {
+          "name": "league_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "season_id": {
+          "name": "season_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "season_year": {
+          "name": "season_year",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "joined_at": {
+          "name": "joined_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rounds_played_in_league": {
+          "name": "rounds_played_in_league",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_points_in_league": {
+          "name": "total_points_in_league",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "isExisting": false,
+      "definition": "SELECT p.id AS player_id, p.username, p.discord_user_id, pl.league_id, l.name AS league_name, l.season_id, s.year AS season_year, pl.joined_at, count(DISTINCT prs.id) AS rounds_played_in_league, COALESCE(sum(prs.total_points), 0::bigint) AS total_points_in_league FROM players p JOIN player_leagues pl ON pl.player_id = p.id JOIN leagues l ON l.id = pl.league_id JOIN seasons s ON s.id = l.season_id LEFT JOIN player_round_scores prs ON prs.player_id = p.id AND prs.league_id = pl.league_id LEFT JOIN grands_prix gp ON gp.id = prs.grand_prix_id AND gp.season_id = l.season_id GROUP BY p.id, p.username, p.discord_user_id, pl.league_id, l.name, l.season_id, s.year, pl.joined_at ORDER BY p.id, pl.joined_at DESC",
+      "materialized": false
+    },
+    "public.v_player_season_detail": {
+      "name": "v_player_season_detail",
+      "schema": "public",
+      "columns": {
+        "league_id": {
+          "name": "league_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "league_name": {
+          "name": "league_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "season_id": {
+          "name": "season_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "team_name": {
+          "name": "team_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "round_number": {
+          "name": "round_number",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "event_name": {
+          "name": "event_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_completed": {
+          "name": "is_completed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_points": {
+          "name": "total_points",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "breakdown_json": {
+          "name": "breakdown_json",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "calculated_at": {
+          "name": "calculated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "driver1_code": {
+          "name": "driver1_code",
+          "type": "char(3)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "driver2_code": {
+          "name": "driver2_code",
+          "type": "char(3)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "driver3_code": {
+          "name": "driver3_code",
+          "type": "char(3)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "wildcard_code": {
+          "name": "wildcard_code",
+          "type": "char(3)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "constructor": {
+          "name": "constructor",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "isExisting": false,
+      "definition": "SELECT pl.league_id, l.name AS league_name, l.season_id, p.id AS player_id, p.username, pl.team_name, gp.round_number, gp.event_name, gp.is_completed, prs.total_points, prs.breakdown_json, prs.calculated_at, d.driver1_code, d.driver2_code, d.driver3_code, d.wildcard_code, c.short_name AS constructor FROM player_leagues pl JOIN players p ON p.id = pl.player_id JOIN leagues l ON l.id = pl.league_id JOIN grands_prix gp ON gp.season_id = l.season_id LEFT JOIN player_round_scores prs ON prs.player_id = p.id AND prs.league_id = pl.league_id AND prs.grand_prix_id = gp.id LEFT JOIN LATERAL ( SELECT dr1.code AS driver1_code, dr2.code AS driver2_code, dr3.code AS driver3_code, dr4.code AS wildcard_code, drafts.constructor_id FROM drafts JOIN drivers dr1 ON dr1.id = drafts.driver1_id JOIN drivers dr2 ON dr2.id = drafts.driver2_id JOIN drivers dr3 ON dr3.id = drafts.driver3_id JOIN drivers dr4 ON dr4.id = drafts.wildcard_id WHERE drafts.player_id = p.id AND drafts.league_id = pl.league_id AND drafts.grand_prix_id = gp.id LIMIT 1) d ON true LEFT JOIN constructors c ON c.id = d.constructor_id ORDER BY pl.league_id, p.id, gp.round_number",
+      "materialized": false
+    }
+  },
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {}
+  }
+}
