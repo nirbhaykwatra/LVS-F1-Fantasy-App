@@ -32,6 +32,8 @@ export async function GET(request: NextRequest) {
         return NextResponse.redirect(new URL('/signin', request.url))
     }
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? request.nextUrl.origin
+
     try {
         const accessToken = await exchangeCodeForToken(code)
         const discordUser = await getDiscordUser(accessToken)
@@ -51,20 +53,17 @@ export async function GET(request: NextRequest) {
                     path: '/',
                     sameSite: 'lax',
                 })
-                return NextResponse.redirect(
-                    new URL('/signup/complete', request.url)
-                )
+                return NextResponse.redirect(new URL('/signup/complete', baseUrl))
             }
 
             // Player has full credentials — log them in directly
             await createSession(existingPlayer.id)
-            return NextResponse.redirect(new URL('/dashboard', request.url))
+            return NextResponse.redirect(new URL('/dashboard', baseUrl))
         }
 
-        // No player found with this Discord username — SSO is for migration only
-        return NextResponse.redirect(new URL('/signup', request.url))
+        return NextResponse.redirect(new URL('/signup', baseUrl))
     } catch (err) {
         console.error('Discord OAuth error:', err)
-        return NextResponse.redirect(new URL('/signin', request.url))
+        return NextResponse.redirect(new URL('/signin', baseUrl))
     }
 }
