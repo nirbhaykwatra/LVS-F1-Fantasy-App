@@ -30,7 +30,6 @@ export const getCurrentUser = cache(async () => {
 
 export const getUserByEmail = async (email: string) => {
     try {
-        // @ts-expect-error: There is a ts-ignore in the Drizzle config which makes db.query return an empty object
         const user = await db.query.players.findFirst({
             where: eq(players.email, email),
         })
@@ -44,7 +43,6 @@ export const getUserByEmail = async (email: string) => {
 
 export const getUserByDiscordID = async (discordId: number) => {
     try {
-        // @ts-expect-error: There is a ts-ignore in the Drizzle config which makes db.query return an empty object
         const user = await db.query.players.findFirst({
             where: eq(players.discordUserId, discordId),
         })
@@ -58,7 +56,6 @@ export const getUserByDiscordID = async (discordId: number) => {
 
 export const getUserByUsername = async (username: string) => {
     try {
-        // @ts-expect-error: There is a ts-ignore in the Drizzle config which makes db.query return an empty object
         const user = await db.query.players.findFirst({
             where: eq(players.username, username),
         })

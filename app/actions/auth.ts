@@ -71,6 +71,18 @@ export const signIn= async (prevState: ActionResponse | null, formData: FormData
             };
         }
 
+        // If user exists but has no password, it means they have not yet completed the Discord migration
+        // TODO: Remove this guard after all Discord users have completed the migration
+        if (!user.password) {
+            return {
+                success: false,
+                message: 'Discord migration not complete!',
+                errors: {
+                    migration: ['Discord migration not complete!'],
+                },
+            };
+        }
+
         // Verify password
         const isValidPassword = await verifyPassword(data.password, user.password);
         if (!isValidPassword) {
