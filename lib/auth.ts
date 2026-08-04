@@ -1,14 +1,14 @@
 ﻿import { db } from '@/db';
 import { players } from '@/db/schema';
-import * as jose from 'jose'
-import { cache } from 'react'
-import { compare, hash } from 'bcrypt'
-import { nanoid } from 'nanoid'
-import { cookies } from 'next/headers'
+import * as jose from 'jose';
+import { cache } from 'react';
+import { compare, hash } from 'bcrypt';
+import { eq } from 'drizzle-orm';
+import { cookies } from 'next/headers';
 
 // JWT types
 interface JWTPayload {
-    userId: string
+    userId: number
     [key: string]: string | number | boolean | null | undefined
 }
 
@@ -44,7 +44,7 @@ export async function createUser(username: string, email: string, password: stri
             password: hashedPassword,
         }).returning({ id: players.id })
 
-        return { id: String(newPlayer.id), email, username }
+        return { id: newPlayer.id, email, username }
     } catch (error) {
         console.error('Error creating user:', error)
         return null
@@ -91,7 +91,7 @@ export async function shouldRefreshToken(token: string): Promise<boolean> {
 }
 
 // Create a session using JWT
-export async function createSession(userId: string) {
+export async function createSession(userId: number) {
     try {
         // Create JWT with user data
         const token = await generateJWT({ userId })
@@ -124,6 +124,7 @@ export const getSession = cache(async () => {
         if (!token) return null
         const payload = await verifyJWT(token)
 
+
         return payload ? { userId: payload.userId } : null
     } catch (error) {
         // Handle the specific prerendering error
@@ -146,4 +147,22 @@ export const getSession = cache(async () => {
 export async function deleteSession() {
     const cookieStore = await cookies()
     cookieStore.delete('auth_token')
+}
+
+// Link web credentials to an existing player (Discord migration)
+export async function linkPlayerCredentials(playerId: number, email: string, password: string) {
+    const hashedPassword = await hashPassword(password)
+
+    try {
+        const [updated] = await db
+            .update(players)
+            .set({ email, password: hashedPassword })
+            .where(eq(players.id, playerId))
+            .returning({ id: players.id })
+
+        return updated ?? null
+    } catch (error) {
+        console.error('Error linking player credentials:', error)
+        return null
+    }
 }
