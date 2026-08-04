@@ -1,0 +1,71 @@
+﻿import { db } from '@/db'
+import { getSession } from './auth'
+import { eq } from 'drizzle-orm'
+import { players } from '@/db/schema'
+import { cache } from 'react'
+import {
+    unstable_cacheTag as cacheTag,
+    unstable_cacheLife as cacheLife,
+} from 'next/cache'
+
+export const getCurrentUser = cache(async () => {
+    console.log('get current user')
+    const session = await getSession()
+    if (!session) {
+        return null
+    }
+
+    try {
+        const results = await db
+            .select()
+            .from(players)
+            .where(eq(players.id, session.userId))
+
+        return results[0] || null
+    } catch (e) {
+        console.error(e)
+        return null
+    }
+})
+
+export const getUserByEmail = async (email: string) => {
+    try {
+        // @ts-expect-error: There is a ts-ignore in the Drizzle config which makes db.query return an empty object
+        const user = await db.query.players.findFirst({
+            where: eq(players.email, email),
+        })
+
+        return user
+    } catch (e) {
+        console.error(e)
+        return null
+    }
+}
+
+export const getUserByDiscordID = async (discordId: number) => {
+    try {
+        // @ts-expect-error: There is a ts-ignore in the Drizzle config which makes db.query return an empty object
+        const user = await db.query.players.findFirst({
+            where: eq(players.discordUserId, discordId),
+        })
+
+        return user
+    } catch(e) {
+        console.error(e);
+        return null;
+    }
+}
+
+export const getUserByUsername = async (username: string) => {
+    try {
+        // @ts-expect-error: There is a ts-ignore in the Drizzle config which makes db.query return an empty object
+        const user = await db.query.players.findFirst({
+            where: eq(players.username, username),
+        })
+
+        return user
+    } catch (e) {
+        console.error(e)
+        return null
+    }
+}
