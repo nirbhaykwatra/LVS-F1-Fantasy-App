@@ -1,5 +1,8 @@
 ﻿import Link from "next/link";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
+import SignOutButton from "@/components/dashboard/SignOutButton";
+import PlayerName from "@/components/dashboard/PlayerName";
+import {Suspense} from "react";
 
 // Placeholder user data
 const user = {
@@ -24,15 +27,12 @@ export default function DashboardPage() {
                     LVS F1 FANTASY
                 </Link>
                 <nav className="flex items-center gap-4">
-          <span className="text-sm font-semibold text-foreground">
-            {user.username}
-          </span>
-                    <Link
-                        href="/api/auth/signout"
-                        className="rounded-full bg-brand/10 px-4 py-2 text-sm font-semibold text-brand transition hover:bg-brand/20"
-                    >
-                        Sign Out
-                    </Link>
+                  <span className="text-sm font-semibold text-foreground">
+                    <Suspense fallback={<div>Loading...</div>}>
+                            <PlayerName />
+                        </Suspense>
+                  </span>
+                    <SignOutButton />
                 </nav>
             </header>
 
@@ -43,7 +43,9 @@ export default function DashboardPage() {
             Overview
           </span>
                     <h1 className="text-3xl font-black leading-tight text-foreground">
-                        Welcome back, {user.username}
+                        Welcome back, <Suspense fallback={<div>Loading...</div>}>
+                            <PlayerName />
+                        </Suspense>
                     </h1>
                     <p className="text-sm text-foreground/60">
                         Here is how your dream team is stacking up on the grid.
@@ -55,7 +57,7 @@ export default function DashboardPage() {
                     {/* Card 1: Team Info */}
                     <div className="flex flex-col gap-2 rounded-2xl border border-black/10 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
                         <h2 className="text-xs font-semibold uppercase tracking-wide text-foreground/70">
-                            Current Team
+                            Favorite Team
                         </h2>
                         <p className="text-2xl font-bold text-foreground">{user.teamName}</p>
                     </div>

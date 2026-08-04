@@ -3,14 +3,11 @@ import { getSession } from './auth'
 import { eq } from 'drizzle-orm'
 import { players } from '@/db/schema'
 import { cache } from 'react'
-import {
-    unstable_cacheTag as cacheTag,
-    unstable_cacheLife as cacheLife,
-} from 'next/cache'
 
 export const getCurrentUser = cache(async () => {
     console.log('get current user')
     const session = await getSession()
+
     if (!session) {
         return null
     }
