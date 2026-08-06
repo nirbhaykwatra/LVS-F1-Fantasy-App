@@ -10,7 +10,7 @@ import {
     deleteSession,
     linkPlayerCredentials
 } from "@/lib/auth";
-import { getCurrentUser, getUserByEmail} from "@/lib/dal";
+import { getCurrentUser, getUserByEmail } from "@/lib/dal";
 
 // Define Zod schema for signin validation
 const SignInSchema = z.object({
@@ -31,6 +31,17 @@ const SignUpSchema = z
         path: ['confirmPassword'],
     })
 
+const DiscordSignUpSchema = z
+    .object({
+        email: z.string().min(1, 'Email is required').email('Invalid email format'),
+        password: z.string().min(6, 'Password must be at least 6 characters'),
+        confirmPassword: z.string().min(1, 'Please confirm your password'),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+        message: "Passwords don't match",
+        path: ['confirmPassword'],
+    })
+
 export type SignInData = z.infer<typeof SignInSchema>
 export type SignUpData = z.infer<typeof SignUpSchema>
 
@@ -41,7 +52,7 @@ export type ActionResponse = {
     error?: string
 }
 
-export const signIn= async (prevState: ActionResponse | null, formData: FormData): Promise<ActionResponse> => {
+export const signIn = async (prevState: ActionResponse | null, formData: FormData): Promise<ActionResponse> => {
     try {
 
         // Get form data from request
@@ -104,13 +115,13 @@ export const signIn= async (prevState: ActionResponse | null, formData: FormData
             message: 'Sign in successful',
         };
 
-    } catch(error) {
+    } catch (error) {
         console.error(error)
         return {
-          success: false,
-          message: 'Sign in failed',
-          errors: {},
-          error: 'Sign in failed',
+            success: false,
+            message: 'Sign in failed',
+            errors: {},
+            error: 'Sign in failed',
         };
     }
 }
@@ -166,9 +177,9 @@ export const signUp = async (prevState: ActionResponse | null, formData: FormDat
     } catch (error) {
         console.error(error)
         return {
-          success: false,
-          message: 'Signing up failed',
-          error: 'Signing up failed',
+            success: false,
+            message: 'Signing up failed',
+            error: 'Signing up failed',
         };
     }
 }
@@ -212,7 +223,7 @@ export const completeDiscordSignup = async (prevState: ActionResponse | null, fo
             confirmPassword: formData.get('confirmPassword') as string,
         }
 
-        const validationResult = SignUpSchema.safeParse(data)
+        const validationResult = DiscordSignUpSchema.safeParse(data)
         if (!validationResult.success) {
             return {
                 success: false,
