@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { signIn } from "@/app/actions/auth";
 import type { ActionResponse } from "@/app/actions/auth";
+import Footer from "@/components/Footer";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -70,14 +71,14 @@ export default function SignInPage() {
 
               <div className="flex flex-col gap-1.5">
                 <label
-                    htmlFor="username"
+                    htmlFor="email"
                     className="text-xs font-semibold uppercase tracking-wide text-foreground/70"
                 >
                   Email
                 </label>
                 <input
-                    id="username"
-                    name="username"
+                    id="email"
+                    name="email"
                     type="text"
                     autoComplete="name"
                     placeholder="Max Verstappen"
@@ -134,9 +135,7 @@ export default function SignInPage() {
           </div>
         </main>
 
-        <footer className="relative z-10 mt-auto flex items-center justify-center px-6 py-6 text-xs text-foreground/50">
-          © {new Date().getFullYear()} LVS F1 Fantasy. Not affiliated with Formula 1.
-        </footer>
+        <Footer />
       </div>
   );
 }

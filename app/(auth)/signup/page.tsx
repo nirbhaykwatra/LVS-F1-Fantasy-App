@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { signUp } from "@/app/actions/auth";
 import type { ActionResponse } from "@/app/actions/auth";
+import Footer from "@/components/Footer";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -178,9 +179,7 @@ export default function SignUpPage() {
           </div>
         </main>
 
-        <footer className="relative z-10 mt-auto flex items-center justify-center px-6 py-6 text-xs text-foreground/50">
-          © {new Date().getFullYear()} LVS F1 Fantasy. Not affiliated with Formula 1.
-        </footer>
+        <Footer />
       </div>
   );
 }

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import Link from "next/link";
 import CompleteSignupForm from "./CompleteSignupForm";
+import Footer from "@/components/Footer";
 
 export default async function CompleteSignupPage() {
     const cookieStore = await cookies();
@@ -41,6 +42,7 @@ export default async function CompleteSignupPage() {
                     <CompleteSignupForm />
                 </div>
             </main>
+            <Footer />
         </div>
     );
 }
