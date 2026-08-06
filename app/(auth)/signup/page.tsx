@@ -1,12 +1,11 @@
 ﻿"use client";
 
 import Link from "next/link";
-import { useActionState, useEffect } from "react";
+import {Suspense, useActionState, useEffect} from "react";
 import { useRouter } from "next/navigation";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { signUp } from "@/app/actions/auth";
 import type { ActionResponse } from "@/app/actions/auth";
-import Footer from "@/components/Footer";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -178,8 +177,6 @@ export default function SignUpPage() {
             </p>
           </div>
         </main>
-
-        <Footer />
       </div>
   );
 }

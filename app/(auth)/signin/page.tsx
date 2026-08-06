@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { signIn } from "@/app/actions/auth";
 import type { ActionResponse } from "@/app/actions/auth";
-import Footer from "@/components/Footer";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -134,8 +133,6 @@ export default function SignInPage() {
             </p>
           </div>
         </main>
-
-        <Footer />
       </div>
   );
 }

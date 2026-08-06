@@ -2,7 +2,6 @@ import Link from "next/link";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { Tagline } from "@/components/landing/Tagline";
 import { taglines } from "@/lib/utils";
-import Footer from "@/components/Footer";
 
 const playerFeatures = [
   "Join F1 Fantasy Leagues",
@@ -168,8 +167,6 @@ export default function Home() {
             Create your league
           </Link>
         </section>
-
-        <Footer />
       </div>
   );
 }

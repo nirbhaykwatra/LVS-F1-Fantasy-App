@@ -1,6 +1,5 @@
 ﻿import Link from "next/link";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
-import Footer from "@/components/Footer";
 import SignOutButton from "@/components/dashboard/SignOutButton";
 import PlayerName from "@/components/dashboard/PlayerName";
 import { Suspense } from "react";
@@ -78,8 +77,6 @@ export default function DashboardPage( { searchParams }: { searchParams: Promise
                     <LeaguesTable />
                 </Suspense>
             </main>
-
-            <Footer />
         </div>
     );
 }
