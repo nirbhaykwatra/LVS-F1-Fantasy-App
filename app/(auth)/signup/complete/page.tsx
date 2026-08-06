@@ -1,15 +1,14 @@
-﻿import { cookies } from "next/headers";
+﻿import Link from "next/link";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
-import Link from "next/link";
-import CompleteSignupForm from "./CompleteSignupForm";
+import CompleteSignupForm from "@/components/auth/CompleteSignupForm";
 
 export default async function CompleteSignupPage() {
     const cookieStore = await cookies();
     const discordPendingId = cookieStore.get("discord_pending_id")?.value;
 
     if (!discordPendingId) redirect("/signup");
-
     return (
         <div className="relative isolate flex flex-1 flex-col bg-background font-sans">
             <AnimatedBackground />
