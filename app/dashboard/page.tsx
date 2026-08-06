@@ -1,12 +1,15 @@
 ﻿import Link from "next/link";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import SignOutButton from "@/components/dashboard/SignOutButton";
-import PlayerName from "@/components/dashboard/PlayerName";
+import {PlayerName} from "@/components/dashboard/PlayerName";
 import { Suspense } from "react";
 import { LeaguesTable } from "@/components/dashboard/LeaguesTable";
 import { ScoringBreakdownPanel } from "@/components/dashboard/ScoringBreakdownPanel";
 import { DashboardSummary } from "@/components/dashboard/DashboardSummary";
 import {DashboardLeagueDropdown} from "@/components/dashboard/DashboardLeagueDropdown";
+import {LeagueStatistics} from "@/components/dashboard/LeagueStatistics";
+import {PlayerNameNav} from "@/components/dashboard/PlayerNameNav";
+import {LeagueLeaderboard} from "@/components/dashboard/LeagueLeaderboard";
 
 export default function DashboardPage( { searchParams }: { searchParams: Promise<{ round?: string, leagueId?: string }> } ) {
     return (
@@ -23,8 +26,8 @@ export default function DashboardPage( { searchParams }: { searchParams: Promise
                 </Link>
                 <nav className="flex items-center gap-4">
                   <span className="text-sm font-semibold text-foreground">
-                    <Suspense fallback={<div>Loading...</div>}>
-                            <PlayerName />
+                    <Suspense fallback={<div></div>}>
+                            <PlayerNameNav />
                         </Suspense>
                   </span>
                     <SignOutButton />
@@ -38,18 +41,11 @@ export default function DashboardPage( { searchParams }: { searchParams: Promise
                       Overview
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <h1 className="text-3xl font-black leading-tight text-foreground">
-                                Welcome back, <Suspense fallback={<div>Loading...</div>}>
-                                <PlayerName />
-                            </Suspense>
-                            </h1>
-                            <p className="text-sm text-foreground/60">
-                                Here is how your dream team is stacking up on the grid.
-                            </p>
-                        </div>
+                        <Suspense fallback={<div></div>}>
+                            <PlayerName searchParams={ searchParams }/>
+                        </Suspense>
                         <div className="sm:justify-self-end">
-                            <Suspense fallback={<div>Loading...</div>}>
+                            <Suspense fallback={<div></div>}>
                                 <DashboardLeagueDropdown searchParams={ searchParams } />
                             </Suspense>
                         </div>
@@ -57,23 +53,22 @@ export default function DashboardPage( { searchParams }: { searchParams: Promise
 
                 </div>
 
-                <Suspense fallback={<p>Loading...</p>}>
-                    <DashboardSummary />
+                <Suspense fallback={<p></p>}>
+                    <DashboardSummary searchParams={ searchParams }/>
                 </Suspense>
 
-                <Suspense fallback={<p>Loading...</p>}>
+                <Suspense fallback={<p></p>}>
                     <ScoringBreakdownPanel searchParams={ searchParams } />
                 </Suspense>
 
-                {/* Extended Activity Area */}
-                <div className="flex flex-col gap-4 rounded-2xl border border-black/10 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5 mt-4">
-                    <h2 className="text-lg font-bold text-foreground">Recent Activity</h2>
-                    <div className="h-px w-full bg-black/10 dark:bg-white/10" />
-                    <p className="text-sm text-foreground/60 text-center py-8">
-                        No race data recorded for this week yet.
-                    </p>
-                </div>
-                <Suspense fallback={<p>Loading...</p>}>
+                <Suspense fallback={<p></p>}>
+                    <LeagueLeaderboard searchParams={ searchParams } />
+                </Suspense>
+
+                <Suspense fallback={<p></p>}>
+                    <LeagueStatistics searchParams={ searchParams } />
+                </Suspense>
+                <Suspense fallback={<p></p>}>
                     <LeaguesTable />
                 </Suspense>
             </main>

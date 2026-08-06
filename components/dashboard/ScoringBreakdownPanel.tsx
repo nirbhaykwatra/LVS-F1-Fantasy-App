@@ -30,7 +30,7 @@ export async function ScoringBreakdownPanel({ searchParams }: {searchParams: Pro
     return (
         <div>
             <div className="flex flex-col gap-4 rounded-2xl border border-black/10 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5 mt-4">
-                <div className="flex flex-row gap-4 justify-between">
+                <div className="flex flex-col sm:flex-row gap-4 justify-between">
                     <GrandPrixSelector options={grandPrixOptions} selected={selectedGrandPrix} />
                     <h2 className="text-lg font-bold text-foreground">Previous Grand Prix Results</h2>
                     <div className="flex flex-row gap-2 items-baseline">
@@ -50,7 +50,7 @@ export async function ScoringBreakdownPanel({ searchParams }: {searchParams: Pro
                                     <h2 className="text-sm font-semibold uppercase tracking-wide text-foreground/70">
                                         {label}
                                     </h2>
-                                    <h2 className="text-2xl font-bold tracking-wide text-brand text-center">
+                                    <h2 className="text-2xl font-black tracking-wide text-brand text-center">
                                         {entry.name}
                                     </h2>
                                     <p className="text-2xl font-semibold uppercase text-foreground">
@@ -65,7 +65,7 @@ export async function ScoringBreakdownPanel({ searchParams }: {searchParams: Pro
                                     <h2 className="text-sm font-semibold uppercase tracking-wide text-foreground/70">
                                         {label}
                                     </h2>
-                                    <h2 className="text-2xl font-bold tracking-wide text-brand text-center">
+                                    <h2 className="text-2xl font-black tracking-wide text-brand text-center">
                                         {entry.name}
                                     </h2>
                                     <p className="text-2xl font-semibold uppercase text-foreground">

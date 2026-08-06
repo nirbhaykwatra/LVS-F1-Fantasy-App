@@ -71,49 +71,56 @@ export const drafts = pgTable("drafts", {
 	isAutoAssigned: boolean("is_auto_assigned").default(false).notNull(),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	seasonId: integer("season_id").notNull(),   // <-- appended, TEMPORARY position — move back to after leagueId once the Discord bot is sunset
 }, (table) => [
 	index("idx_drafts_grand_prix_league").using("btree", table.grandPrixId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops")),
 	index("idx_drafts_player_league").using("btree", table.playerId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops")),
+	index("idx_drafts_season").using("btree", table.seasonId.asc().nullsLast().op("int4_ops")),
 	foreignKey({
-			columns: [table.constructorId],
-			foreignColumns: [constructors.id],
-			name: "drafts_constructor_id_fkey"
-		}),
+		columns: [table.constructorId],
+		foreignColumns: [constructors.id],
+		name: "drafts_constructor_id_fkey"
+	}),
 	foreignKey({
-			columns: [table.driver1Id],
-			foreignColumns: [drivers.id],
-			name: "drafts_driver1_id_fkey"
-		}),
+		columns: [table.driver1Id],
+		foreignColumns: [drivers.id],
+		name: "drafts_driver1_id_fkey"
+	}),
 	foreignKey({
-			columns: [table.driver2Id],
-			foreignColumns: [drivers.id],
-			name: "drafts_driver2_id_fkey"
-		}),
+		columns: [table.driver2Id],
+		foreignColumns: [drivers.id],
+		name: "drafts_driver2_id_fkey"
+	}),
 	foreignKey({
-			columns: [table.driver3Id],
-			foreignColumns: [drivers.id],
-			name: "drafts_driver3_id_fkey"
-		}),
+		columns: [table.driver3Id],
+		foreignColumns: [drivers.id],
+		name: "drafts_driver3_id_fkey"
+	}),
 	foreignKey({
-			columns: [table.grandPrixId],
-			foreignColumns: [grandsPrix.id],
-			name: "drafts_grand_prix_id_fkey"
-		}).onDelete("cascade"),
+		columns: [table.grandPrixId],
+		foreignColumns: [grandsPrix.id],
+		name: "drafts_grand_prix_id_fkey"
+	}).onDelete("cascade"),
 	foreignKey({
-			columns: [table.leagueId],
-			foreignColumns: [leagues.id],
-			name: "drafts_league_id_fkey"
-		}).onDelete("cascade"),
+		columns: [table.leagueId],
+		foreignColumns: [leagues.id],
+		name: "drafts_league_id_fkey"
+	}).onDelete("cascade"),
 	foreignKey({
-			columns: [table.playerId],
-			foreignColumns: [players.id],
-			name: "drafts_player_id_fkey"
-		}).onDelete("cascade"),
+		columns: [table.playerId],
+		foreignColumns: [players.id],
+		name: "drafts_player_id_fkey"
+	}).onDelete("cascade"),
 	foreignKey({
-			columns: [table.wildcardId],
-			foreignColumns: [drivers.id],
-			name: "drafts_wildcard_id_fkey"
-		}),
+		columns: [table.seasonId],
+		foreignColumns: [seasons.id],
+		name: "drafts_season_id_fkey"
+	}).onDelete("cascade"),
+	foreignKey({
+		columns: [table.wildcardId],
+		foreignColumns: [drivers.id],
+		name: "drafts_wildcard_id_fkey"
+	}),
 	unique("drafts_player_id_league_id_grand_prix_id_key").on(table.grandPrixId, table.leagueId, table.playerId),
 	check("drafts_check", sql`(driver1_id <> driver2_id) AND (driver1_id <> driver3_id) AND (driver1_id <> wildcard_id) AND (driver2_id <> driver3_id) AND (driver2_id <> wildcard_id) AND (driver3_id <> wildcard_id)`),
 ]);
@@ -181,24 +188,31 @@ export const playerRoundScores = pgTable("player_round_scores", {
 	totalPoints: integer("total_points").default(0).notNull(),
 	breakdownJson: jsonb("breakdown_json").default({}).notNull(),
 	calculatedAt: timestamp("calculated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	seasonId: integer("season_id").notNull(),
 }, (table) => [
 	index("idx_player_scores_gp_league").using("btree", table.grandPrixId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops")),
 	index("idx_player_scores_player_league").using("btree", table.playerId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops")),
+	index("idx_player_scores_season").using("btree", table.seasonId.asc().nullsLast().op("int4_ops")),
 	foreignKey({
-			columns: [table.grandPrixId],
-			foreignColumns: [grandsPrix.id],
-			name: "player_round_scores_grand_prix_id_fkey"
-		}).onDelete("cascade"),
+		columns: [table.grandPrixId],
+		foreignColumns: [grandsPrix.id],
+		name: "player_round_scores_grand_prix_id_fkey"
+	}).onDelete("cascade"),
 	foreignKey({
-			columns: [table.leagueId],
-			foreignColumns: [leagues.id],
-			name: "player_round_scores_league_id_fkey"
-		}).onDelete("cascade"),
+		columns: [table.leagueId],
+		foreignColumns: [leagues.id],
+		name: "player_round_scores_league_id_fkey"
+	}).onDelete("cascade"),
 	foreignKey({
-			columns: [table.playerId],
-			foreignColumns: [players.id],
-			name: "player_round_scores_player_id_fkey"
-		}).onDelete("cascade"),
+		columns: [table.playerId],
+		foreignColumns: [players.id],
+		name: "player_round_scores_player_id_fkey"
+	}).onDelete("cascade"),
+	foreignKey({
+		columns: [table.seasonId],
+		foreignColumns: [seasons.id],
+		name: "player_round_scores_season_id_fkey"
+	}).onDelete("cascade"),
 	unique("player_round_scores_player_id_league_id_grand_prix_id_key").on(table.grandPrixId, table.leagueId, table.playerId),
 ]);
 
@@ -412,9 +426,16 @@ export const playerLeagues = pgTable("player_leagues", {
 	teamMotto: text("team_motto"),
 	joinedAt: timestamp("joined_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	role: text().default('member').notNull(),
+	seasonId: integer("season_id").notNull(),
 }, (table) => [
 	index("idx_player_leagues_league").using("btree", table.leagueId.asc().nullsLast().op("int4_ops")),
 	index("idx_player_leagues_player").using("btree", table.playerId.asc().nullsLast().op("int4_ops")),
+	index("idx_player_leagues_season").using("btree", table.seasonId.asc().nullsLast().op("int4_ops")),
+	foreignKey({
+		columns: [table.seasonId],
+		foreignColumns: [seasons.id],
+		name: "player_leagues_season_id_fkey"
+	}).onDelete("cascade"),
 	foreignKey({
 			columns: [table.leagueId],
 			foreignColumns: [leagues.id],

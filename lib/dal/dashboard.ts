@@ -4,9 +4,11 @@ import {
     playerRoundScores,
     grandsPrix,
     drafts,
+    constructors,
+    playerLeagues
 } from "@/db/schema";
-import { eq, and, desc } from "drizzle-orm";
-import {GrandPrixOption} from "@/components/dashboard/GrandPrixSelector";
+import { eq, and, desc, sql, asc } from "drizzle-orm";
+import { GrandPrixOption } from "@/components/dashboard/GrandPrixSelector";
 
 // ---------- breakdown_json shape ----------
 
@@ -51,6 +53,40 @@ export async function getPlayerLeaguesSummary(playerId: number): Promise<PlayerL
         });
     }
     return summary;
+}
+
+export type LeagueLeaderboardData = {leagueId: number, seasonId: number, playerData: Array<[playerId: number, username: string, teamName: string, points: number, rank: number]>};
+export async function getLeagueLeaderboard(leagueId: number): Promise<LeagueLeaderboardData | null> {
+    const rows = await db
+        .select({
+            playerId: vPlayerLeagueStats.playerId,
+            seasonId: vPlayerLeagueStats.seasonId,
+            totalPoints: vPlayerLeagueStats.totalPoints,
+            currentRank: vPlayerLeagueStats.currentRank,
+            username: vPlayerLeagueStats.username,
+            teamName: vPlayerLeagueStats.teamName,
+        })
+        .from(vPlayerLeagueStats)
+        .where(eq(vPlayerLeagueStats.leagueId, leagueId))
+        .orderBy(asc(vPlayerLeagueStats.currentRank));
+
+    if (rows.length === 0) {
+        return null;
+    }
+
+    const seasonId = rows[0].seasonId;
+    if (seasonId === null) {
+        throw new Error(`getLeagueLeaderboard: seasonId null for leagueId ${leagueId}`);
+    }
+
+    const playerData = rows.map((row): [number, string, string, number, number] => {
+        if (row.playerId === null || row.username === null || row.teamName === null || row.totalPoints === null || row.currentRank === null) {
+            throw new Error(`getLeagueLeaderboard: unexpected null field for leagueId ${leagueId}`);
+        }
+        return [row.playerId, row.username, row.teamName, row.totalPoints, row.currentRank];
+    });
+
+    return { leagueId, seasonId, playerData };
 }
 
 // ---------- 2. Per-league, per-round detail, with full driver/constructor objects ----------
@@ -219,4 +255,74 @@ export async function getGrandPrixOptions(): Promise<GrandPrixOption[]> {
     }));
 
     return grandPrixOptions;
+}
+
+export interface MostDraftedConstructor {
+    constructorId: number;
+    shortName: string;
+    fullName: string;
+    colorHex: string;
+    timesDrafted: number;
+}
+
+/**
+ * Returns the constructor a player has drafted most often.
+ * Optionally scope to a single league and/or season.
+ */
+export async function getMostDraftedConstructorForPlayer(
+    playerId: number, options?: { leagueId?: number; seasonId?: number }): Promise<MostDraftedConstructor | null> {
+
+    const conditions = [eq(drafts.playerId, playerId)];
+
+    if (options?.leagueId !== undefined) {
+        conditions.push(eq(drafts.leagueId, options.leagueId));
+    }
+    if (options?.seasonId !== undefined) {
+        conditions.push(eq(drafts.seasonId, options.seasonId));
+    }
+
+    const [result] = await db
+        .select({
+            constructorId: constructors.id,
+            shortName: constructors.shortName,
+            fullName: constructors.fullName,
+            colorHex: constructors.colorHex,
+            timesDrafted: sql<number>`count(*)`.mapWith(Number),
+        })
+        .from(drafts)
+        .innerJoin(constructors, eq(drafts.constructorId, constructors.id))
+        .where(and(...conditions))
+        .groupBy(constructors.id, constructors.shortName, constructors.fullName, constructors.colorHex)
+        .orderBy(sql`count(*) desc`)
+        .limit(1);
+
+    return result ?? null;
+}
+
+export async function getPlayerTeamName(playerId: number, options?: { leagueId?: number; seasonId?: number }): Promise<string | null> {
+    const conditions = [eq(playerLeagues.playerId, playerId)];
+    if (options?.leagueId) conditions.push(eq(playerLeagues.leagueId, options.leagueId));
+    if (options?.seasonId) conditions.push(eq(playerLeagues.seasonId, options.seasonId));
+
+    const playerLeague = await db.select()
+        .from(playerLeagues)
+        .where(
+            and(...conditions)
+        )
+        .limit(1);
+    return playerLeague[0]?.teamName ?? null;
+}
+
+export async function getPlayerTeamMotto(playerId: number, options?: { leagueId?: number; seasonId?: number }): Promise<string | null> {
+    const conditions = [eq(playerLeagues.playerId, playerId)];
+    if (options?.leagueId) conditions.push(eq(playerLeagues.leagueId, options.leagueId));
+    if (options?.seasonId) conditions.push(eq(playerLeagues.seasonId, options.seasonId));
+
+    const playerLeague = await db.select()
+        .from(playerLeagues)
+        .where(
+            and(...conditions)
+        )
+        .limit(1);
+    return playerLeague[0]?.teamMotto ?? null;
 }

@@ -39,7 +39,7 @@ export function GrandPrixSelector({ options, selected }: { options: GrandPrixOpt
                 onClick={() => setIsOpen((prev) => !prev)}
                 aria-haspopup="listbox"
                 aria-expanded={isOpen}
-                className="flex flex-row items-center gap-2 rounded-full border border-transparent px-5 py-2 -mx-2 -my-1 dark:border-white/10 dark:bg-white/5"
+                className="flex flex-row items-center gap-2 rounded-2xl sm:rounded-full border border-transparent px-5 py-2 -mx-2 -my-1 dark:border-white/10 dark:bg-white/5"
             >
                 <h2 className="text-lg font-bold text-foreground">
                     Round {selected.roundNumber} - {selected.name}

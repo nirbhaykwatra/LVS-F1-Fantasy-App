@@ -21,6 +21,8 @@ export const seasonsRelations = relations(seasons, ({many}) => ({
 	leagues: many(leagues),
 	scoringRules: many(scoringRules),
 	counterpickUsages: many(counterpickUsage),
+	drafts: many(drafts),
+	playerRoundScores: many(playerRoundScores),
 }));
 
 export const driversRelations = relations(drivers, ({one, many}) => ({
@@ -96,6 +98,10 @@ export const draftsRelations = relations(drafts, ({one}) => ({
 		references: [drivers.id],
 		relationName: "drafts_wildcardId_drivers_id"
 	}),
+	season: one(seasons, {
+		fields: [drafts.seasonId],
+		references: [seasons.id]
+	}),
 }));
 
 export const leaguesRelations = relations(leagues, ({one, many}) => ({
@@ -163,6 +169,10 @@ export const playerRoundScoresRelations = relations(playerRoundScores, ({one}) =
 	player: one(players, {
 		fields: [playerRoundScores.playerId],
 		references: [players.id]
+	}),
+	season: one(seasons, {
+		fields: [playerRoundScores.seasonId],
+		references: [seasons.id]
 	}),
 }));
 
@@ -251,5 +261,9 @@ export const playerLeaguesRelations = relations(playerLeagues, ({one}) => ({
 	player: one(players, {
 		fields: [playerLeagues.playerId],
 		references: [players.id]
+	}),
+	season: one(seasons, {
+		fields: [playerLeagues.seasonId],
+		references: [seasons.id]
 	}),
 }));
