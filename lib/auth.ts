@@ -123,7 +123,6 @@ export const getSession = cache(async () => {
 
         if (!token) return null
         const payload = await verifyJWT(token)
-        console.log(payload);
 
         return payload ? { userId: payload.userId } : null
     } catch (error) {

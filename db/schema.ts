@@ -224,6 +224,7 @@ export const raceResults = pgTable("race_results", {
 	check("race_results_session_type_check", sql`session_type = ANY (ARRAY['qualifying'::text, 'race'::text, 'sprint'::text, 'sprint_qualifying'::text])`),
 ]);
 
+// TODO: Maybe add a UUID column for leagues or just use the invite code...?
 export const leagues = pgTable("leagues", {
 	id: integer().primaryKey().generatedAlwaysAsIdentity({ name: "leagues_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 2147483647, cache: 1 }),
 	name: text().notNull(),
@@ -358,6 +359,7 @@ export const seasons = pgTable("seasons", {
 	unique("seasons_year_key").on(table.year),
 ]);
 
+// TODO: Maybe add a UUID for players
 export const players = pgTable("players", {
 	id: integer().primaryKey().generatedAlwaysAsIdentity({ name: "players_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 2147483647, cache: 1 }),
 	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
