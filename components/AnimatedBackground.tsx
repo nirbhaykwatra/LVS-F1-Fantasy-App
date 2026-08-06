@@ -15,7 +15,7 @@ export function AnimatedBackground() {
       frame = requestAnimationFrame(() => {
         const y = window.scrollY;
         if (blobARef.current) {
-          blobARef.current.style.transform = `translate3d(0, ${y * 0.18}px, 0)`;
+          blobARef.current.style.transform = `translate3d(0, ${y * 0.15}px, 0)`;
         }
         if (blobBRef.current) {
           blobBRef.current.style.transform = `translate3d(0, ${y * -0.12}px, 0)`;
@@ -56,7 +56,7 @@ export function AnimatedBackground() {
 
       <div
         ref={gridRef}
-        className="absolute inset-0 animate-[drift_9s_linear_infinite] bg-grid opacity-[0.05] will-change-transform"
+        className="absolute inset-0 animate-[drift_25s_linear_infinite] bg-grid opacity-[0.05] will-change-transform"
       />
     </div>
   );
