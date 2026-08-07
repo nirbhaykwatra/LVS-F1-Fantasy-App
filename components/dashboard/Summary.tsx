@@ -1,6 +1,6 @@
 ﻿import SmallCard from "@/components/dashboard/SmallCard";
 import { getCurrentUser } from "@/lib/dal/user";
-import {getMostDraftedConstructorForPlayer, getPlayerLeaguesSummary, getPlayerTeamName} from "@/lib/dal/playerInfo";
+import {getPlayerLeaguesSummary, getPlayerTeamName} from "@/lib/dal/playerInfo";
 
 export async function Summary({ searchParams }: { searchParams: Promise<{ leagueId?: string }> }) {
     const user = await getCurrentUser();
