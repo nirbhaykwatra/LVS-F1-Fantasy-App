@@ -35,7 +35,7 @@ export async function PlayerStatistics({ searchParams }: {searchParams: Promise<
         lowestSingleRoundDriverScore: await getPlayerLowestSingleRoundDriverScore(user.id, leagueId),
         highestScoringRound: await getPlayerBestRound(user.id, leagueId),
         lowestScoringRound: await getPlayerWorstRound(user.id, leagueId),
-        averagePointsPerRound: await getPlayerAveragePointsPerRound(leagueId),
+        averagePointsPerRound: await getPlayerAveragePointsPerRound(user.id, leagueId),
         highestScoringRandomRound: await getPlayerBestAutoAssignedRound(user.id, leagueId),
         lowestScoringRandomRound: await getPlayerWorstAutoAssignedRound(user.id, leagueId)
     }
