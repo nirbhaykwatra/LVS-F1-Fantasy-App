@@ -1,5 +1,5 @@
-﻿import { getPlayerLeaguesSummary} from "@/lib/dal/dashboard";
-import { getCurrentUser } from "@/lib/dal";
+﻿import { getPlayerLeaguesSummary} from "@/lib/dal/playerInfo";
+import { getCurrentUser } from "@/lib/dal/user";
 
 export async function LeaguesTable() {
     const user = await getCurrentUser();

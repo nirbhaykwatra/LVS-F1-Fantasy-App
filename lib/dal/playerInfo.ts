@@ -5,7 +5,7 @@ import {
     grandsPrix,
     drafts,
     constructors,
-    playerLeagues
+    playerLeagues, players
 } from "@/db/schema";
 import { eq, and, desc, sql, asc } from "drizzle-orm";
 import { GrandPrixOption } from "@/components/dashboard/GrandPrixSelector";
@@ -257,46 +257,14 @@ export async function getGrandPrixOptions(): Promise<GrandPrixOption[]> {
     return grandPrixOptions;
 }
 
-export interface MostDraftedConstructor {
-    constructorId: number;
-    shortName: string;
-    fullName: string;
-    colorHex: string;
-    timesDrafted: number;
-}
-
-/**
- * Returns the constructor a player has drafted most often.
- * Optionally scope to a single league and/or season.
- */
-export async function getMostDraftedConstructorForPlayer(
-    playerId: number, options?: { leagueId?: number; seasonId?: number }): Promise<MostDraftedConstructor | null> {
-
-    const conditions = [eq(drafts.playerId, playerId)];
-
-    if (options?.leagueId !== undefined) {
-        conditions.push(eq(drafts.leagueId, options.leagueId));
-    }
-    if (options?.seasonId !== undefined) {
-        conditions.push(eq(drafts.seasonId, options.seasonId));
-    }
-
-    const [result] = await db
-        .select({
-            constructorId: constructors.id,
-            shortName: constructors.shortName,
-            fullName: constructors.fullName,
-            colorHex: constructors.colorHex,
-            timesDrafted: sql<number>`count(*)`.mapWith(Number),
-        })
-        .from(drafts)
-        .innerJoin(constructors, eq(drafts.constructorId, constructors.id))
-        .where(and(...conditions))
-        .groupBy(constructors.id, constructors.shortName, constructors.fullName, constructors.colorHex)
-        .orderBy(sql`count(*) desc`)
+export async function getPlayerFromId(playerId: number) {
+    const [player] = await db
+        .select()
+        .from(players)
+        .where(eq(players.id, playerId))
         .limit(1);
 
-    return result ?? null;
+    return player ?? null;
 }
 
 export async function getPlayerTeamName(playerId: number, options?: { leagueId?: number; seasonId?: number }): Promise<string | null> {

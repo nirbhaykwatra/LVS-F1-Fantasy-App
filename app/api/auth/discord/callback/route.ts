@@ -1,5 +1,5 @@
 ﻿import { NextRequest, NextResponse } from 'next/server'
-import { getUserByUsername } from '@/lib/dal'
+import { getUserByUsername } from '@/lib/dal/user'
 import { createSession } from '@/lib/auth'
 import { cookies } from 'next/headers'
 

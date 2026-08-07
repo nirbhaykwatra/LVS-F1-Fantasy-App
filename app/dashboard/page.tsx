@@ -1,15 +1,16 @@
 ﻿import Link from "next/link";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import SignOutButton from "@/components/dashboard/SignOutButton";
-import {PlayerName} from "@/components/dashboard/PlayerName";
+import { PlayerName } from "@/components/dashboard/PlayerName";
 import { Suspense } from "react";
 import { LeaguesTable } from "@/components/dashboard/LeaguesTable";
 import { ScoringBreakdownPanel } from "@/components/dashboard/ScoringBreakdownPanel";
-import { DashboardSummary } from "@/components/dashboard/DashboardSummary";
-import {DashboardLeagueDropdown} from "@/components/dashboard/DashboardLeagueDropdown";
-import {LeagueStatistics} from "@/components/dashboard/LeagueStatistics";
-import {PlayerNameNav} from "@/components/dashboard/PlayerNameNav";
-import {LeagueLeaderboard} from "@/components/dashboard/LeagueLeaderboard";
+import { Summary } from "@/components/dashboard/Summary";
+import { LeagueDropdown } from "@/components/dashboard/LeagueDropdown";
+import { PlayerStatistics } from "@/components/dashboard/PlayerStatistics";
+import { PlayerNameNav } from "@/components/dashboard/PlayerNameNav";
+import { LeagueLeaderboard } from "@/components/dashboard/LeagueLeaderboard";
+import { LeagueStatistics } from "@/components/dashboard/LeagueStatistics";
 
 export default function DashboardPage( { searchParams }: { searchParams: Promise<{ round?: string, leagueId?: string }> } ) {
     return (
@@ -46,7 +47,7 @@ export default function DashboardPage( { searchParams }: { searchParams: Promise
                         </Suspense>
                         <div className="sm:justify-self-end">
                             <Suspense fallback={<div></div>}>
-                                <DashboardLeagueDropdown searchParams={ searchParams } />
+                                <LeagueDropdown searchParams={ searchParams } />
                             </Suspense>
                         </div>
                     </div>
@@ -54,7 +55,7 @@ export default function DashboardPage( { searchParams }: { searchParams: Promise
                 </div>
 
                 <Suspense fallback={<p></p>}>
-                    <DashboardSummary searchParams={ searchParams }/>
+                    <Summary searchParams={ searchParams }/>
                 </Suspense>
 
                 <Suspense fallback={<p></p>}>
@@ -68,6 +69,11 @@ export default function DashboardPage( { searchParams }: { searchParams: Promise
                 <Suspense fallback={<p></p>}>
                     <LeagueStatistics searchParams={ searchParams } />
                 </Suspense>
+
+                <Suspense fallback={<p></p>}>
+                    <PlayerStatistics searchParams={ searchParams } />
+                </Suspense>
+
                 <Suspense fallback={<p></p>}>
                     <LeaguesTable />
                 </Suspense>

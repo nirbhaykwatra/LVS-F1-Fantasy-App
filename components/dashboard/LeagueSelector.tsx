@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { PlayerLeaguesSummary } from "@/lib/dal/dashboard";
+import { PlayerLeaguesSummary } from "@/lib/dal/playerInfo";
 
 export function LeagueSelector({ options, selected }: { options: PlayerLeaguesSummary; selected: { leagueId: number, leagueName: string; currentPointsTotal: number; currentRank: number } }) {
     const [isOpen, setIsOpen] = useState(false);

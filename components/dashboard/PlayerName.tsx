@@ -1,5 +1,5 @@
-﻿import { getCurrentUser } from "@/lib/dal";
-import {getPlayerLeaguesSummary, getPlayerTeamMotto} from "@/lib/dal/dashboard";
+﻿import { getCurrentUser } from "@/lib/dal/user";
+import {getPlayerLeaguesSummary, getPlayerTeamMotto} from "@/lib/dal/playerInfo";
 
 export async function PlayerName({ searchParams }: { searchParams: Promise<{ leagueId?: string }>}) {
     const user = await getCurrentUser();

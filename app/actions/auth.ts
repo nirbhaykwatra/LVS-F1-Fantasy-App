@@ -10,7 +10,7 @@ import {
     deleteSession,
     linkPlayerCredentials
 } from "@/lib/auth";
-import { getCurrentUser, getUserByEmail } from "@/lib/dal";
+import { getCurrentUser, getUserByEmail } from "@/lib/dal/user";
 
 // Define Zod schema for signin validation
 const SignInSchema = z.object({

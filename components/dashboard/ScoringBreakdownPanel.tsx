@@ -1,5 +1,5 @@
-﻿import {getGrandPrixOptions, getMostRecentGrandPrix, getPlayerLeagueSeasonDetail} from "@/lib/dal/dashboard";
-import { getCurrentUser } from "@/lib/dal";
+﻿import {getGrandPrixOptions, getMostRecentGrandPrix, getPlayerLeagueSeasonDetail} from "@/lib/dal/playerInfo";
+import { getCurrentUser } from "@/lib/dal/user";
 import { GrandPrixOption, GrandPrixSelector } from "@/components/dashboard/GrandPrixSelector";
 
 export async function ScoringBreakdownPanel({ searchParams }: {searchParams: Promise<{round?: string}>}) {

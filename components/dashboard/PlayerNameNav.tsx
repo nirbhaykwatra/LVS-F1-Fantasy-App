@@ -1,4 +1,4 @@
-﻿import { getCurrentUser } from "@/lib/dal";
+﻿import { getCurrentUser } from "@/lib/dal/user";
 
 export async function PlayerNameNav() {
     const user = await getCurrentUser();

@@ -13,3 +13,13 @@
     "Ki ki ki! Rraa! Rraa!",
     "Pierre Gasly"
 ];
+
+export interface Statistic {
+    id: string;
+    name: string;
+    value: string;
+}
+
+export function getPointsText(points: number) {
+    return points !== 1 && points !== -1 ? `${points} points` : `${points} point`;
+}

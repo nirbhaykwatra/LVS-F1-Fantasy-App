@@ -72,8 +72,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       >
       <body className="min-h-full flex flex-col">
       {/* Currently, Serwist provider goes into a reload loop when visiting the app, so it's disabled. Fix it later. */}
-      {/*<SerwistProvider swUrl="/serwist/sw.js">{children}</SerwistProvider>*/}
-      {children}
+      <SerwistProvider swUrl="/serwist/sw.js">{children}</SerwistProvider>
+      {/*{children}*/}
       </body>
       </html>
   );

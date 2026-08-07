@@ -1,8 +1,8 @@
-﻿import {getCurrentUser} from "@/lib/dal";
+﻿import {getCurrentUser} from "@/lib/dal/user";
 import {LeagueSelector} from "@/components/dashboard/LeagueSelector";
-import {getPlayerLeaguesSummary} from "@/lib/dal/dashboard";
+import {getPlayerLeaguesSummary} from "@/lib/dal/playerInfo";
 
-export async function DashboardSeasonDropdown({ searchParams }: { searchParams: Promise<{ leagueId?: string }> }) {
+export async function LeagueDropdown({ searchParams }: { searchParams: Promise<{ leagueId?: string }> }) {
     const user = await getCurrentUser();
     if (!user) return null;
     const leagues = await getPlayerLeaguesSummary(user.id);

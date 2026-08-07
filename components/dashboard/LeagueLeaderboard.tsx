@@ -1,5 +1,5 @@
-﻿import {getCurrentUser} from "@/lib/dal";
-import {getLeagueLeaderboard, getMostDraftedConstructorForPlayer, getPlayerLeaguesSummary} from "@/lib/dal/dashboard";
+﻿import {getCurrentUser} from "@/lib/dal/user";
+import {getLeagueLeaderboard, getPlayerLeaguesSummary} from "@/lib/dal/playerInfo";
 
 export async function LeagueLeaderboard({ searchParams }: { searchParams: Promise<{leagueId?: string}> }) {
     const user = await getCurrentUser();
@@ -16,14 +16,16 @@ export async function LeagueLeaderboard({ searchParams }: { searchParams: Promis
         ? await getLeagueLeaderboard(leagueId)
         : null;
 
+    const leagueName = leagues.find(league => league.leagueId === leagueId)?.leagueName ?? "League Not Found";
+
     const playerRows = playerLeagueData?.playerData ?? [];
 
     return (
         <div className="flex flex-col gap-4 rounded-2xl border border-black/10 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5 mt-4">
-            <h2 className="text-lg font-bold text-foreground">League Statistics</h2>
+            <h2 className="text-lg font-bold text-foreground">{leagueName} Leaderboard</h2>
             <div className="h-px w-full bg-black/10 dark:bg-white/10" />
             { playerRows.length > 0 ?
-                <table className="w-full border-collapse block md:table [&_td]:px-4 [&_td]:py-2 [&_th]:px-4 [&_th]:py-2">
+                <table className="w-full border-collapse block md:table [&_td]:px-4 [&_td]:py-2 md:[&_td:first-child]:pl-0 md:[&_td:last-child]:pr-0">
                     <thead className="hidden md:table-header-group">
                     <tr>
                         <th className="text-left">Rank</th>
