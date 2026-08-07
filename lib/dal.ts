@@ -57,6 +57,25 @@ type RoundExtremeOptions = {
     direction: "best" | "worst";
 };
 
+type DriverPointsRow = {
+    driverId: number;
+    code: string;
+    firstName: string;
+    lastName: string;
+    totalPointsContributed: number;
+};
+
+type DriverSingleRoundRow = {
+    driverId: number;
+    code: string;
+    firstName: string;
+    lastName: string;
+    grandPrixId: number;
+    roundNumber: number;
+    eventName: string;
+    pointsScored: number;
+};
+
 /**
  * Shared query for finding a single best/worst-scoring round, optionally
  * scoped to one player, filtered by whether the draft was auto-assigned.
@@ -103,6 +122,43 @@ async function getRoundExtreme({ leagueId, playerId, isAutoAssigned, direction }
     return result ?? null;
 }
 
+// Shared CTE: unnests each draft's 4 slots into individual (driver, round, points) rows,
+// pairing each breakdown_json slot with the matching driverXId column.
+function driverRoundPointsCte(playerId: number, leagueId: number) {
+    const leagueFilter = leagueId ? sql`AND d.league_id = ${leagueId}` : sql``;
+
+    return sql`
+        driver_round_points AS (
+            SELECT d.driver1_id AS driver_id, d.grand_prix_id,
+                   (prs.breakdown_json -> 'driver1' ->> 'points')::int AS points
+            FROM drafts d
+            JOIN player_round_scores prs
+                ON prs.player_id = d.player_id AND prs.league_id = d.league_id AND prs.grand_prix_id = d.grand_prix_id
+            WHERE d.player_id = ${playerId} ${leagueFilter}
+            UNION ALL
+            SELECT d.driver2_id, d.grand_prix_id,
+                   (prs.breakdown_json -> 'driver2' ->> 'points')::int
+            FROM drafts d
+            JOIN player_round_scores prs
+                ON prs.player_id = d.player_id AND prs.league_id = d.league_id AND prs.grand_prix_id = d.grand_prix_id
+            WHERE d.player_id = ${playerId} ${leagueFilter}
+            UNION ALL
+            SELECT d.driver3_id, d.grand_prix_id,
+                   (prs.breakdown_json -> 'driver3' ->> 'points')::int
+            FROM drafts d
+            JOIN player_round_scores prs
+                ON prs.player_id = d.player_id AND prs.league_id = d.league_id AND prs.grand_prix_id = d.grand_prix_id
+            WHERE d.player_id = ${playerId} ${leagueFilter}
+            UNION ALL
+            SELECT d.wildcard_id, d.grand_prix_id,
+                   (prs.breakdown_json -> 'wildcard' ->> 'points')::int
+            FROM drafts d
+            JOIN player_round_scores prs
+                ON prs.player_id = d.player_id AND prs.league_id = d.league_id AND prs.grand_prix_id = d.grand_prix_id
+            WHERE d.player_id = ${playerId} ${leagueFilter}
+        )
+    `;
+}
 
 // ============================================================================
 // 1. LEAGUE OVERVIEW / SUMMARY
@@ -714,7 +770,7 @@ export async function getPlayerWithMostAutoAssignedDrafts(leagueId: number) {
 // ============================================================================
 
 /** Most drafted driver by a specific player (can filter by leagueId or check across all leagues). */
-export async function getPlayerMostDraftedDriver(playerId: number, leagueId?: number) {
+export async function getPlayerMostDraftedDriver(playerId: number, leagueId: number) {
     const whereCondition = leagueId
         ? and(eq(drafts.playerId, playerId), eq(drafts.leagueId, leagueId))
         : eq(drafts.playerId, playerId);
@@ -741,7 +797,7 @@ export async function getPlayerMostDraftedDriver(playerId: number, leagueId?: nu
 }
 
 /** Most drafted constructor by a specific player (can filter by leagueId or check across all leagues). */
-export async function getPlayerMostDraftedConstructor(playerId: number, leagueId?: number) {
+export async function getPlayerMostDraftedConstructor(playerId: number, leagueId: number) {
     const whereCondition = leagueId
         ? and(eq(drafts.playerId, playerId), eq(drafts.leagueId, leagueId))
         : eq(drafts.playerId, playerId);
@@ -763,74 +819,74 @@ export async function getPlayerMostDraftedConstructor(playerId: number, leagueId
     return result ?? null;
 }
 
-/** Highest overall points scored by a driver when included in this player's draft lineup. */
-export async function getPlayerHighestPointsScoringDriver(playerId: number, leagueId?: number) {
-    const whereCondition = leagueId
-        ? and(eq(drafts.playerId, playerId), eq(drafts.leagueId, leagueId))
-        : eq(drafts.playerId, playerId);
+/** Highest cumulative points scored by a driver across all rounds in this player's lineup. */
+export async function getPlayerHighestPointsScoringDriver(playerId: number, leagueId: number) {
+    const result = await db.execute<DriverPointsRow>(sql`
+        WITH ${driverRoundPointsCte(playerId, leagueId)}
+        SELECT drv.id AS "driverId", drv.code, drv.first_name AS "firstName", drv.last_name AS "lastName",
+               SUM(drp.points) AS "totalPointsContributed"
+        FROM driver_round_points drp
+        JOIN drivers drv ON drv.id = drp.driver_id
+        WHERE drp.points IS NOT NULL
+        GROUP BY drv.id, drv.code, drv.first_name, drv.last_name
+        ORDER BY "totalPointsContributed" DESC
+        LIMIT 1
+    `);
 
-    const [result] = await db
-        .select({
-            driverId: drivers.id,
-            code: drivers.code,
-            firstName: drivers.firstName,
-            lastName: drivers.lastName,
-            totalPointsContributed: sql<number>`sum(${playerRoundScores.totalPoints})`,
-        })
-        .from(drafts)
-        .innerJoin(
-            drivers,
-            sql`${drivers.id} in (${drafts.driver1Id}, ${drafts.driver2Id}, ${drafts.driver3Id}, ${drafts.wildcardId})`
-        )
-        .innerJoin(
-            playerRoundScores,
-            and(
-                eq(playerRoundScores.playerId, drafts.playerId),
-                eq(playerRoundScores.leagueId, drafts.leagueId),
-                eq(playerRoundScores.grandPrixId, drafts.grandPrixId)
-            )
-        )
-        .where(whereCondition)
-        .groupBy(drivers.id, drivers.code, drivers.firstName, drivers.lastName)
-        .orderBy(desc(sql`sum(${playerRoundScores.totalPoints})`))
-        .limit(1);
-
-    return result ?? null;
+    return result.rows[0] ?? null;
 }
 
-/** Lowest overall points scored by a driver when included in this player's draft lineup. */
-export async function getPlayerLowestPointsScoringDriver(playerId: number, leagueId?: number) {
-    const whereCondition = leagueId
-        ? and(eq(drafts.playerId, playerId), eq(drafts.leagueId, leagueId))
-        : eq(drafts.playerId, playerId);
+/** Lowest cumulative points scored by a driver across all rounds in this player's lineup. */
+export async function getPlayerLowestPointsScoringDriver(playerId: number, leagueId: number) {
+    const result = await db.execute<DriverPointsRow>(sql`
+        WITH ${driverRoundPointsCte(playerId, leagueId)}
+        SELECT drv.id AS "driverId", drv.code, drv.first_name AS "firstName", drv.last_name AS "lastName",
+               SUM(drp.points) AS "totalPointsContributed"
+        FROM driver_round_points drp
+        JOIN drivers drv ON drv.id = drp.driver_id
+        WHERE drp.points IS NOT NULL
+        GROUP BY drv.id, drv.code, drv.first_name, drv.last_name
+        ORDER BY "totalPointsContributed" ASC
+        LIMIT 1
+    `);
 
-    const [result] = await db
-        .select({
-            driverId: drivers.id,
-            code: drivers.code,
-            firstName: drivers.firstName,
-            lastName: drivers.lastName,
-            totalPointsContributed: sql<number>`sum(${playerRoundScores.totalPoints})`,
-        })
-        .from(drafts)
-        .innerJoin(
-            drivers,
-            sql`${drivers.id} in (${drafts.driver1Id}, ${drafts.driver2Id}, ${drafts.driver3Id}, ${drafts.wildcardId})`
-        )
-        .innerJoin(
-            playerRoundScores,
-            and(
-                eq(playerRoundScores.playerId, drafts.playerId),
-                eq(playerRoundScores.leagueId, drafts.leagueId),
-                eq(playerRoundScores.grandPrixId, drafts.grandPrixId)
-            )
-        )
-        .where(whereCondition)
-        .groupBy(drivers.id, drivers.code, drivers.firstName, drivers.lastName)
-        .orderBy(asc(sql`sum(${playerRoundScores.totalPoints})`))
-        .limit(1);
+    return result.rows[0] ?? null;
+}
 
-    return result ?? null;
+/** Highest points scored by a driver in a single round in this player's lineup. */
+export async function getPlayerHighestSingleRoundDriverScore(playerId: number, leagueId: number) {
+    const result = await db.execute<DriverSingleRoundRow>(sql`
+        WITH ${driverRoundPointsCte(playerId, leagueId)}
+        SELECT drv.id AS "driverId", drv.code, drv.first_name AS "firstName", drv.last_name AS "lastName",
+               gp.id AS "grandPrixId", gp.round_number AS "roundNumber", gp.event_name AS "eventName",
+               drp.points AS "pointsScored"
+        FROM driver_round_points drp
+        JOIN drivers drv ON drv.id = drp.driver_id
+        JOIN grands_prix gp ON gp.id = drp.grand_prix_id
+        WHERE drp.points IS NOT NULL
+        ORDER BY drp.points DESC
+        LIMIT 1
+    `);
+
+    return result.rows[0] ?? null;
+}
+
+/** Lowest points scored by a driver in a single round in this player's lineup. */
+export async function getPlayerLowestSingleRoundDriverScore(playerId: number, leagueId: number) {
+    const result = await db.execute<DriverSingleRoundRow>(sql`
+        WITH ${driverRoundPointsCte(playerId, leagueId)}
+        SELECT drv.id AS "driverId", drv.code, drv.first_name AS "firstName", drv.last_name AS "lastName",
+               gp.id AS "grandPrixId", gp.round_number AS "roundNumber", gp.event_name AS "eventName",
+               drp.points AS "pointsScored"
+        FROM driver_round_points drp
+        JOIN drivers drv ON drv.id = drp.driver_id
+        JOIN grands_prix gp ON gp.id = drp.grand_prix_id
+        WHERE drp.points IS NOT NULL
+        ORDER BY drp.points ASC
+        LIMIT 1
+    `);
+
+    return result.rows[0] ?? null;
 }
 
 /** Highest single round score recorded by a player (can filter by leagueId or check across all leagues). */

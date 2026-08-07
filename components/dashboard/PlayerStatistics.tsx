@@ -9,7 +9,7 @@ import {
     getPlayerWorstRound,
     getPlayerBestAutoAssignedRound,
     getPlayerWorstAutoAssignedRound,
-    getPlayerAveragePointsPerRound,
+    getPlayerAveragePointsPerRound, getPlayerHighestSingleRoundDriverScore, getPlayerLowestSingleRoundDriverScore,
 } from "@/lib/dal";
 import {getPointsText, Statistic} from "@/lib/utils";
 
@@ -27,10 +27,12 @@ export async function PlayerStatistics({ searchParams }: {searchParams: Promise<
     const player = await getPlayerFromId(user.id);
 
     const rawStatistics = {
-        mostDraftedConstructor: await getPlayerMostDraftedConstructor(leagueId),
-        mostDraftedDriver: await getPlayerMostDraftedDriver(leagueId),
-        highestPointsScoringDriver: await getPlayerHighestPointsScoringDriver(leagueId),
-        lowestPointsScoringDriver: await getPlayerLowestPointsScoringDriver(leagueId),
+        mostDraftedConstructor: await getPlayerMostDraftedConstructor(user.id, leagueId),
+        mostDraftedDriver: await getPlayerMostDraftedDriver(user.id, leagueId),
+        highestPointsScoringDriver: await getPlayerHighestPointsScoringDriver(user.id, leagueId),
+        lowestPointsScoringDriver: await getPlayerLowestPointsScoringDriver(user.id, leagueId),
+        highestSingleRoundDriverScore: await getPlayerHighestSingleRoundDriverScore(user.id, leagueId),
+        lowestSingleRoundDriverScore: await getPlayerLowestSingleRoundDriverScore(user.id, leagueId),
         highestScoringRound: await getPlayerBestRound(user.id, leagueId),
         lowestScoringRound: await getPlayerWorstRound(user.id, leagueId),
         averagePointsPerRound: await getPlayerAveragePointsPerRound(leagueId),
@@ -41,13 +43,21 @@ export async function PlayerStatistics({ searchParams }: {searchParams: Promise<
     const playerStatistics: Statistic[] = [
         { id: "most-drafted-constructor", name: "Most Drafted Constructor", value: rawStatistics.mostDraftedConstructor.fullName },
         { id: "most-drafted-driver", name: "Most Drafted Driver", value: `${rawStatistics.mostDraftedDriver.firstName} ${rawStatistics.mostDraftedDriver.lastName}` },
-        { id: "highest-points-scoring-driver", name: "Highest Points Scored In A Single Weekend",
-            value: rawStatistics.highestPointsScoringDriver ? `${getPointsText(rawStatistics.highestScoringRound.points)} - ${rawStatistics.highestScoringRound.player.username} - ${rawStatistics.highestScoringRound.round.eventName}` : "N/A" },
-        { id: "lowest-points-scoring-driver", name: "Lowest Points Scored In A Single Weekend",
-            value: rawStatistics.lowestPointsScoringDriver ? `${getPointsText(rawStatistics.lowestScoringRound.points)} - ${rawStatistics.lowestScoringRound.player.username} - ${rawStatistics.lowestScoringRound.round.eventName}` : "N/A" },
+        { id: "highest-points-scoring-driver", name: "Most Successful Drafted Driver",
+            value: rawStatistics.highestPointsScoringDriver ? `${getPointsText(rawStatistics.highestPointsScoringDriver.totalPointsContributed)} - ${rawStatistics.highestPointsScoringDriver.firstName} ${rawStatistics.highestPointsScoringDriver.lastName}` : "N/A" },
+        { id: "lowest-points-scoring-driver", name: "Least Successful Drafted Driver",
+            value: rawStatistics.lowestPointsScoringDriver ? `${getPointsText(rawStatistics.lowestPointsScoringDriver.totalPointsContributed)} - ${rawStatistics.lowestPointsScoringDriver.firstName} ${rawStatistics.lowestPointsScoringDriver.lastName}` : "N/A" },
+        { id: "highest-points-scoring-driver-single-round", name: "Most Points Scored By A Driver In A Round",
+            value: rawStatistics.highestSingleRoundDriverScore ?
+                `${getPointsText(rawStatistics.highestSingleRoundDriverScore.pointsScored)} - 
+                ${rawStatistics.highestSingleRoundDriverScore.firstName} ${rawStatistics.highestSingleRoundDriverScore.lastName}` : "N/A" },
+        { id: "lowest-points-scoring-driver-single-round", name: "Least Points Scored By A Driver In A Round",
+            value: rawStatistics.lowestSingleRoundDriverScore ?
+                `${getPointsText(rawStatistics.lowestSingleRoundDriverScore.pointsScored)} - 
+                ${rawStatistics.lowestSingleRoundDriverScore.firstName} ${rawStatistics.lowestSingleRoundDriverScore.lastName}` : "N/A" },
         { id: "average-points-per-round", name: "Average Points Per Round", value: String(Math.trunc(rawStatistics.averagePointsPerRound * 100) / 100) },
-        { id: "highest-random-round", name: "Highest Auto-Assigned Round", value: rawStatistics.highestScoringRandomRound ? `${getPointsText(rawStatistics.highestScoringRandomRound.points)} - ${rawStatistics.highestScoringRandomRound.player.username} - ${rawStatistics.highestScoringRandomRound.round.eventName}` : "N/A" },
-        { id: "lowest-random-round", name: "Lowest Auto-Assigned Round", value: rawStatistics.lowestScoringRandomRound ? `${getPointsText(rawStatistics.lowestScoringRandomRound.points)} - ${rawStatistics.lowestScoringRandomRound.player.username} - ${rawStatistics.lowestScoringRandomRound.round.eventName}` : "N/A" },
+        { id: "highest-random-round", name: "Most Points From A Random Draft", value: rawStatistics.highestScoringRandomRound ? `${getPointsText(rawStatistics.highestScoringRandomRound.points)} - ${rawStatistics.highestScoringRandomRound.player.username} - ${rawStatistics.highestScoringRandomRound.round.eventName}` : "No random drafts made" },
+        { id: "lowest-random-round", name: "Least Points From A Random Draft", value: rawStatistics.lowestScoringRandomRound ? `${getPointsText(rawStatistics.lowestScoringRandomRound.points)} - ${rawStatistics.lowestScoringRandomRound.player.username} - ${rawStatistics.lowestScoringRandomRound.round.eventName}` : "No random drafts made" },
     ];
 
     return (
