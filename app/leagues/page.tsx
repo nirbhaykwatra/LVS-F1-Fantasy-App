@@ -11,7 +11,7 @@ import { getCurrentUser } from "@/lib/dal/user";
 import { getPlayerLeaguesSummary } from "@/lib/dal/playerInfo";
 // NOTE: adjust this import to wherever your invite-code lookup actually lives —
 // I assumed a DAL function with this name/shape since I don't have your league DAL.
-// import { joinLeagueByInviteCode } from "@/lib/dal/league";
+import { joinLeagueByInviteCode } from "@/lib/dal";
 
 async function joinLeagueAction(
     _prevState: JoinLeagueState,
@@ -25,8 +25,8 @@ async function joinLeagueAction(
     const code = String(formData.get("inviteCode") ?? "").trim();
     if (!code) return { error: "Enter an invite code." };
 
-    // const joined = await joinLeagueByInviteCode(user.id, code).catch(() => null);
-    // if (!joined) return { error: "That code didn't match a league." };
+    const joined = await joinLeagueByInviteCode(user.id, code, { teamName: "", teamMotto: "" }).catch(() => null);
+    if (!joined) return { error: "That code didn't match a league." };
 
     redirect("/leagues");
 }

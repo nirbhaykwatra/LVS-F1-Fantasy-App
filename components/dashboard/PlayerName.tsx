@@ -1,18 +1,17 @@
 ﻿import { getCurrentUser } from "@/lib/dal/user";
 import {getPlayerLeaguesSummary, getPlayerTeamMotto} from "@/lib/dal/playerInfo";
 
-export async function PlayerName({ searchParams }: { searchParams: Promise<{ leagueId?: string }>}) {
+export async function PlayerName({ leagueId }: { leagueId: string }) {
     const user = await getCurrentUser();
     if (!user) return null;
 
     const leagues = await getPlayerLeaguesSummary(user.id);
 
-    const rawLeagueId = (await searchParams)?.leagueId;
-    const leagueId = rawLeagueId
-        ? Number(rawLeagueId)
+    const actualLeagueId = leagueId
+        ? Number(leagueId)
         : leagues[0]?.leagueId; // default to the (only) league when nothing is selected
 
-    const playerMotto = await getPlayerTeamMotto(user.id, { leagueId })
+    const playerMotto = await getPlayerTeamMotto(user.id, actualLeagueId);
 
     return (
         <div>

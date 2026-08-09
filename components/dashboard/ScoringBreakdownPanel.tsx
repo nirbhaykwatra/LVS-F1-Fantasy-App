@@ -2,14 +2,14 @@
 import { getCurrentUser } from "@/lib/dal/user";
 import { GrandPrixOption, GrandPrixSelector } from "@/components/dashboard/GrandPrixSelector";
 
-export async function ScoringBreakdownPanel({ searchParams }: {searchParams: Promise<{round?: string}>}) {
+export async function ScoringBreakdownPanel({ round }: { round?: string }) {
     const user = await getCurrentUser();
     if (!user)
         return null;
     const detail = await getPlayerLeagueSeasonDetail(user.id, 1);
     const recentGP = await getMostRecentGrandPrix();
 
-    const requestedRound = Number((await searchParams)?.round);
+    const requestedRound = Number(round);
     const grandPrixOptions: GrandPrixOption[] = await getGrandPrixOptions();
     const selectedGrandPrix: GrandPrixOption = grandPrixOptions.find((gp) => gp.roundNumber === requestedRound) || { roundNumber: recentGP.roundNumber, name: recentGP.name };
 

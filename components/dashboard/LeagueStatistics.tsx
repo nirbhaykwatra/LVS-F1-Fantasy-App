@@ -15,31 +15,30 @@ import {
 } from "@/lib/dal";
 import {getPointsText, Statistic} from "@/lib/utils";
 
-export async function LeagueStatistics({ searchParams }: {searchParams: Promise<{leagueId?: string}>}) {
+export async function LeagueStatistics({ leagueId }: { leagueId: string }) {
     const user = await getCurrentUser();
     if (!user) return null;
 
     const leagues = await getPlayerLeaguesSummary(user.id);
 
-    const rawLeagueId = (await searchParams)?.leagueId;
-    const leagueId = rawLeagueId
-        ? Number(rawLeagueId)
+    const actualLeagueId = leagueId
+        ? Number(leagueId)
         : leagues[0]?.leagueId; // default to the (only) league when nothing is selected
 
-    const leagueName = leagues.find(league => league.leagueId === leagueId)?.leagueName ?? "League Not Found";
+    const leagueName = leagues.find(league => league.leagueId === actualLeagueId)?.leagueName ?? "League Not Found";
 
     const rawStatistics = {
-        mostDraftedConstructor: await getLeagueMostDraftedConstructor(leagueId),
-        mostDraftedDriver: await getLeagueMostDraftedDriver(leagueId),
-        roundDraftExtremes: await getLeagueRoundDraftExtremes(leagueId),
-        highestPointsScoringPlayer: await getLeagueHighestPointsScoringPlayer(leagueId),
-        lowestPointsScoringPlayer: await getLeagueLowestPointsScoringPlayer(leagueId),
-        highestScoringRound: await getLeagueBestRound(leagueId),
-        lowestScoringRound: await getLeagueWorstRound(leagueId),
-        averagePointsPerRound: await getLeagueAveragePointsPerRound(leagueId),
-        highestScoringRandomRound: await getLeagueBestAutoAssignedRound(leagueId),
-        lowestScoringRandomRound: await getLeagueWorstAutoAssignedRound(leagueId),
-        playerWithMostRandomDrafts: await getPlayerWithMostAutoAssignedDrafts(leagueId),
+        mostDraftedConstructor: await getLeagueMostDraftedConstructor(actualLeagueId),
+        mostDraftedDriver: await getLeagueMostDraftedDriver(actualLeagueId),
+        roundDraftExtremes: await getLeagueRoundDraftExtremes(actualLeagueId),
+        highestPointsScoringPlayer: await getLeagueHighestPointsScoringPlayer(actualLeagueId),
+        lowestPointsScoringPlayer: await getLeagueLowestPointsScoringPlayer(actualLeagueId),
+        highestScoringRound: await getLeagueBestRound(actualLeagueId),
+        lowestScoringRound: await getLeagueWorstRound(actualLeagueId),
+        averagePointsPerRound: await getLeagueAveragePointsPerRound(actualLeagueId),
+        highestScoringRandomRound: await getLeagueBestAutoAssignedRound(actualLeagueId),
+        lowestScoringRandomRound: await getLeagueWorstAutoAssignedRound(actualLeagueId),
+        playerWithMostRandomDrafts: await getPlayerWithMostAutoAssignedDrafts(actualLeagueId),
     }
 
     const leagueStatistics: Statistic[] = [
@@ -59,7 +58,7 @@ export async function LeagueStatistics({ searchParams }: {searchParams: Promise<
         <div className="flex flex-col gap-4 rounded-2xl border border-black/10 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5 mt-4">
             <h2 className="text-lg font-bold text-foreground">{leagueName} Overall Statistics</h2>
             <div className="h-px w-full bg-black/10 dark:bg-white/10" />
-            { leagueId ?
+            { actualLeagueId ?
                 <table className="w-full border-collapse block md:table [&_td]:px-4 [&_td]:py-2 md:[&_td:first-child]:pl-0 md:[&_td:last-child]:pr-0">
                     <tbody className="block md:table-row-group">
                     {leagueStatistics.map((stat) => (

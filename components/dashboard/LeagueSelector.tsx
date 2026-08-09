@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import {redirect, useRouter, useSearchParams} from "next/navigation";
 import { PlayerLeaguesSummary } from "@/lib/dal/playerInfo";
 
 export function LeagueSelector({ options, selected }: { options: PlayerLeaguesSummary; selected: { leagueId: number, leagueName: string; currentPointsTotal: number; currentRank: number } }) {
@@ -25,7 +25,7 @@ export function LeagueSelector({ options, selected }: { options: PlayerLeaguesSu
         if (leagueId === selected.leagueId) return;
         const params = new URLSearchParams(searchParams.toString());
         params.set("league", String(leagueId));
-        router.push(`?${params.toString()}`, { scroll: false });
+        redirect(`/leagues/${params.get("league")}/dashboard`);
     }
 
     return (

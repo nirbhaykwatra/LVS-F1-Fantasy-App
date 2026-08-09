@@ -225,14 +225,8 @@ export async function getPlayerLeagueSeasonDetail(playerId: number, leagueId: nu
     return detail;
 }
 
-export type GrandPrix = {
-    roundNumber: number;
-    name: string;
-    date: string | null;
-};
-
-export async function getMostRecentGrandPrix(): Promise<GrandPrix> {
-    const completedGrandsPrix: Array<GrandPrix> = await db
+export async function getMostRecentGrandPrix() {
+    const completedGrandsPrix = await db
         .select({ roundNumber: grandsPrix.roundNumber, name: grandsPrix.eventName, date: grandsPrix.raceDateUtc })
         .from(grandsPrix)
         .where(eq(grandsPrix.isCompleted, true))
@@ -267,10 +261,8 @@ export async function getPlayerFromId(playerId: number) {
     return player ?? null;
 }
 
-export async function getPlayerTeamName(playerId: number, options?: { leagueId?: number; seasonId?: number }): Promise<string | null> {
-    const conditions = [eq(playerLeagues.playerId, playerId)];
-    if (options?.leagueId) conditions.push(eq(playerLeagues.leagueId, options.leagueId));
-    if (options?.seasonId) conditions.push(eq(playerLeagues.seasonId, options.seasonId));
+export async function getPlayerTeamName(playerId: number, leagueId: number): Promise<string | null> {
+    const conditions = [eq(playerLeagues.playerId, playerId), eq(playerLeagues.leagueId, leagueId)];
 
     const playerLeague = await db.select()
         .from(playerLeagues)
@@ -281,10 +273,8 @@ export async function getPlayerTeamName(playerId: number, options?: { leagueId?:
     return playerLeague[0]?.teamName ?? null;
 }
 
-export async function getPlayerTeamMotto(playerId: number, options?: { leagueId?: number; seasonId?: number }): Promise<string | null> {
-    const conditions = [eq(playerLeagues.playerId, playerId)];
-    if (options?.leagueId) conditions.push(eq(playerLeagues.leagueId, options.leagueId));
-    if (options?.seasonId) conditions.push(eq(playerLeagues.seasonId, options.seasonId));
+export async function getPlayerTeamMotto(playerId: number, leagueId: number): Promise<string | null> {
+    const conditions = [eq(playerLeagues.playerId, playerId), eq(playerLeagues.leagueId, leagueId)];
 
     const playerLeague = await db.select()
         .from(playerLeagues)

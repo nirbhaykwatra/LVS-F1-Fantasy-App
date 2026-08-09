@@ -250,6 +250,7 @@ export const leagues = pgTable("leagues", {
 	counterpickLimit: integer("counterpick_limit").default(3).notNull(),
 	createdByPlayerId: integer("created_by_player_id"),
 	inviteCode: text("invite_code"),
+	slug: text("slug"),
 }, (table) => [
 	index("idx_leagues_created_by").using("btree", table.createdByPlayerId.asc().nullsLast().op("int4_ops")),
 	index("idx_leagues_discord_guild").using("btree", table.discordGuildId.asc().nullsLast().op("int8_ops")),
@@ -268,6 +269,7 @@ export const leagues = pgTable("leagues", {
 	unique("leagues_discord_guild_id_name_key").on(table.discordGuildId, table.name),
 	unique("leagues_season_id_name_key").on(table.name, table.seasonId),
 	unique("leagues_invite_code_key").on(table.inviteCode),
+	unique("leagues_slug_key").on(table.slug),
 ]);
 
 export const counterpicks = pgTable("counterpicks", {

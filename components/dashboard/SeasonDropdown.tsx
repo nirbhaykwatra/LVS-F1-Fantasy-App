@@ -2,11 +2,11 @@
 import {LeagueSelector} from "@/components/dashboard/LeagueSelector";
 import {getPlayerLeaguesSummary} from "@/lib/dal/playerInfo";
 
-export async function SeasonDropdown({ searchParams }: { searchParams: Promise<{ leagueId?: string }> }) {
+export async function SeasonDropdown({ leagueId }: { leagueId: string }) {
     const user = await getCurrentUser();
     if (!user) return null;
     const leagues = await getPlayerLeaguesSummary(user.id);
-    const requestedLeague = Number((await searchParams)?.leagueId);
+    const requestedLeague = Number(leagueId);
     const selectedLeague = leagues.find((league) => league.leagueId === requestedLeague) || leagues[0];
 
     return (

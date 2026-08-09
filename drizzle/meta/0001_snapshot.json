@@ -1,6 +1,6 @@
 {
-  "id": "d847a1dc-17e5-4da1-98f4-86c69ac1c543",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "3d73ee19-6e59-4635-967e-a17374b0d04d",
+  "prevId": "d847a1dc-17e5-4da1-98f4-86c69ac1c543",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -1579,6 +1579,12 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {
@@ -1698,6 +1704,13 @@
           "nullsNotDistinct": false,
           "columns": [
             "invite_code"
+          ]
+        },
+        "leagues_slug_key": {
+          "name": "leagues_slug_key",
+          "nullsNotDistinct": false,
+          "columns": [
+            "slug"
           ]
         }
       },

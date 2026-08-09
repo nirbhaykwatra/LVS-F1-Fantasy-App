@@ -554,6 +554,15 @@ export async function getLeagueOwners(leagueId: number) {
         .where(and(eq(playerLeagues.leagueId, leagueId), eq(playerLeagues.role, "owner")));
 }
 
+export async function joinLeagueByInviteCode(id: number, code: string, p0: {
+    teamName: string;
+    teamMotto: string;
+}) {
+
+    const leagueId = 123;
+    return { leagueId }
+}
+
 // ============================================================================
 // 9. LEAGUE STATISTICAL METRICS
 // ============================================================================

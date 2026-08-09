@@ -1,22 +1,21 @@
 ﻿import {getCurrentUser} from "@/lib/dal/user";
 import {getLeagueLeaderboard, getPlayerLeaguesSummary} from "@/lib/dal/playerInfo";
 
-export async function LeagueLeaderboard({ searchParams }: { searchParams: Promise<{leagueId?: string}> }) {
+export async function LeagueLeaderboard({ leagueId }: { leagueId: string }) {
     const user = await getCurrentUser();
     if (!user) return null;
 
     const leagues = await getPlayerLeaguesSummary(user.id);
 
-    const rawLeagueId = (await searchParams)?.leagueId;
-    const leagueId = rawLeagueId
-        ? Number(rawLeagueId)
+    const actualLeagueId = leagueId
+        ? Number(leagueId)
         : leagues[0]?.leagueId; // default to the (only) league when nothing is selected
 
-    const playerLeagueData = leagueId
-        ? await getLeagueLeaderboard(leagueId)
+    const playerLeagueData = actualLeagueId
+        ? await getLeagueLeaderboard(Number(actualLeagueId))
         : null;
 
-    const leagueName = leagues.find(league => league.leagueId === leagueId)?.leagueName ?? "League Not Found";
+    const leagueName = leagues.find(league => league.leagueId === actualLeagueId)?.leagueName ?? "League Not Found";
 
     const playerRows = playerLeagueData?.playerData ?? [];
 
