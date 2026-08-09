@@ -1,4 +1,4 @@
-﻿import { AnimatedBackground } from "@/components/AnimatedBackground";
+﻿import { AnimatedBackground } from "@/components/common/AnimatedBackground";
 
 const LandingLoading = () => {
     return (

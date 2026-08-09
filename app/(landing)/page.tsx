@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AnimatedBackground } from "@/components/AnimatedBackground";
+import { AnimatedBackground } from "@/components/common/AnimatedBackground";
 import { Tagline } from "@/components/landing/Tagline";
 import { taglines } from "@/lib/utils";
 

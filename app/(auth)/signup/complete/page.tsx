@@ -1,7 +1,7 @@
 ﻿import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { AnimatedBackground } from "@/components/AnimatedBackground";
+import { AnimatedBackground } from "@/components/common/AnimatedBackground";
 import CompleteSignupForm from "@/components/auth/CompleteSignupForm";
 
 export default async function CompleteSignupPage() {

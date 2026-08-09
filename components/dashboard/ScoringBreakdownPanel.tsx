@@ -13,8 +13,25 @@ export async function ScoringBreakdownPanel({ searchParams }: {searchParams: Pro
     const grandPrixOptions: GrandPrixOption[] = await getGrandPrixOptions();
     const selectedGrandPrix: GrandPrixOption = grandPrixOptions.find((gp) => gp.roundNumber === requestedRound) || { roundNumber: recentGP.roundNumber, name: recentGP.name };
 
-    const breakdown = detail[selectedGrandPrix.roundNumber].pointsBreakdown;
+    const breakdown = detail[selectedGrandPrix.roundNumber]?.pointsBreakdown;
 
+    if (!breakdown){
+        return (
+            <div>
+                <div className="flex flex-col gap-4 rounded-2xl border border-black/10 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5 mt-4">
+                    <div className="flex flex-col sm:flex-row gap-4 justify-between">
+                        <GrandPrixSelector options={grandPrixOptions} selected={selectedGrandPrix} />
+                        <h2 className="text-lg font-bold text-foreground">Previous Grand Prix Results</h2>
+                    </div>
+
+                    <div className="h-px w-full bg-black/10 dark:bg-white/10" />
+                        <p className="text-sm text-foreground/60 text-center py-8">
+                            No race data recorded for this week yet.
+                        </p>
+                </div>
+            </div>
+        );
+    }
     const driverRows: Array<[label: string, entry: typeof breakdown.driver1]> = [
         ["Driver 1", breakdown.driver1],
         ["Driver 2", breakdown.driver2],

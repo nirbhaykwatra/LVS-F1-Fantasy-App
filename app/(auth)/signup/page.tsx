@@ -3,9 +3,10 @@
 import Link from "next/link";
 import {Suspense, useActionState, useEffect} from "react";
 import { useRouter } from "next/navigation";
-import { AnimatedBackground } from "@/components/AnimatedBackground";
+import { AnimatedBackground } from "@/components/common/AnimatedBackground";
 import { signUp } from "@/app/actions/auth";
 import type { ActionResponse } from "@/app/actions/auth";
+import {ButtonPill} from "@/components/common/Buttons";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -34,12 +35,7 @@ export default function SignUpPage() {
           </Link>
           <nav className="flex items-center gap-3">
             <span className="text-sm text-foreground/60">Already racing?</span>
-            <Link
-                href="/signin"
-                className="rounded-full px-4 py-2 text-sm font-semibold text-foreground transition hover:text-brand"
-            >
-              Sign In
-            </Link>
+            <ButtonPill label="Sign In" href="/signin" />
           </nav>
         </header>
 

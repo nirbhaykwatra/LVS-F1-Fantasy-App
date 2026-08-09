@@ -1,4 +1,4 @@
-﻿import getDate from "@/components/Date";
+﻿import getDate from "@/components/common/Date";
 
 export default async function AuthLayout({ children, }: { children: React.ReactNode }) {
     return (
