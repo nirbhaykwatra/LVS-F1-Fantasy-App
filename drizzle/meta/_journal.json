@@ -15,6 +15,13 @@
       "when": 1786276215824,
       "tag": "0001_confused_wendell_vaughn",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791565653734,
+      "tag": "0002_outgoing_tyger_tiger",
+      "breakpoints": true
     }
   ]
 }
