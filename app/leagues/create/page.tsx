@@ -6,35 +6,9 @@ import SignOutButton from "@/components/dashboard/SignOutButton";
 import { PlayerNameNav } from "@/components/dashboard/PlayerNameNav";
 import { CreateLeagueForm, CreateLeagueState } from "@/components/leagues/CreateLeagueForm";
 import { getCurrentUser } from "@/lib/dal/user";
-// NOTE: adjust this import/call to match your actual league-creation DAL —
-// I assumed a function with this name/shape since I don't have your league DAL.
 // import { createLeague } from "@/lib/dal/league";
 
-async function createLeagueAction(
-    _prevState: CreateLeagueState,
-    formData: FormData
-): Promise<CreateLeagueState> {
-    "use server";
 
-    const user = await getCurrentUser();
-    if (!user) return { error: "You need to sign in first." };
-
-    const name = String(formData.get("name") ?? "").trim();
-    if (!name) return { error: "Give your league a name." };
-    if (name.length > 40) return { error: "Keep the name under 40 characters." };
-
-    const visibility = formData.get("visibility") === "public" ? "public" : "private";
-
-    // const league = await createLeague({
-    //     name,
-    //     isPublic: visibility === "public",
-    //     ownerId: user.id,
-    // }).catch(() => null);
-    //
-    // if (!league) return { error: "Something went wrong creating your league. Try again." };
-    //
-    redirect(`/leagues/dashboard`);
-}
 
 // Auth check is dynamic (reads the session cookie/JWT), so it's isolated here
 // and wrapped in Suspense below — same pattern as the leagues list page —
@@ -46,15 +20,7 @@ async function CreateLeagueGate() {
     return <CreateLeagueForm action={createLeagueAction} />;
 }
 
-function CreateLeagueSkeleton() {
-    return (
-        <div className="flex animate-pulse flex-col gap-8">
-            <div className="h-12 rounded-xl bg-black/5 dark:bg-white/10" />
-            <div className="h-24 rounded-xl bg-black/5 dark:bg-white/10" />
-            <div className="h-11 w-40 rounded-full bg-black/5 dark:bg-white/10" />
-        </div>
-    );
-}
+
 
 export default function CreateLeaguePage() {
     return (
