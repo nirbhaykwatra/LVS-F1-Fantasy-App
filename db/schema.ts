@@ -1,8 +1,6 @@
 import { pgTable, index, foreignKey, unique, integer, smallint, text, timestamp, boolean, char, date, check, jsonb, bigint, uniqueIndex, varchar, primaryKey, pgView, numeric } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 
-
-
 export const grandsPrix = pgTable("grands_prix", {
 	id: integer().primaryKey().generatedAlwaysAsIdentity({ name: "grands_prix_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 2147483647, cache: 1 }),
 	seasonId: integer("season_id").notNull(),
@@ -19,8 +17,8 @@ export const grandsPrix = pgTable("grands_prix", {
 	counterpickDeadlineUtc: timestamp("counterpick_deadline_utc", { withTimezone: true, mode: 'string' }),
 	isCompleted: boolean("is_completed").default(false).notNull(),
 }, (table) => [
-	index("idx_grands_prix_completed").using("btree", table.seasonId.asc().nullsLast().op("int4_ops"), table.isCompleted.asc().nullsLast().op("int4_ops")),
-	index("idx_grands_prix_season").using("btree", table.seasonId.asc().nullsLast().op("int4_ops")),
+	index("idx_grands_prix_completed").using("btree", table.seasonId.asc().nullsLast(), table.isCompleted.asc().nullsLast()),
+	index("idx_grands_prix_season").using("btree", table.seasonId.asc().nullsLast()),
 	foreignKey({
 			columns: [table.seasonId],
 			foreignColumns: [seasons.id],
@@ -43,8 +41,8 @@ export const drivers = pgTable("drivers", {
 	nationality: text(),
 	driverImageUrl: text("driver_image_url"),
 }, (table) => [
-	index("idx_drivers_constructor").using("btree", table.constructorId.asc().nullsLast().op("int4_ops")),
-	index("idx_drivers_season").using("btree", table.seasonId.asc().nullsLast().op("int4_ops")),
+	index("idx_drivers_constructor").using("btree", table.constructorId.asc().nullsLast()),
+	index("idx_drivers_season").using("btree", table.seasonId.asc().nullsLast()),
 	foreignKey({
 			columns: [table.constructorId],
 			foreignColumns: [constructors.id],
@@ -73,9 +71,9 @@ export const drafts = pgTable("drafts", {
 	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	seasonId: integer("season_id").notNull(),   // <-- appended, TEMPORARY position — move back to after leagueId once the Discord bot is sunset
 }, (table) => [
-	index("idx_drafts_grand_prix_league").using("btree", table.grandPrixId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops")),
-	index("idx_drafts_player_league").using("btree", table.playerId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops")),
-	index("idx_drafts_season").using("btree", table.seasonId.asc().nullsLast().op("int4_ops")),
+	index("idx_drafts_grand_prix_league").using("btree", table.grandPrixId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
+	index("idx_drafts_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
+	index("idx_drafts_season").using("btree", table.seasonId.asc().nullsLast()),
 	foreignKey({
 		columns: [table.constructorId],
 		foreignColumns: [constructors.id],
@@ -133,7 +131,7 @@ export const constructors = pgTable("constructors", {
 	colorHex: char("color_hex", { length: 7 }).default('#FFFFFF').notNull(),
 	ergastId: text("ergast_id"),
 }, (table) => [
-	index("idx_constructors_season").using("btree", table.seasonId.asc().nullsLast().op("int4_ops")),
+	index("idx_constructors_season").using("btree", table.seasonId.asc().nullsLast()),
 	foreignKey({
 			columns: [table.seasonId],
 			foreignColumns: [seasons.id],
@@ -153,9 +151,9 @@ export const driverExhaustion = pgTable("driver_exhaustion", {
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 }, (table) => [
-	index("idx_driver_exhaustion_driver").using("btree", table.driverId.asc().nullsLast().op("int4_ops")),
-	index("idx_driver_exhaustion_exhausted").using("btree", table.playerId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops")).where(sql`(is_exhausted = true)`),
-	index("idx_driver_exhaustion_player_league").using("btree", table.playerId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops")),
+	index("idx_driver_exhaustion_driver").using("btree", table.driverId.asc().nullsLast()),
+	index("idx_driver_exhaustion_exhausted").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()).where(sql`(is_exhausted = true)`),
+	index("idx_driver_exhaustion_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
 	foreignKey({
 			columns: [table.driverId],
 			foreignColumns: [drivers.id],
@@ -190,9 +188,9 @@ export const playerRoundScores = pgTable("player_round_scores", {
 	calculatedAt: timestamp("calculated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	seasonId: integer("season_id").notNull(),
 }, (table) => [
-	index("idx_player_scores_gp_league").using("btree", table.grandPrixId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops")),
-	index("idx_player_scores_player_league").using("btree", table.playerId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops")),
-	index("idx_player_scores_season").using("btree", table.seasonId.asc().nullsLast().op("int4_ops")),
+	index("idx_player_scores_gp_league").using("btree", table.grandPrixId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
+	index("idx_player_scores_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
+	index("idx_player_scores_season").using("btree", table.seasonId.asc().nullsLast()),
 	foreignKey({
 		columns: [table.grandPrixId],
 		foreignColumns: [grandsPrix.id],
@@ -223,7 +221,7 @@ export const raceResults = pgTable("race_results", {
 	driverId: integer("driver_id").notNull(),
 	position: smallint().notNull(),
 }, (table) => [
-	index("idx_race_results_gp_session").using("btree", table.grandPrixId.asc().nullsLast().op("text_ops"), table.sessionType.asc().nullsLast().op("text_ops")),
+	index("idx_race_results_gp_session").using("btree", table.grandPrixId.asc().nullsLast(), table.sessionType.asc().nullsLast()),
 	foreignKey({
 			columns: [table.driverId],
 			foreignColumns: [drivers.id],
@@ -252,10 +250,10 @@ export const leagues = pgTable("leagues", {
 	inviteCode: text("invite_code"),
 	slug: text("slug"),
 }, (table) => [
-	index("idx_leagues_created_by").using("btree", table.createdByPlayerId.asc().nullsLast().op("int4_ops")),
-	index("idx_leagues_discord_guild").using("btree", table.discordGuildId.asc().nullsLast().op("int8_ops")),
-	index("idx_leagues_invite_code").using("btree", table.inviteCode.asc().nullsLast().op("text_ops")),
-	index("idx_leagues_season").using("btree", table.seasonId.asc().nullsLast().op("int4_ops")),
+	index("idx_leagues_created_by").using("btree", table.createdByPlayerId.asc().nullsLast()),
+	index("idx_leagues_discord_guild").using("btree", table.discordGuildId.asc().nullsLast()),
+	index("idx_leagues_invite_code").using("btree", table.inviteCode.asc().nullsLast()),
+	index("idx_leagues_season").using("btree", table.seasonId.asc().nullsLast()),
 	foreignKey({
 			columns: [table.seasonId],
 			foreignColumns: [seasons.id],
@@ -281,8 +279,8 @@ export const counterpicks = pgTable("counterpicks", {
 	targetDriverId: integer("target_driver_id").notNull(),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 }, (table) => [
-	index("idx_counterpicks_grand_prix_league").using("btree", table.grandPrixId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops")),
-	index("idx_counterpicks_target").using("btree", table.grandPrixId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops"), table.targetPlayerId.asc().nullsLast().op("int4_ops")),
+	index("idx_counterpicks_grand_prix_league").using("btree", table.grandPrixId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
+	index("idx_counterpicks_target").using("btree", table.grandPrixId.asc().nullsLast(), table.leagueId.asc().nullsLast(), table.targetPlayerId.asc().nullsLast()),
 	foreignKey({
 			columns: [table.grandPrixId],
 			foreignColumns: [grandsPrix.id],
@@ -318,7 +316,7 @@ export const scoringRules = pgTable("scoring_rules", {
 	ruleKey: text("rule_key").notNull(),
 	ruleValue: jsonb("rule_value").notNull(),
 }, (table) => [
-	index("idx_scoring_rules_season").using("btree", table.seasonId.asc().nullsLast().op("int4_ops")),
+	index("idx_scoring_rules_season").using("btree", table.seasonId.asc().nullsLast()),
 	foreignKey({
 			columns: [table.seasonId],
 			foreignColumns: [seasons.id],
@@ -338,9 +336,9 @@ export const constructorExhaustion = pgTable("constructor_exhaustion", {
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 }, (table) => [
-	index("idx_constructor_exhaustion_constructor").using("btree", table.constructorId.asc().nullsLast().op("int4_ops")),
-	index("idx_constructor_exhaustion_exhausted").using("btree", table.playerId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops")).where(sql`(is_exhausted = true)`),
-	index("idx_constructor_exhaustion_player_league").using("btree", table.playerId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops")),
+	index("idx_constructor_exhaustion_constructor").using("btree", table.constructorId.asc().nullsLast()),
+	index("idx_constructor_exhaustion_exhausted").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()).where(sql`(is_exhausted = true)`),
+	index("idx_constructor_exhaustion_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
 	foreignKey({
 			columns: [table.constructorId],
 			foreignColumns: [constructors.id],
@@ -386,9 +384,9 @@ export const players = pgTable("players", {
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	email: text(),
 }, (table) => [
-	index("idx_players_discord_user").using("btree", table.discordUserId.asc().nullsLast().op("int8_ops")),
-	index("idx_players_email").using("btree", table.email.asc().nullsLast().op("text_ops")),
-	index("idx_players_username").using("btree", table.username.asc().nullsLast().op("text_ops")),
+	index("idx_players_discord_user").using("btree", table.discordUserId.asc().nullsLast()),
+	index("idx_players_email").using("btree", table.email.asc().nullsLast()),
+	index("idx_players_username").using("btree", table.username.asc().nullsLast()),
 	unique("players_discord_user_id_key").on(table.discordUserId),
 	unique("players_username_key").on(table.username),
 	unique("players_email_key").on(table.email),
@@ -400,8 +398,8 @@ export const counterpickUsage = pgTable("counterpick_usage", {
 	seasonId: integer("season_id").notNull(),
 	usedCount: integer("used_count").default(0).notNull(),
 }, (table) => [
-	index("idx_counterpick_usage_player_league").using("btree", table.playerId.asc().nullsLast().op("int4_ops"), table.leagueId.asc().nullsLast().op("int4_ops")),
-	index("idx_counterpick_usage_season").using("btree", table.seasonId.asc().nullsLast().op("int4_ops")),
+	index("idx_counterpick_usage_player_league").using("btree", table.playerId.asc().nullsLast(), table.leagueId.asc().nullsLast()),
+	index("idx_counterpick_usage_season").using("btree", table.seasonId.asc().nullsLast()),
 	foreignKey({
 			columns: [table.leagueId],
 			foreignColumns: [leagues.id],
@@ -430,9 +428,9 @@ export const playerLeagues = pgTable("player_leagues", {
 	role: text().default('member').notNull(),
 	seasonId: integer("season_id").notNull(),
 }, (table) => [
-	index("idx_player_leagues_league").using("btree", table.leagueId.asc().nullsLast().op("int4_ops")),
-	index("idx_player_leagues_player").using("btree", table.playerId.asc().nullsLast().op("int4_ops")),
-	index("idx_player_leagues_season").using("btree", table.seasonId.asc().nullsLast().op("int4_ops")),
+	index("idx_player_leagues_league").using("btree", table.leagueId.asc().nullsLast()),
+	index("idx_player_leagues_player").using("btree", table.playerId.asc().nullsLast()),
+	index("idx_player_leagues_season").using("btree", table.seasonId.asc().nullsLast()),
 	foreignKey({
 		columns: [table.seasonId],
 		foreignColumns: [seasons.id],
