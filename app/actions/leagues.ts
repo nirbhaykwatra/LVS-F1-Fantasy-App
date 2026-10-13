@@ -1,9 +1,10 @@
 ﻿'use server'
 
-import  { redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import { ActionResponse } from "@/app/actions/auth";
 import { getCurrentUser } from "@/lib/dal/user";
-import { addLeague, addPlayerToLeagueByCode, getLeagueByInviteCode, addPlayerToLeague, getLeagueById } from "@/lib/dal/leagues";
+import { addLeague, addPlayerToLeagueByCode, getLeagueByInviteCode, addPlayerToLeague } from "@/lib/dal/leagues";
+import { PlayerLeaguesSummary, getPlayerLeaguesSummary } from "@/lib/dal/playerInfo";
 import { getCurrentSeason } from "@/lib/dal/stats";
 
 export async function createLeague(prevState: ActionResponse | null, formData: FormData): Promise<ActionResponse | null> {
@@ -66,10 +67,31 @@ export async function setupOwnerTeam(prevState: ActionResponse | null, formData:
 export async function redirectJoinToCreateTeam(prevState: ActionResponse | null, formData: FormData): Promise<ActionResponse | null> {
     const code = String(formData.get("inviteCode") ?? "").trim();
     const league = await getLeagueByInviteCode(code);
+
     if (!league) return {
         success: false,
         message: "Could not find league!",
         error: "Could not find league!"
+    }
+
+    const user = await getCurrentUser();
+
+     if (!user) return {
+        success: false,
+        message: "You need to sign in first.",
+        error: "You need to sign in first."
+     }
+
+    const playerLeagueSummary = await getPlayerLeaguesSummary(user.id);
+
+    for  (const playerLeague of playerLeagueSummary) {
+        if (playerLeague.leagueId === league.id) {
+            return {
+                success: false,
+                message: "You are already in this league!",
+                error: "You are already in this league!"
+            }
+        }
     }
 
     redirect(`/join?code=${league.inviteCode}`);

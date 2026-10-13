@@ -183,7 +183,7 @@ export async function LeagueLeaderboard({ leagueId }: { leagueId: string }) {
             <h2 className="text-lg font-bold text-foreground">{leagueName} Leaderboard</h2>
             <div className="h-px w-full bg-black/10 dark:bg-white/10" />
             { playerRows.length > 0 ?
-                <table className="w-full border-collapse block md:table [&_td]:px-4 [&_td]:py-2 md:[&_td:first-child]:pl-0 md:[&_td:last-child]:pr-0">
+                <table className="w-full border-collapse block md:table [&_td]:py-2 md:[&_td:first-child]:pl-0 md:[&_td:last-child]:pr-0">
                     <thead className="hidden md:table-header-group">
                     <tr>
                         <th className="text-left">Rank</th>
@@ -196,7 +196,7 @@ export async function LeagueLeaderboard({ leagueId }: { leagueId: string }) {
                     {playerRows.map(([playerId, username, teamName, points, rank]) => (
                         <tr
                             key={playerId}
-                            className="block md:table-row mb-3 last:mb-0 md:mb-0 rounded-xl border border-black/10 dark:border-white/10 md:border-0 md:rounded-none"
+                            className="block md:table-row mb-3 md:mb-0 rounded-xl border border-black/10 dark:border-white/10 md:border-0 md:rounded-none"
                         >
                             <td className="flex justify-between items-center md:table-cell border-b border-black/5 dark:border-white/5 md:border-0">
                                 <span className="font-semibold text-xs uppercase tracking-wide text-foreground/50 md:hidden">Rank</span>
