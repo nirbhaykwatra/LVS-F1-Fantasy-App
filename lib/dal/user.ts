@@ -12,12 +12,12 @@ export const getCurrentUser = cache(async () => {
     }
 
     try {
-        const results = await db
+        const [user] = await db
             .select()
             .from(players)
             .where(eq(players.id, session.userId))
 
-        return results[0] || null
+        return user || null
     } catch (e) {
         console.error(e)
         return null

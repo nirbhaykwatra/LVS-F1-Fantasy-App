@@ -1,6 +1,6 @@
 {
-  "id": "f4fba38f-ba67-4dc6-91b7-6223ae63ea1d",
-  "prevId": "3d73ee19-6e59-4635-967e-a17374b0d04d",
+  "id": "34ac4f42-6fb9-4798-ab65-86bedcc2fdfe",
+  "prevId": "fdfb639c-6a05-47a2-bc95-e5a54c857cce",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -1543,19 +1543,32 @@
           "name": "created_by_player_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "invite_code": {
           "name": "invite_code",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "slug": {
           "name": "slug",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
+        },
+        "current_owner_id": {
+          "name": "current_owner_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "visibility": {
+          "name": "visibility",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'private'"
         }
       },
       "indexes": {
@@ -1682,7 +1695,12 @@
         }
       },
       "policies": {},
-      "checkConstraints": {},
+      "checkConstraints": {
+        "leagues_visibility_check": {
+          "name": "leagues_visibility_check",
+          "value": "visibility = ANY (ARRAY['private'::text, 'public'::text])"
+        }
+      },
       "isRLSEnabled": false
     },
     "public.player_leagues": {
@@ -1836,7 +1854,7 @@
       "checkConstraints": {
         "player_leagues_role_check": {
           "name": "player_leagues_role_check",
-          "value": "role = ANY (ARRAY['owner'::text, 'member'::text])"
+          "value": "role = ANY (ARRAY['owner'::text, 'player'::text])"
         }
       },
       "isRLSEnabled": false
@@ -2212,6 +2230,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "constructor_id": {
+          "name": "constructor_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
         "position": {
           "name": "position",
           "type": "smallint",
@@ -2267,6 +2291,19 @@
             "id"
           ],
           "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "race_results_constructor_id_fkey": {
+          "name": "race_results_constructor_id_fkey",
+          "tableFrom": "race_results",
+          "tableTo": "constructors",
+          "columnsFrom": [
+            "constructor_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
           "onUpdate": "no action"
         }
       },

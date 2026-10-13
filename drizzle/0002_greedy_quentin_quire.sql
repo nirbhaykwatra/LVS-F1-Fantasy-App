@@ -1,0 +1,1 @@
+ALTER TABLE "leagues" ADD CONSTRAINT "leagues_visibility_check" CHECK (visibility = ANY (ARRAY['private'::text, 'public'::text]));

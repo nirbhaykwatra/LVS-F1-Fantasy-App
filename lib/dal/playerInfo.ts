@@ -7,8 +7,9 @@ import {
     constructors,
     playerLeagues, players
 } from "@/db/schema";
-import { eq, and, desc, sql, asc } from "drizzle-orm";
-import { GrandPrixOption } from "@/components/dashboard/GrandPrixSelector";
+import { eq, and, desc, asc } from "drizzle-orm";
+import { GrandPrixOption } from "@/components/dashboard/LeagueDashboardClientComponents";
+import {getLeagueById} from "@/lib/dal/leagues";
 
 // ---------- breakdown_json shape ----------
 
@@ -29,7 +30,7 @@ export type PointsBreakdown = {
 
 // ---------- 1. Leagues summary (unchanged) ----------
 
-export type PlayerLeaguesSummary = Array<{ leagueId: number, leagueName: string; currentPointsTotal: number; currentRank: number }>;
+export type PlayerLeaguesSummary = Array<{ leagueId: number, leagueName: string; slug: string, currentPointsTotal: number; currentRank: number }>;
 
 export async function getPlayerLeaguesSummary(playerId: number): Promise<PlayerLeaguesSummary> {
     const rows = await db
@@ -45,9 +46,11 @@ export async function getPlayerLeaguesSummary(playerId: number): Promise<PlayerL
     const summary: PlayerLeaguesSummary = [];
     for (const row of rows) {
         if (row.leagueId === null) continue;
+        const league = await getLeagueById(row.leagueId);
         summary.push({
             leagueId: row.leagueId ?? 0,
             leagueName: row.leagueName ?? "",
+            slug: league?.slug ?? "",
             currentPointsTotal: row.currentPointsTotal ?? 0,
             currentRank: row.currentRank ?? 0,
         });
@@ -243,6 +246,10 @@ export async function getGrandPrixOptions(): Promise<GrandPrixOption[]> {
         .where(eq(grandsPrix.isCompleted, true))
         .orderBy(desc(grandsPrix.roundNumber));
 
+    if (allGrandsPrix.length === 0) {
+        return [];
+    }
+
     const grandPrixOptions: GrandPrixOption[] = allGrandsPrix.map((r) => ({
         roundNumber: r.roundNumber,
         name: r.eventName,
@@ -276,11 +283,13 @@ export async function getPlayerTeamName(playerId: number, leagueId: number): Pro
 export async function getPlayerTeamMotto(playerId: number, leagueId: number): Promise<string | null> {
     const conditions = [eq(playerLeagues.playerId, playerId), eq(playerLeagues.leagueId, leagueId)];
 
-    const playerLeague = await db.select()
+    const [playerLeague] = await db
+        .select()
         .from(playerLeagues)
         .where(
             and(...conditions)
         )
         .limit(1);
-    return playerLeague[0]?.teamMotto ?? null;
+
+    return playerLeague?.teamMotto ?? null;
 }

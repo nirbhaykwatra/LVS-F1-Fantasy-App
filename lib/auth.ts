@@ -5,6 +5,7 @@ import { cache } from 'react';
 import { compare, hash } from 'bcrypt';
 import { eq } from 'drizzle-orm';
 import { cookies } from 'next/headers';
+import { connection } from 'next/server';
 
 // JWT types
 interface JWTPayload {
@@ -118,6 +119,7 @@ export async function createSession(userId: number) {
 // Get current session from JWT
 export const getSession = cache(async () => {
     try {
+        await connection();
         const cookieStore = await cookies()
         const token = cookieStore.get('auth_token')?.value
 

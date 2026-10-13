@@ -1,12 +1,13 @@
 ﻿"use client";
 
 import Link from "next/link";
-import {Suspense, useActionState, useEffect} from "react";
+import { useActionState, useEffect} from "react";
 import { useRouter } from "next/navigation";
 import { AnimatedBackground } from "@/components/common/AnimatedBackground";
 import { signUp } from "@/app/actions/auth";
 import type { ActionResponse } from "@/app/actions/auth";
-import {ButtonPill} from "@/components/common/Buttons";
+import { ButtonPill } from "@/components/common/UI";
+import { HeaderLogoButton } from "@/components/common/Header";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -26,13 +27,7 @@ export default function SignUpPage() {
         <AnimatedBackground />
 
         <header className="relative z-10 flex items-center justify-between px-6 py-5 sm:px-10">
-          <Link
-              href="/"
-              className="flex items-center gap-2 font-mono text-sm font-bold tracking-widest text-foreground"
-          >
-            <span className="h-2.5 w-2.5 rounded-full bg-brand" />
-            LVS F1 FANTASY
-          </Link>
+          <HeaderLogoButton />
           <nav className="flex items-center gap-3">
             <span className="text-sm text-foreground/60">Already racing?</span>
             <ButtonPill label="Sign In" href="/signin" />

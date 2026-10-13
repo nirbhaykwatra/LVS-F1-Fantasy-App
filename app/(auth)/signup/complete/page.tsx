@@ -1,26 +1,22 @@
-﻿import Link from "next/link";
-import { cookies } from "next/headers";
+﻿import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { AnimatedBackground } from "@/components/common/AnimatedBackground";
-import CompleteSignupForm from "@/components/auth/CompleteSignupForm";
+import { CompleteSignupForm } from "@/components/forms/AuthForms";
+import { HeaderLogoButton } from "@/components/common/Header";
 
 export default async function CompleteSignupPage() {
     const cookieStore = await cookies();
-    const discordPendingId = cookieStore.get("discord_pending_id")?.value;
 
+    // Check if user signed up using Discord. If not, redirect to signup page.
+    const discordPendingId = cookieStore.get("discord_pending_id")?.value;
     if (!discordPendingId) redirect("/signup");
+
     return (
         <div className="relative isolate flex flex-1 flex-col bg-background font-sans">
             <AnimatedBackground />
 
             <header className="relative z-10 flex items-center justify-between px-6 py-5 sm:px-10">
-                <Link
-                    href="/"
-                    className="flex items-center gap-2 font-mono text-sm font-bold tracking-widest text-foreground"
-                >
-                    <span className="h-2.5 w-2.5 rounded-full bg-brand" />
-                    LVS F1 FANTASY
-                </Link>
+                <HeaderLogoButton />
             </header>
 
             <main className="relative z-10 flex flex-1 items-center justify-center px-6 py-16 sm:px-10">

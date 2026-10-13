@@ -1,6 +1,6 @@
 {
-  "id": "3d73ee19-6e59-4635-967e-a17374b0d04d",
-  "prevId": "d847a1dc-17e5-4da1-98f4-86c69ac1c543",
+  "id": "fdfb639c-6a05-47a2-bc95-e5a54c857cce",
+  "prevId": "e83c925f-321b-4486-8bc4-f58a9705c4a8",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -86,8 +86,7 @@
               "expression": "constructor_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -102,15 +101,13 @@
               "expression": "player_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             },
             {
               "expression": "league_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -126,15 +123,13 @@
               "expression": "player_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             },
             {
               "expression": "league_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -279,8 +274,7 @@
               "expression": "season_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -357,15 +351,13 @@
               "expression": "player_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             },
             {
               "expression": "league_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -380,8 +372,7 @@
               "expression": "season_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -518,15 +509,13 @@
               "expression": "grand_prix_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             },
             {
               "expression": "league_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -541,22 +530,19 @@
               "expression": "grand_prix_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             },
             {
               "expression": "league_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             },
             {
               "expression": "target_player_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -758,15 +744,13 @@
               "expression": "grand_prix_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             },
             {
               "expression": "league_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -781,15 +765,13 @@
               "expression": "player_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             },
             {
               "expression": "league_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -804,8 +786,7 @@
               "expression": "season_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1036,8 +1017,7 @@
               "expression": "driver_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1052,15 +1032,13 @@
               "expression": "player_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             },
             {
               "expression": "league_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1076,15 +1054,13 @@
               "expression": "player_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             },
             {
               "expression": "league_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1265,8 +1241,7 @@
               "expression": "constructor_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1281,8 +1256,7 @@
               "expression": "season_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1445,15 +1419,13 @@
               "expression": "season_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             },
             {
               "expression": "is_completed",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1468,8 +1440,7 @@
               "expression": "season_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1572,19 +1543,32 @@
           "name": "created_by_player_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "invite_code": {
           "name": "invite_code",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "slug": {
           "name": "slug",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
+        },
+        "current_owner_id": {
+          "name": "current_owner_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "visibility": {
+          "name": "visibility",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'private'"
         }
       },
       "indexes": {
@@ -1595,8 +1579,7 @@
               "expression": "created_by_player_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1611,8 +1594,7 @@
               "expression": "discord_guild_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int8_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1627,8 +1609,7 @@
               "expression": "invite_code",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "text_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1643,8 +1624,7 @@
               "expression": "season_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1775,8 +1755,7 @@
               "expression": "league_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1791,8 +1770,7 @@
               "expression": "player_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1807,8 +1785,7 @@
               "expression": "season_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1872,7 +1849,7 @@
       "checkConstraints": {
         "player_leagues_role_check": {
           "name": "player_leagues_role_check",
-          "value": "role = ANY (ARRAY['owner'::text, 'member'::text])"
+          "value": "role = ANY (ARRAY['owner'::text, 'player'::text])"
         }
       },
       "isRLSEnabled": false
@@ -1952,15 +1929,13 @@
               "expression": "grand_prix_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             },
             {
               "expression": "league_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1975,15 +1950,13 @@
               "expression": "player_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             },
             {
               "expression": "league_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -1998,8 +1971,7 @@
               "expression": "season_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -2146,8 +2118,7 @@
               "expression": "discord_user_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int8_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -2162,8 +2133,7 @@
               "expression": "email",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "text_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -2178,8 +2148,7 @@
               "expression": "username",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "text_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -2256,6 +2225,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "constructor_id": {
+          "name": "constructor_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
         "position": {
           "name": "position",
           "type": "smallint",
@@ -2271,15 +2246,13 @@
               "expression": "grand_prix_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "text_ops"
+              "nulls": "last"
             },
             {
               "expression": "session_type",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "text_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,
@@ -2313,6 +2286,19 @@
             "id"
           ],
           "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "race_results_constructor_id_fkey": {
+          "name": "race_results_constructor_id_fkey",
+          "tableFrom": "race_results",
+          "tableTo": "constructors",
+          "columnsFrom": [
+            "constructor_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
@@ -2385,8 +2371,7 @@
               "expression": "season_id",
               "isExpression": false,
               "asc": true,
-              "nulls": "last",
-              "opclass": "int4_ops"
+              "nulls": "last"
             }
           ],
           "isUnique": false,

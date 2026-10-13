@@ -219,6 +219,7 @@ export const raceResults = pgTable("race_results", {
 	grandPrixId: integer("grand_prix_id").notNull(),
 	sessionType: text("session_type").notNull(),
 	driverId: integer("driver_id").notNull(),
+	constructorId: integer("constructor_id").notNull(),
 	position: smallint().notNull(),
 }, (table) => [
 	index("idx_race_results_gp_session").using("btree", table.grandPrixId.asc().nullsLast(), table.sessionType.asc().nullsLast()),
@@ -232,6 +233,11 @@ export const raceResults = pgTable("race_results", {
 			foreignColumns: [grandsPrix.id],
 			name: "race_results_grand_prix_id_fkey"
 		}).onDelete("cascade"),
+	foreignKey({
+		columns: [table.constructorId],
+		foreignColumns: [constructors.id],
+		name: "race_results_constructor_id_fkey"
+	}),
 	unique("race_results_grand_prix_id_session_type_driver_id_key").on(table.driverId, table.grandPrixId, table.sessionType),
 	check("race_results_session_type_check", sql`session_type = ANY (ARRAY['qualifying'::text, 'race'::text, 'sprint'::text, 'sprint_qualifying'::text])`),
 ]);
@@ -246,9 +252,11 @@ export const leagues = pgTable("leagues", {
 	embedColor: integer("embed_color").default(15135274).notNull(),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	counterpickLimit: integer("counterpick_limit").default(3).notNull(),
-	createdByPlayerId: integer("created_by_player_id"),
-	inviteCode: text("invite_code"),
-	slug: text("slug"),
+	createdByPlayerId: integer("created_by_player_id").notNull(),
+	inviteCode: text("invite_code").notNull(),
+	slug: text("slug").notNull(),
+	currentOwnerId: integer("current_owner_id").notNull(),
+	visibility: text("visibility").default("private").notNull(),
 }, (table) => [
 	index("idx_leagues_created_by").using("btree", table.createdByPlayerId.asc().nullsLast()),
 	index("idx_leagues_discord_guild").using("btree", table.discordGuildId.asc().nullsLast()),
@@ -268,6 +276,7 @@ export const leagues = pgTable("leagues", {
 	unique("leagues_season_id_name_key").on(table.name, table.seasonId),
 	unique("leagues_invite_code_key").on(table.inviteCode),
 	unique("leagues_slug_key").on(table.slug),
+	check("leagues_visibility_check", sql`visibility = ANY (ARRAY['private'::text, 'public'::text])`),
 ]);
 
 export const counterpicks = pgTable("counterpicks", {
@@ -447,7 +456,7 @@ export const playerLeagues = pgTable("player_leagues", {
 			name: "player_leagues_player_id_fkey"
 		}).onDelete("cascade"),
 	primaryKey({ columns: [table.leagueId, table.playerId], name: "player_leagues_pkey"}),
-	check("player_leagues_role_check", sql`role = ANY (ARRAY['owner'::text, 'member'::text])`),
+	check("player_leagues_role_check", sql`role = ANY (ARRAY['owner'::text, 'player'::text])`),
 ]);
 export const vDriverDraftStats = pgView("v_driver_draft_stats", {	driverId: integer("driver_id"),
 	code: char({ length: 3 }),

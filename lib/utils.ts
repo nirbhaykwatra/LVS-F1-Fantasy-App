@@ -14,6 +14,33 @@
     "Pierre Gasly"
 ];
 
+export const playerFeatures = [
+    "Join F1 Fantasy Leagues",
+    "Draft your team every race weekend",
+    "View race results and driver standings",
+    "Compare performance with friends",
+    "Use power ups and counterpicks",
+];
+
+export const managerFeatures = [
+    "Create and manage leagues",
+    "Add and remove players",
+    "Track points and standings",
+    "Customize league settings and rules",
+    "Import and export league data",
+];
+
+export const tickerItems = [
+    "Create your own league",
+    "Play against your friends",
+    "Spice up your F1 experience",
+    "Make your own rules",
+    "Analyze your performance",
+    "Dive into the data",
+    "Unlock power ups",
+];
+
+
 export interface Statistic {
     id: string;
     name: string;

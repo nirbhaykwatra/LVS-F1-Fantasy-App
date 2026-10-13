@@ -1,76 +1,9 @@
 import Link from "next/link";
 import { AnimatedBackground } from "@/components/common/AnimatedBackground";
 import { Tagline } from "@/components/landing/Tagline";
-import { taglines } from "@/lib/utils";
-
-const playerFeatures = [
-  "Join F1 Fantasy Leagues",
-  "Draft your team every race weekend",
-  "View race results and driver standings",
-  "Compare performance with friends",
-  "Use power ups and counterpicks",
-];
-
-const managerFeatures = [
-  "Create and manage leagues",
-  "Add and remove players",
-  "Track points and standings",
-  "Customize league settings and rules",
-  "Import and export league data",
-];
-
-const tickerItems = [
-    "Create your own league",
-    "Play against your friends",
-    "Spice up your F1 experience",
-    "Make your own rules",
-    "Analyze your performance",
-    "Dive into the data",
-    "Unlock power ups",
-];
-
-function FeatureCard({
-                       title,
-                       items,
-                     }: {
-  title: string;
-  items: string[];
-}) {
-  return (
-      <div className="flex flex-col gap-4 rounded-2xl border border-black/10 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
-        <h3 className="text-lg font-bold text-foreground">{title}</h3>
-        <ul className="flex flex-col gap-2">
-          {items.map((item) => (
-              <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-foreground/70"
-              >
-                <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand" />
-                {item}
-              </li>
-          ))}
-        </ul>
-      </div>
-  );
-}
-
-function Ticker() {
-  return (
-      <div className="relative overflow-hidden border-y border-brand/20 bg-black py-3">
-        <div className="flex w-max animate-[marquee_28s_linear_infinite] gap-10 whitespace-nowrap will-change-transform hover:[animation-play-state:paused]">
-          {[...tickerItems, ...tickerItems].map((item, i) => (
-              <span
-                  key={`${item}-${i}`}
-                  className="flex items-center gap-3 font-mono text-xs font-bold tracking-widest text-white/80"
-              >
-            <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-                {item}
-          </span>
-          ))}
-        </div>
-      </div>
-  );
-}
+import { taglines, playerFeatures, managerFeatures, tickerItems } from "@/lib/utils";
+import { FeatureCard, Ticker } from "@/components/common/UIServer";
+import { HeaderLogoButton } from "@/components/common/Header";
 
 export default function Home() {
   return (
@@ -79,10 +12,7 @@ export default function Home() {
 
         {/* Top bar */}
         <header className="relative z-10 flex items-center justify-between px-6 py-5 sm:px-10">
-          <div className="flex items-center gap-2 font-mono text-sm font-bold tracking-widest text-foreground">
-            <span className="h-2.5 w-2.5 rounded-full bg-brand" />
-            LVS F1 FANTASY
-          </div>
+            <HeaderLogoButton />
           <nav className="flex items-center gap-3">
             <Link
                 href="/signin"
@@ -131,7 +61,7 @@ export default function Home() {
 
         {/* Ticker */}
         <div className="relative z-10">
-          <Ticker />
+          <Ticker tickerItems={tickerItems}/>
         </div>
 
         {/* Features */}
